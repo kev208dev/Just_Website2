@@ -1,0 +1,92 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write # publishes the build-preview branch
+  pages: write
+  id-token: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BASE_PATH: /${{ github.event.repository.name }}/
+  SITE_URL: https://${{ github.repository_owner }}.github.io
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: |
+          set -o pipefail
+          if [ -f package-lock.json ]; then npm ci --no-audit --no-fund 2>&1 | tee install.log
+          else npm install --no-audit --no-fund 2>&1 | tee install.log; fi
+
+      - name: Type check (astro check)
+        run: |
+          set -o pipefail
+          npx astro check 2>&1 | tee check.log
+
+      - name: Production build
+        run: |
+          set -o pipefail
+          npx astro build 2>&1 | tee build.log
+
+      - name: Upload Pages artifact
+        if: success()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      # Publishes the static build + logs to the `build-preview` branch so the
+      # output can be inspected and browser-tested without GitHub Pages.
+      # Normal (non-force) pushes only.
+      - name: Publish build-preview branch
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin build-preview >/dev/null 2>&1; then
+            git fetch --depth=1 origin build-preview
+            git worktree add -B build-preview _preview origin/build-preview
+          else
+            git worktree add --orphan -b build-preview _preview
+          fi
+          find _preview -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          for f in install.log check.log build.log; do [ -f "$f" ] && cp "$f" _preview/; done
+          [ -d dist ] && cp -r dist _preview/dist
+          echo "${GITHUB_SHA}" > _preview/SOURCE_SHA
+          cp package-lock.json _preview/ 2>/dev/null || true
+          cd _preview
+          git add -A
+          git commit -q -m "preview: ${GITHUB_SHA::7} (${JOB_STATUS})" || exit 0
+          git push origin build-preview
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    # GitHub Pages must be enabled (Settings → Pages → Source: GitHub Actions).
+    # Until then this job fails without affecting the build result.
+    continue-on-error: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

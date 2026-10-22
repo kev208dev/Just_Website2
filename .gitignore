@@ -1,0 +1,25 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# local tooling / verification output
+tools/.harness/
+tools/vendor/
+.preview/
+screenshots/
+
+# logs
+npm-debug.log*
+*.log
+
+# environment
+.env
+.env.*
+
+# os / editor
+.DS_Store
+.vscode/
+.idea/
