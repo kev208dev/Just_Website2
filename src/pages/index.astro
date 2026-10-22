@@ -1,8 +1,130 @@
 ---
-const base = import.meta.env.BASE_URL;
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/home.css";
+import { projects, projectImage, projectUrl } from "../lib/data";
+import { asset } from "../lib/paths";
+import { SITE } from "../lib/site";
+import type { GalleryItem } from "../components/three/types";
+
+const items: GalleryItem[] = projects.map((p, index) => ({
+  index,
+  slug: p.slug,
+  title: p.title,
+  category: p.category,
+  year: p.year,
+  summary: p.summary,
+  href: projectUrl(p.slug),
+  image: projectImage(p),
+  imageAspect: p.imageSize ? p.imageSize[0] / p.imageSize[1] : 1.6,
+}));
+const first = items[0];
+const total = String(items.length).padStart(2, "0");
 ---
-<!doctype html>
-<html lang="ko">
-  <head><meta charset="utf-8" /><title>JUST</title></head>
-  <body><h1>JUST Website 2.0</h1><p>Scaffolding — base: {base}</p></body>
-</html>
+
+<BaseLayout bodyClass="is-home" footer={false}>
+  <section class="home" data-home data-logo={asset("models/just-logo.svg")} aria-label="JUST 프로젝트 3D 갤러리">
+    <div
+      class="home-stage"
+      data-stage
+      tabindex="0"
+      role="region"
+      aria-roledescription="3D 갤러리"
+      aria-label="선택 작품 3D 갤러리 — 스크롤·드래그 또는 화살표 키로 탐색하고 Enter로 엽니다"
+    >
+    </div>
+    <div class="home-vignette" aria-hidden="true"></div>
+
+    <div class="home-hero">
+      <h1 class="hero-title" data-reveal="lines">
+        <span class="split-line"><span>From zero.</span></span>
+        <span class="split-line"><span>To anything.</span></span>
+      </h1>
+      <div class="hero-aside" data-reveal="fade" data-reveal-delay="0.3">
+        <span class="eyebrow eyebrow--accent">JUST Digital Atelier</span>
+        <p>{SITE.collective}</p>
+      </div>
+    </div>
+
+    <div class="home-ui">
+      <div class="ui-works">
+        <p class="eyebrow">Selected works</p>
+        <div class="ui-counter" aria-hidden="true"><strong data-active-index>01</strong>/ {total}</div>
+        <a class="ui-title" href={first.href} data-active-link data-cursor="view" data-cursor-label="Open">
+          <span class="ui-title__name" data-swap data-active-title>{first.title}</span>
+          <span class="ui-title__meta" data-swap>
+            <span data-active-category>{[first.category, first.year].filter(Boolean).join(" · ")}</span>
+            <span class="open">View project ↗</span>
+          </span>
+        </a>
+        <div class="ui-steps">
+          <button class="ui-step" type="button" data-step="-1" aria-label="이전 프로젝트">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M10 3L5 8l5 5"></path></svg>
+          </button>
+          <button class="ui-step" type="button" data-step="1" aria-label="다음 프로젝트">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 3l5 5-5 5"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="ui-explore" aria-hidden="true">
+        <span class="eyebrow"><span class="mouse-label">Scroll to explore</span><span class="touch-label">Swipe to explore</span></span>
+        <span class="ui-explore__line"></span>
+      </div>
+
+      <div class="ui-modes" role="group" aria-label="갤러리 배치 방식">
+        <button class="ui-mode" type="button" data-mode="rings" aria-pressed="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><ellipse cx="8" cy="8" rx="7" ry="3"></ellipse><ellipse cx="8" cy="8" rx="4.5" ry="1.8"></ellipse></svg>
+          Rings
+        </button>
+        <button class="ui-mode" type="button" data-mode="spiral" aria-pressed="false">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M8 8.2a1 1 0 1 1 1-1 2.2 2.2 0 0 1-2.2 2.2A3.4 3.4 0 0 1 3.4 6 4.6 4.6 0 0 1 8 1.4 5.8 5.8 0 0 1 13.8 7.2"></path></svg>
+          Spiral
+        </button>
+      </div>
+    </div>
+
+    <p class="sr-only" aria-live="polite" data-live></p>
+
+    <nav class="sr-only" aria-label="전체 작품 목록">
+      <ul>
+        {items.map((item) => <li><a href={item.href}>{item.title} — {item.category}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="home-fallback" data-fallback hidden>
+      <p class="eyebrow">Selected works — {total}</p>
+      <div class="fallback-grid">
+        {
+          items.map((item) => (
+            <a class="fallback-card" href={item.href}>
+              <figure>
+                {item.image ? (
+                  <img src={item.image} alt="" loading="lazy" decoding="async" />
+                ) : (
+                  <span class="type-thumb">{item.title}</span>
+                )}
+              </figure>
+              <h3>{item.title}</h3>
+              <p>{[item.category, item.year].filter(Boolean).join(" · ")}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <script type="application/json" id="gallery-data" set:html={JSON.stringify(items)} />
+  </section>
+  <noscript>
+    <style>
+      .home-fallback { display: block !important; padding: 3rem var(--gutter); }
+      .home-stage, .home-ui { display: none !important; }
+      body.is-home { overflow: auto !important; height: auto !important; }
+      .home { position: relative !important; }
+      .home-hero { position: relative !important; top: auto !important; padding-top: calc(var(--header-h) + 2rem); }
+    </style>
+  </noscript>
+</BaseLayout>
+
+<script>
+  import "../scripts/home";
+</script>
