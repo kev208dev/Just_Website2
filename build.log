@@ -1,61 +1,61 @@
-[2m04:40:40[22m [34m[content][39m Syncing content
-[2m04:40:40[22m [34m[content][39m Synced content
-[2m04:40:40[22m [34m[types][39m Generated [2m39ms[22m
-[2m04:40:40[22m [34m[build][39m output: [34m"static"[39m
-[2m04:40:40[22m [34m[build][39m mode: [34m"static"[39m
-[2m04:40:40[22m [34m[build][39m directory: [34m/home/runner/work/Just_Website2/Just_Website2/dist/[39m
-[2m04:40:40[22m [34m[build][39m Collecting build info...
-[2m04:40:40[22m [34m[build][39m [32m✓ Completed in 51ms.[39m
-[2m04:40:40[22m [34m[build][39m Building static entrypoints...
-[2m04:40:41[22m [34m[vite][39m [32m✓ built in 965ms[39m
-[2m04:40:41[22m [34m[build][39m [32m✓ Completed in 999ms.[39m
+[2m04:48:14[22m [34m[content][39m Syncing content
+[2m04:48:14[22m [34m[content][39m Synced content
+[2m04:48:14[22m [34m[types][39m Generated [2m32ms[22m
+[2m04:48:14[22m [34m[build][39m output: [34m"static"[39m
+[2m04:48:14[22m [34m[build][39m mode: [34m"static"[39m
+[2m04:48:14[22m [34m[build][39m directory: [34m/home/runner/work/Just_Website2/Just_Website2/dist/[39m
+[2m04:48:14[22m [34m[build][39m Collecting build info...
+[2m04:48:14[22m [34m[build][39m [32m✓ Completed in 45ms.[39m
+[2m04:48:14[22m [34m[build][39m Building static entrypoints...
+[2m04:48:15[22m [34m[vite][39m [32m✓ built in 951ms[39m
+[2m04:48:15[22m [34m[build][39m [32m✓ Completed in 979ms.[39m
 
 [42m[30m building client (vite) [39m[49m
-[2m04:40:41[22m [34m[vite][39m transforming...
-[2m04:40:42[22m [34m[vite][39m [32m✓[39m 57 modules transformed.
-[2m04:40:42[22m [34m[vite][39m rendering chunks...
-[2m04:40:42[22m [34m[vite][39m computing gzip size...
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mclient.B9YBqyHK.js                                             [39m[1m[2m  0.03 kB[22m[1m[22m[2m │ gzip:   0.05 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mpage.DosqaVe5.js                                               [39m[1m[2m  0.07 kB[22m[1m[22m[2m │ gzip:   0.08 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mcontact.astro_astro_type_script_index_0_lang.EXRj_qYL.js       [39m[1m[2m  0.48 kB[22m[1m[22m[2m │ gzip:   0.30 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mlifecycle.CeEqMtu6.js                                          [39m[1m[2m  0.69 kB[22m[1m[22m[2m │ gzip:   0.42 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mHeader.astro_astro_type_script_index_0_lang.DONL4ZDk.js        [39m[1m[2m  1.18 kB[22m[1m[22m[2m │ gzip:   0.53 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mClientRouter.astro_astro_type_script_index_0_lang.DRioC4UT.js  [39m[1m[2m  1.72 kB[22m[1m[22m[2m │ gzip:   0.86 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mawards.astro_astro_type_script_index_0_lang.DBn28W1p.js        [39m[1m[2m  1.96 kB[22m[1m[22m[2m │ gzip:   0.84 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mindex.B324nrla.js                                              [39m[1m[2m  2.33 kB[22m[1m[22m[2m │ gzip:   1.07 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mindex.astro_astro_type_script_index_0_lang.Cb6mYLHV.js         [39m[1m[2m  4.68 kB[22m[1m[22m[2m │ gzip:   2.19 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mpeople.astro_astro_type_script_index_0_lang.BHsngI27.js        [39m[1m[2m  7.65 kB[22m[1m[22m[2m │ gzip:   2.95 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mclient.ClJywuJL.js                                             [39m[1m[2m 12.08 kB[22m[1m[22m[2m │ gzip:   4.26 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mindex.astro_astro_type_script_index_0_lang.Bg9_XnLE.js         [39m[1m[2m 27.05 kB[22m[1m[22m[2m │ gzip:  10.59 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mBaseLayout.astro_astro_type_script_index_0_lang.CjKw_tLA.js    [39m[1m[2m 45.62 kB[22m[1m[22m[2m │ gzip:  18.87 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mindex.CzGW6FVa.js                                              [39m[1m[2m 70.46 kB[22m[1m[22m[2m │ gzip:  27.81 kB[22m
-[2m04:40:42[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mExperienceCanvas.Cj-zXUbN.js                                   [39m[1m[2m582.04 kB[22m[1m[22m[2m │ gzip: 154.23 kB[22m
-[2m04:40:42[22m [34m[vite][39m [32m✓ built in 1.24s[39m
+[2m04:48:15[22m [34m[vite][39m transforming...
+[2m04:48:17[22m [34m[vite][39m [32m✓[39m 57 modules transformed.
+[2m04:48:17[22m [34m[vite][39m rendering chunks...
+[2m04:48:17[22m [34m[vite][39m computing gzip size...
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mclient.B9YBqyHK.js                                             [39m[1m[2m  0.03 kB[22m[1m[22m[2m │ gzip:   0.05 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mpage.DosqaVe5.js                                               [39m[1m[2m  0.07 kB[22m[1m[22m[2m │ gzip:   0.08 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mcontact.astro_astro_type_script_index_0_lang.EXRj_qYL.js       [39m[1m[2m  0.48 kB[22m[1m[22m[2m │ gzip:   0.30 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mlifecycle.CeEqMtu6.js                                          [39m[1m[2m  0.69 kB[22m[1m[22m[2m │ gzip:   0.42 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mHeader.astro_astro_type_script_index_0_lang.DONL4ZDk.js        [39m[1m[2m  1.18 kB[22m[1m[22m[2m │ gzip:   0.53 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mClientRouter.astro_astro_type_script_index_0_lang.DRioC4UT.js  [39m[1m[2m  1.72 kB[22m[1m[22m[2m │ gzip:   0.86 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mawards.astro_astro_type_script_index_0_lang.DBn28W1p.js        [39m[1m[2m  1.96 kB[22m[1m[22m[2m │ gzip:   0.84 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mindex.B324nrla.js                                              [39m[1m[2m  2.33 kB[22m[1m[22m[2m │ gzip:   1.07 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mindex.astro_astro_type_script_index_0_lang.Cb6mYLHV.js         [39m[1m[2m  4.68 kB[22m[1m[22m[2m │ gzip:   2.19 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mpeople.astro_astro_type_script_index_0_lang.BHsngI27.js        [39m[1m[2m  7.65 kB[22m[1m[22m[2m │ gzip:   2.95 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mclient.ClJywuJL.js                                             [39m[1m[2m 12.08 kB[22m[1m[22m[2m │ gzip:   4.26 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mindex.astro_astro_type_script_index_0_lang.Bg9_XnLE.js         [39m[1m[2m 27.05 kB[22m[1m[22m[2m │ gzip:  10.59 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mBaseLayout.astro_astro_type_script_index_0_lang.CjKw_tLA.js    [39m[1m[2m 45.62 kB[22m[1m[22m[2m │ gzip:  18.87 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mindex.CzGW6FVa.js                                              [39m[1m[2m 70.46 kB[22m[1m[22m[2m │ gzip:  27.81 kB[22m
+[2m04:48:17[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mExperienceCanvas.Cj-zXUbN.js                                   [39m[1m[2m582.04 kB[22m[1m[22m[2m │ gzip: 154.23 kB[22m
+[2m04:48:17[22m [34m[vite][39m [32m✓ built in 1.48s[39m
 
 [42m[30m generating static routes [39m[49m
-[2m04:40:42[22m [32m▶[39m src/pages/404.astro
-[2m04:40:42[22m   [34m└─[39m [2m/404.html[22m [2m(+5ms)[22m 
-[2m04:40:42[22m [32m▶[39m src/pages/about.astro
-[2m04:40:42[22m   [34m└─[39m [2m/about/index.html[22m [2m(+2ms)[22m 
-[2m04:40:42[22m [32m▶[39m src/pages/awards.astro
-[2m04:40:42[22m   [34m└─[39m [2m/awards/index.html[22m [2m(+5ms)[22m 
-[2m04:40:42[22m [32m▶[39m src/pages/contact.astro
-[2m04:40:42[22m   [34m└─[39m [2m/contact/index.html[22m [2m(+1ms)[22m 
-[2m04:40:42[22m [32m▶[39m src/pages/index.astro
-[2m04:40:42[22m   [34m└─[39m [2m/index.html[22m [2m(+1ms)[22m 
-[2m04:40:42[22m [32m▶[39m src/pages/people.astro
-[2m04:40:42[22m   [34m└─[39m [2m/people/index.html[22m [2m(+4ms)[22m 
-[2m04:40:42[22m [32m▶[39m src/pages/work/[slug].astro
-[2m04:40:42[22m   [34m├─[39m [2m/work/junhyeon-game/index.html[22m [2m(+2ms)[22m 
-[2m04:40:42[22m   [34m├─[39m [2m/work/junhyeon-casino/index.html[22m [2m(+2ms)[22m 
-[2m04:40:42[22m   [34m├─[39m [2m/work/pangolingo/index.html[22m [2m(+2ms)[22m 
-[2m04:40:42[22m   [34m├─[39m [2m/work/just-speed/index.html[22m [2m(+1ms)[22m 
-[2m04:40:42[22m   [34m├─[39m [2m/work/just-quiz/index.html[22m [2m(+1ms)[22m 
-[2m04:40:42[22m   [34m├─[39m [2m/work/dino-sueo/index.html[22m [2m(+2ms)[22m 
-[2m04:40:42[22m   [34m└─[39m [2m/work/croctick/index.html[22m [2m(+2ms)[22m 
-[2m04:40:42[22m [32m▶[39m src/pages/work/index.astro
-[2m04:40:42[22m   [34m└─[39m [2m/work/index.html[22m [2m(+1ms)[22m 
-[2m04:40:42[22m [32m✓ Completed in 42ms.
+[2m04:48:17[22m [32m▶[39m src/pages/404.astro
+[2m04:48:17[22m   [34m└─[39m [2m/404.html[22m [2m(+10ms)[22m 
+[2m04:48:17[22m [32m▶[39m src/pages/about.astro
+[2m04:48:17[22m   [34m└─[39m [2m/about/index.html[22m [2m(+4ms)[22m 
+[2m04:48:17[22m [32m▶[39m src/pages/awards.astro
+[2m04:48:17[22m   [34m└─[39m [2m/awards/index.html[22m [2m(+7ms)[22m 
+[2m04:48:17[22m [32m▶[39m src/pages/contact.astro
+[2m04:48:17[22m   [34m└─[39m [2m/contact/index.html[22m [2m(+2ms)[22m 
+[2m04:48:17[22m [32m▶[39m src/pages/index.astro
+[2m04:48:17[22m   [34m└─[39m [2m/index.html[22m [2m(+2ms)[22m 
+[2m04:48:17[22m [32m▶[39m src/pages/people.astro
+[2m04:48:17[22m   [34m└─[39m [2m/people/index.html[22m [2m(+2ms)[22m 
+[2m04:48:17[22m [32m▶[39m src/pages/work/[slug].astro
+[2m04:48:17[22m   [34m├─[39m [2m/work/junhyeon-game/index.html[22m [2m(+3ms)[22m 
+[2m04:48:17[22m   [34m├─[39m [2m/work/junhyeon-casino/index.html[22m [2m(+2ms)[22m 
+[2m04:48:17[22m   [34m├─[39m [2m/work/pangolingo/index.html[22m [2m(+2ms)[22m 
+[2m04:48:17[22m   [34m├─[39m [2m/work/just-speed/index.html[22m [2m(+1ms)[22m 
+[2m04:48:17[22m   [34m├─[39m [2m/work/just-quiz/index.html[22m [2m(+1ms)[22m 
+[2m04:48:17[22m   [34m├─[39m [2m/work/dino-sueo/index.html[22m [2m(+2ms)[22m 
+[2m04:48:17[22m   [34m└─[39m [2m/work/croctick/index.html[22m [2m(+1ms)[22m 
+[2m04:48:17[22m [32m▶[39m src/pages/work/index.astro
+[2m04:48:17[22m   [34m└─[39m [2m/work/index.html[22m [2m(+2ms)[22m 
+[2m04:48:17[22m [32m✓ Completed in 59ms.
 [39m
-[2m04:40:42[22m [34m[build][39m 14 page(s) built in [1m2.34s[22m
-[2m04:40:42[22m [34m[build][39m [1mComplete![22m
+[2m04:48:17[22m [34m[build][39m 14 page(s) built in [1m2.57s[22m
+[2m04:48:17[22m [34m[build][39m [1mComplete![22m
