@@ -1,27 +1,37 @@
-[2m04:02:05[22m [34m[content][39m Syncing content
-[2m04:02:05[22m [34m[content][39m Synced content
-[2m04:02:05[22m [34m[types][39m Generated [2m32ms[22m
-[2m04:02:05[22m [34m[build][39m output: [34m"static"[39m
-[2m04:02:05[22m [34m[build][39m mode: [34m"static"[39m
-[2m04:02:05[22m [34m[build][39m directory: [34m/home/runner/work/Just_Website2/Just_Website2/dist/[39m
-[2m04:02:05[22m [34m[build][39m Collecting build info...
-[2m04:02:05[22m [34m[build][39m [32m✓ Completed in 43ms.[39m
-[2m04:02:05[22m [34m[build][39m Building static entrypoints...
-[2m04:02:05[22m [34m[vite][39m [32m✓ built in 392ms[39m
-[2m04:02:05[22m [34m[build][39m [32m✓ Completed in 422ms.[39m
+[2m04:31:40[22m [34m[content][39m Syncing content
+[2m04:31:40[22m [34m[content][39m Synced content
+[2m04:31:40[22m [34m[types][39m Generated [2m54ms[22m
+[2m04:31:40[22m [34m[build][39m output: [34m"static"[39m
+[2m04:31:40[22m [34m[build][39m mode: [34m"static"[39m
+[2m04:31:40[22m [34m[build][39m directory: [34m/home/runner/work/Just_Website2/Just_Website2/dist/[39m
+[2m04:31:40[22m [34m[build][39m Collecting build info...
+[2m04:31:40[22m [34m[build][39m [32m✓ Completed in 67ms.[39m
+[2m04:31:40[22m [34m[build][39m Building static entrypoints...
+[2m04:31:41[22m [34m[vite][39m [32m✓ built in 916ms[39m
+[2m04:31:41[22m [34m[build][39m [32m✓ Completed in 954ms.[39m
 
 [42m[30m building client (vite) [39m[49m
-[2m04:02:05[22m [34m[vite][39m transforming...
-[2m04:02:05[22m [34m[vite][39m [32m✓[39m 4 modules transformed.
-[2m04:02:05[22m [34m[vite][39m rendering chunks...
-[2m04:02:05[22m [34m[vite][39m computing gzip size...
-[2m04:02:05[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mpage.BT_9kWGp.js  [39m[1m[2m2.25 kB[22m[1m[22m[2m │ gzip: 1.01 kB[22m
-[2m04:02:05[22m [34m[vite][39m [32m✓ built in 21ms[39m
+[2m04:31:41[22m [34m[vite][39m transforming...
+[2m04:31:42[22m [34m[vite][39m [32m✓[39m 47 modules transformed.
+[2m04:31:43[22m [34m[vite][39m rendering chunks...
+[2m04:31:43[22m [34m[vite][39m computing gzip size...
+[2m04:31:43[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mclient.B9YBqyHK.js                                             [39m[1m[2m  0.03 kB[22m[1m[22m[2m │ gzip:   0.05 kB[22m
+[2m04:31:43[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mpage.DosqaVe5.js                                               [39m[1m[2m  0.07 kB[22m[1m[22m[2m │ gzip:   0.08 kB[22m
+[2m04:31:43[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mlifecycle.CeEqMtu6.js                                          [39m[1m[2m  0.69 kB[22m[1m[22m[2m │ gzip:   0.42 kB[22m
+[2m04:31:43[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mHeader.astro_astro_type_script_index_0_lang.DONL4ZDk.js        [39m[1m[2m  1.18 kB[22m[1m[22m[2m │ gzip:   0.53 kB[22m
+[2m04:31:43[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mClientRouter.astro_astro_type_script_index_0_lang.DRioC4UT.js  [39m[1m[2m  1.72 kB[22m[1m[22m[2m │ gzip:   0.86 kB[22m
+[2m04:31:43[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mindex.B324nrla.js                                              [39m[1m[2m  2.33 kB[22m[1m[22m[2m │ gzip:   1.07 kB[22m
+[2m04:31:43[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mindex.astro_astro_type_script_index_0_lang.Cb6mYLHV.js         [39m[1m[2m  4.68 kB[22m[1m[22m[2m │ gzip:   2.19 kB[22m
+[2m04:31:43[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mclient.ClJywuJL.js                                             [39m[1m[2m 12.08 kB[22m[1m[22m[2m │ gzip:   4.26 kB[22m
+[2m04:31:43[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mBaseLayout.astro_astro_type_script_index_0_lang.Dz2IqGCp.js    [39m[1m[2m 45.61 kB[22m[1m[22m[2m │ gzip:  18.87 kB[22m
+[2m04:31:43[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mindex.CzGW6FVa.js                                              [39m[1m[2m 70.46 kB[22m[1m[22m[2m │ gzip:  27.81 kB[22m
+[2m04:31:43[22m [34m[vite][39m [2mdist/[22m[2m_assets/[22m[36mExperienceCanvas.Cj-zXUbN.js                                   [39m[1m[2m582.04 kB[22m[1m[22m[2m │ gzip: 154.23 kB[22m
+[2m04:31:43[22m [34m[vite][39m [32m✓ built in 1.77s[39m
 
 [42m[30m generating static routes [39m[49m
-[2m04:02:05[22m [32m▶[39m src/pages/index.astro
-[2m04:02:05[22m   [34m└─[39m [2m/index.html[22m [2m(+4ms)[22m 
-[2m04:02:05[22m [32m✓ Completed in 8ms.
+[2m04:31:43[22m [32m▶[39m src/pages/index.astro
+[2m04:31:43[22m   [34m└─[39m [2m/index.html[22m [2m(+12ms)[22m 
+[2m04:31:43[22m [32m✓ Completed in 22ms.
 [39m
-[2m04:02:05[22m [34m[build][39m 1 page(s) built in [1m504ms[22m
-[2m04:02:05[22m [34m[build][39m [1mComplete![22m
+[2m04:31:43[22m [34m[build][39m 1 page(s) built in [1m2.83s[22m
+[2m04:31:43[22m [34m[build][39m [1mComplete![22m
