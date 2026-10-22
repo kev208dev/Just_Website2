@@ -1,0 +1,177 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../lib/site";
+---
+
+<BaseLayout title="Contact" description="JUST에 연락하기 — 공식 이메일과 인스타그램." footer={false}>
+  <div class="page contact" data-contact>
+    <div class="container">
+      <div class="page-head__meta">
+        <span class="eyebrow eyebrow--accent">Contact</span>
+        <span class="eyebrow">{SITE.motto}</span>
+      </div>
+      <h1 class="contact-title" data-reveal="lines">
+        <span class="split-line"><span>Let's make</span></span>
+        <span class="split-line"><span><em>something</em> real.</span></span>
+      </h1>
+
+      <div class="channels">
+        <p class="lead" data-reveal="fade">
+          프로젝트 협업, 대회·행사 제안, 동아리 관련 문의는 아래 공식 채널로 연락해 주세요.
+        </p>
+
+        <ul class="channel-list">
+          <li class="channel" data-reveal="fade">
+            <span class="channel__label eyebrow">Email</span>
+            <a class="channel__value" href={`mailto:${SITE.email}`} data-cursor="view" data-cursor-label="Mail">{SITE.email}</a>
+            <button class="chip channel__copy" type="button" data-copy={SITE.email}>
+              <span data-copy-label>Copy</span>
+            </button>
+          </li>
+          <li class="channel" data-reveal="fade">
+            <span class="channel__label eyebrow">Instagram</span>
+            <a class="channel__value" href={SITE.instagram.url} target="_blank" rel="noopener noreferrer" data-cursor="view" data-cursor-label="Open">
+              {SITE.instagram.handle}
+            </a>
+            <span class="channel__arrow" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12L12 4M5.5 4H12v6.5"></path></svg>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <footer class="contact-foot">
+        <span>© {new Date().getFullYear()} JUST — Digital Atelier</span>
+        <span>From zero. To anything.</span>
+      </footer>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .contact {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contact > .container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contact-title {
+    margin-top: clamp(1rem, 3vw, 2rem);
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: clamp(3.2rem, 11.5vw, 13rem);
+    line-height: 0.86;
+    letter-spacing: -0.065em;
+    text-transform: uppercase;
+    margin-left: -0.05em;
+  }
+
+  .contact-title em {
+    font-style: normal;
+    color: var(--c-accent);
+  }
+
+  .channels {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--gutter);
+    margin-top: clamp(3rem, 8vw, 7rem);
+  }
+
+  .channels .lead {
+    grid-column: 1 / span 4;
+  }
+
+  .channel-list {
+    grid-column: 6 / -1;
+    border-top: 1px solid var(--c-line);
+  }
+
+  .channel {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding-block: clamp(1.25rem, 2.6vw, 2rem);
+    border-bottom: 1px solid var(--c-line);
+  }
+
+  .channel__value {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(1.4rem, 3.2vw, 2.8rem);
+    letter-spacing: -0.035em;
+    overflow-wrap: anywhere;
+    transition: color var(--d-micro);
+  }
+
+  .channel__value:hover {
+    color: var(--c-accent);
+  }
+
+  .channel__arrow svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .contact-foot {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-block: clamp(3rem, 8vw, 6rem) 2rem;
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+
+  @media (max-width: 860px) {
+    .channels .lead,
+    .channel-list {
+      grid-column: 1 / -1;
+    }
+    .channel {
+      grid-template-columns: 1fr auto;
+    }
+    .channel__label {
+      grid-column: 1 / -1;
+    }
+    .contact-foot {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+</style>
+
+<script>
+  import { onPage } from "../scripts/lifecycle";
+
+  onPage<HTMLElement>("[data-contact]", (page) => {
+    const button = page.querySelector<HTMLButtonElement>("[data-copy]");
+    const label = page.querySelector<HTMLElement>("[data-copy-label]");
+    if (!button || !label) return;
+    let timer = 0;
+    const onClick = async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy || "");
+        label.textContent = "Copied";
+      } catch {
+        label.textContent = "Select & copy";
+      }
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => (label.textContent = "Copy"), 1800);
+    };
+    button.addEventListener("click", onClick);
+    return () => {
+      window.clearTimeout(timer);
+      button.removeEventListener("click", onClick);
+    };
+  });
+</script>

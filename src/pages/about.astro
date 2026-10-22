@@ -1,0 +1,527 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import practices from "../data/practices.json";
+import { awards, members, projects, projectImage, projectUrl, stats } from "../lib/data";
+import { url } from "../lib/paths";
+import { SITE } from "../lib/site";
+
+const leaders = (generation: string) => members.filter((m) => m.generation === generation && m.role);
+const countGen = (generation: string) => members.filter((m) => m.generation === generation).length;
+
+// history built only from recorded data
+const timeline = [
+  {
+    mark: "23기",
+    title: "JUST 4기",
+    body: leaders("23기").map((m) => `${m.role?.replace("Just 4기 ", "")} ${m.name}`).join(" · "),
+  },
+  {
+    mark: "24기",
+    title: "JUST 5기",
+    body: leaders("24기").map((m) => `${m.role?.replace("Just 5기 ", "").replace("Just ", "")} ${m.name}`).join(" · "),
+  },
+  { mark: "25기", title: "New generation", body: `${countGen("25기")}명의 멤버 합류` },
+  {
+    mark: "2025",
+    title: "Awards",
+    body: `수상 기록 ${awards.filter((a) => a.year === 2025).length}건 — 대상 ${awards.filter((a) => a.year === 2025 && a.tier === "grand").length}건 포함`,
+  },
+  {
+    mark: "2026",
+    title: "Archive",
+    body: awards
+      .filter((a) => a.year === 2026)
+      .map((a) => projects.find((p) => p.slug === a.project)?.title ?? a.event)
+      .join(" · "),
+  },
+];
+
+const numbers = [
+  { value: stats.projects, label: "Projects", note: "작품 아카이브" },
+  { value: stats.members, label: "Members", note: "현재 멤버" },
+  { value: stats.awardRecords, label: "Award records", note: "수상·선정 기록" },
+  { value: stats.grandPrizes, label: "Grand prizes", note: "대상" },
+];
+
+const values = [
+  { phrase: "Journey starts from me", gloss: "모든 프로젝트는 한 사람의 질문에서 출발합니다." },
+  { phrase: "From zero. To anything.", gloss: "아무것도 없는 곳에서 시작해, 무엇이든 만들어 봅니다." },
+  { phrase: "Build. Prove.", gloss: "생각에서 멈추지 않고, 만들어서 증명합니다." },
+];
+
+const strip = projects.filter((p) => p.image);
+---
+
+<BaseLayout title="About" description={SITE.description}>
+  <div class="page about">
+    <header class="page-head container">
+      <div class="page-head__meta">
+        <span class="eyebrow eyebrow--accent">About — JUST Digital Atelier</span>
+        <span class="eyebrow">{SITE.motto}</span>
+      </div>
+      <h1 class="about-title" data-reveal="lines">
+        <span class="split-line"><span>We don't</span></span>
+        <span class="split-line"><span>just think.</span></span>
+        <span class="split-line accent-line"><span>We build.</span></span>
+      </h1>
+    </header>
+
+    <section class="manifesto container" aria-labelledby="manifesto-title">
+      <p class="eyebrow">01 — Manifesto</p>
+      <h2 id="manifesto-title" class="manifesto__text" data-reveal="fade">
+        JUST는 <span class="digit">0</span>에서 <span class="digit">1</span>을<br />창조하는 동아리입니다.
+      </h2>
+      <p class="lead manifesto__lead" data-reveal="fade">
+        {SITE.description} 아이디어를 발견하고, 직접 실험하고, 기술로 결과물을 만들어 대회와 무대에서 검증받습니다.
+      </p>
+    </section>
+
+    <section class="numbers container" aria-label="JUST in numbers">
+      {
+        numbers.map((n) => (
+          <div class="number" data-reveal="fade">
+            <span class="number__value">{String(n.value).padStart(2, "0")}</span>
+            <span class="number__label">{n.label}</span>
+            <span class="number__note">{n.note}</span>
+          </div>
+        ))
+      }
+    </section>
+
+    <section class="practice" aria-labelledby="practice-title">
+      <div class="container">
+        <div class="section-label">
+          <span class="num">02</span>
+          <h2 id="practice-title" class="eyebrow">What we do</h2>
+        </div>
+        <ol class="practice__list">
+          {
+            practices.map((p, i) => (
+              <li class="practice__item" data-reveal="fade" data-reveal-delay={String(i * 0.06)}>
+                <span class="practice__index">{String(i + 1).padStart(2, "0")}</span>
+                <span class="practice__en">{p.en}</span>
+                <h3 class="practice__title">{p.title}</h3>
+                <p class="practice__desc">{p.description}</p>
+                <ul class="practice__tags">
+                  {p.tags.map((t) => (
+                    <li>{t}</li>
+                  ))}
+                </ul>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="values container" aria-labelledby="values-title">
+      <div class="section-label">
+        <span class="num">03</span>
+        <h2 id="values-title" class="eyebrow">What we believe</h2>
+      </div>
+      <ul>
+        {
+          values.map((v, i) => (
+            <li class="value">
+              <span class="value__num">{String(i + 1).padStart(2, "0")}</span>
+              <p class="value__phrase" data-reveal="lines">
+                <span class="split-line">
+                  <span>{v.phrase}</span>
+                </span>
+              </p>
+              <p class="value__gloss">{v.gloss}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="history container" aria-labelledby="history-title">
+      <div class="section-label">
+        <span class="num">04</span>
+        <h2 id="history-title" class="eyebrow">History</h2>
+      </div>
+      <ol class="timeline">
+        {
+          timeline.map((t) => (
+            <li class="timeline__item" data-reveal="fade">
+              <span class="timeline__mark">{t.mark}</span>
+              <span class="timeline__title">{t.title}</span>
+              <span class="timeline__body">{t.body}</span>
+            </li>
+          ))
+        }
+      </ol>
+      <a class="link-arrow history__more" href={url("awards")}>
+        전체 수상 아카이브
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 12L12 4M5.5 4H12v6.5"></path></svg>
+      </a>
+    </section>
+
+    <section class="output" aria-labelledby="output-title">
+      <div class="container section-label">
+        <span class="num">05</span>
+        <h2 id="output-title" class="eyebrow">Made at JUST</h2>
+      </div>
+      <div class="output__track">
+        {
+          strip.map((p, i) => (
+            <a class="output__card" href={projectUrl(p.slug)} data-cursor="view" data-cursor-caption={p.title}>
+              <span class="output__media" data-reveal="mask" data-reveal-delay={String(i * 0.08)}>
+                <img src={projectImage(p)!} alt={p.imageAlt ?? p.title} loading="lazy" decoding="async" />
+              </span>
+              <span class="output__title">{p.title}</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .about-title {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: clamp(3.4rem, 12.5vw, 14rem);
+    line-height: 0.84;
+    letter-spacing: -0.065em;
+    text-transform: uppercase;
+    margin-left: -0.05em;
+  }
+
+  .about-title .split-line:nth-child(2) {
+    padding-left: 1.2em;
+  }
+
+  .accent-line {
+    color: var(--c-accent);
+  }
+
+  .manifesto {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--gutter);
+    padding-block: var(--section);
+  }
+
+  .manifesto > .eyebrow {
+    grid-column: 1 / span 3;
+    padding-top: 0.8rem;
+  }
+
+  .manifesto__text {
+    grid-column: 4 / -1;
+    font-family: var(--f-text);
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 4.8rem);
+    line-height: 1.12;
+    letter-spacing: -0.04em;
+  }
+
+  .digit {
+    display: inline-grid;
+    place-items: center;
+    width: 1.05em;
+    height: 1.05em;
+    margin-inline: 0.04em;
+    border: 2px solid var(--c-accent);
+    border-radius: 50%;
+    color: var(--c-accent);
+    font-family: var(--f-display);
+    font-size: 0.86em;
+    line-height: 1;
+    vertical-align: 0.06em;
+  }
+
+  .manifesto__lead {
+    grid-column: 7 / -1;
+  }
+
+  .numbers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--c-line);
+    padding-bottom: var(--section);
+  }
+
+  .number {
+    display: grid;
+    gap: 0.3rem;
+    padding: 1.6rem 1.2rem 0 0;
+    border-right: 1px solid var(--c-line);
+    padding-left: 1.2rem;
+  }
+
+  .number:first-child {
+    padding-left: 0;
+  }
+
+  .number:last-child {
+    border-right: 0;
+  }
+
+  .number__value {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+  }
+
+  .number__label {
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+  }
+
+  .number__note {
+    font-size: 0.85rem;
+    color: var(--c-muted);
+  }
+
+  /* light editorial section */
+  .practice {
+    background: var(--c-paper);
+    color: var(--c-ink);
+    padding-block: var(--section);
+  }
+
+  .practice .section-label {
+    border-color: rgba(13, 14, 15, 0.16);
+  }
+
+  .practice .eyebrow {
+    color: rgba(13, 14, 15, 0.6);
+  }
+
+  .practice .num {
+    color: var(--c-accent-deep);
+  }
+
+  .practice__list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-left: 1px solid rgba(13, 14, 15, 0.16);
+  }
+
+  .practice__item {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto auto;
+    gap: 0.6rem;
+    min-height: 26rem;
+    padding: 1.5rem;
+    border-right: 1px solid rgba(13, 14, 15, 0.16);
+    transition: background var(--d-standard) var(--ease-standard);
+  }
+
+  .practice__item:hover {
+    background: rgba(13, 14, 15, 0.04);
+  }
+
+  .practice__index {
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    color: var(--c-accent-deep);
+  }
+
+  .practice__en {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: clamp(2.2rem, 3.6vw, 3.6rem);
+    letter-spacing: -0.05em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .practice__title {
+    align-self: end;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .practice__desc {
+    font-size: 0.95rem;
+    color: rgba(13, 14, 15, 0.7);
+  }
+
+  .practice__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .practice__tags li {
+    padding: 2px 10px;
+    border: 1px solid rgba(13, 14, 15, 0.2);
+    border-radius: 999px;
+    font-size: 0.75rem;
+  }
+
+  .values {
+    padding-block: var(--section) 0;
+  }
+
+  .value {
+    display: grid;
+    grid-template-columns: 4rem 1fr minmax(0, 22rem);
+    align-items: baseline;
+    gap: var(--gutter);
+    padding-block: clamp(1.4rem, 3vw, 2.4rem);
+    border-bottom: 1px solid var(--c-line);
+  }
+
+  .value__num {
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    color: var(--c-accent);
+  }
+
+  .value__phrase {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 5.6vw, 5.8rem);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+
+  .value__gloss {
+    color: var(--c-muted);
+  }
+
+  .history {
+    padding-block: var(--section);
+  }
+
+  .timeline {
+    border-top: 1px solid var(--c-line);
+  }
+
+  .timeline__item {
+    display: grid;
+    grid-template-columns: minmax(6rem, 14rem) minmax(8rem, 16rem) 1fr;
+    gap: var(--gutter);
+    align-items: baseline;
+    padding-block: 1.4rem;
+    border-bottom: 1px solid var(--c-line);
+  }
+
+  .timeline__mark {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(1.8rem, 3.6vw, 3.2rem);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .timeline__title {
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+  }
+
+  .timeline__body {
+    color: rgba(241, 238, 232, 0.8);
+  }
+
+  .history__more {
+    margin-top: 2rem;
+  }
+
+  .output {
+    padding-bottom: var(--section);
+  }
+
+  .output__track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(260px, 30vw);
+    gap: var(--gutter);
+    overflow-x: auto;
+    padding-inline: var(--gutter);
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+
+  .output__card {
+    scroll-snap-align: start;
+  }
+
+  .output__media {
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: var(--r-md);
+    background: var(--c-surface);
+  }
+
+  .output__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 900ms var(--ease-out);
+  }
+
+  .output__card:hover img {
+    transform: scale(1.05);
+  }
+
+  .output__title {
+    display: block;
+    margin-top: 0.8rem;
+    font-family: var(--f-display);
+    font-weight: 600;
+  }
+
+  @media (max-width: 900px) {
+    .manifesto > .eyebrow,
+    .manifesto__text,
+    .manifesto__lead {
+      grid-column: 1 / -1;
+    }
+    .numbers {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .number {
+      padding: 1.4rem 1rem;
+      border-bottom: 1px solid var(--c-line);
+    }
+    .number:nth-child(2n) {
+      border-right: 0;
+    }
+    .number:nth-child(2n + 1) {
+      padding-left: 0;
+    }
+    .practice__list {
+      grid-template-columns: 1fr 1fr;
+    }
+    .practice__item {
+      min-height: 18rem;
+      border-bottom: 1px solid rgba(13, 14, 15, 0.16);
+    }
+    .value {
+      grid-template-columns: 2.5rem 1fr;
+    }
+    .value__gloss {
+      grid-column: 2;
+    }
+    .timeline__item {
+      grid-template-columns: 5.5rem 1fr;
+    }
+    .timeline__body {
+      grid-column: 2;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .practice__list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -36,9 +36,11 @@ onPage<HTMLElement>("main", (main) => {
         const lines = el.querySelectorAll<HTMLElement>(".split-line > span");
         gsap.fromTo(
           lines,
-          { yPercent: 112, rotate: 2 },
+          // y: 0 overrides the CSS pre-hide transform GSAP would otherwise read as a pixel offset
+          { yPercent: 112, y: 0, rotate: 2 },
           {
             yPercent: 0,
+            y: 0,
             rotate: 0,
             duration: 1.1,
             ease: EASE.out,

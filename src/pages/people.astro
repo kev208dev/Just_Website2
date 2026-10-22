@@ -1,0 +1,418 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { awardsForMember, generations, members } from "../lib/data";
+import { asset, url } from "../lib/paths";
+
+const count = String(members.length).padStart(2, "0");
+const byGen = (g: string) => members.filter((m) => m.generation === g);
+
+// serialised for the profile panel (awards are linked by member name)
+const profiles = Object.fromEntries(
+  members.map((m) => [
+    m.id,
+    {
+      name: m.name,
+      generation: m.generation,
+      unit: m.unit,
+      role: m.role,
+      nickname: m.nickname,
+      easterEgg: m.easterEgg ?? null,
+      awards: awardsForMember(m.name).map((a) => ({ id: a.id, event: a.event, award: a.award, year: a.year })),
+    },
+  ]),
+);
+---
+
+<BaseLayout title="People" description="JUST의 멤버들 — 23기부터 25기, 그리고 One Flap.">
+  <div class="page people" data-people data-awards-url={url("awards")} data-spider={asset("images/easter/doyeon-spider-drop.webp")}>
+    <header class="page-head container">
+      <div class="page-head__meta">
+        <span class="eyebrow eyebrow--accent">The collective</span>
+        <span class="eyebrow">{count} members · {generations.length} groups</span>
+      </div>
+      <h1 class="page-head__title" data-reveal="lines">
+        <span class="split-line"><span>People<sup>{count}</sup></span></span>
+      </h1>
+      <div class="page-head__intro">
+        <p class="lead" data-reveal="fade">
+          기수별로 함께 만들고 함께 증명해 온 사람들입니다. 카드를 누르면 프로필이 열리고, <strong class="hint">이름을 더블클릭하면</strong> 숨겨진 별명이
+          보입니다.
+        </p>
+      </div>
+    </header>
+
+    <div class="people-toolbar container" data-reveal="fade">
+      <div class="people-filters" role="group" aria-label="기수 필터">
+        <button class="chip" type="button" data-gen="all" aria-pressed="true">All <span class="count">{members.length}</span></button>
+        {
+          generations.map((g) => (
+            <button class="chip" type="button" data-gen={g} aria-pressed="false">
+              {g} <span class="count">{byGen(g).length}</span>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="container">
+      {
+        generations.map((g) => (
+          <section class="gen" data-gen-group={g} aria-labelledby={`gen-${g}`}>
+            <div class="gen__head">
+              <h2 class="gen__title" id={`gen-${g}`}>
+                {g}
+              </h2>
+              <span class="eyebrow">{String(byGen(g).length).padStart(2, "0")}</span>
+            </div>
+            <ul class="member-grid">
+              {byGen(g).map((m) => {
+                const awardCount = awardsForMember(m.name).length;
+                return (
+                  <li id={`member-${m.id}`} class="member-cell">
+                    <button
+                      class="member"
+                      type="button"
+                      data-member={m.id}
+                      aria-haspopup="dialog"
+                      aria-label={`${m.name} 프로필 열기`}
+                    >
+                      <span class="member__top">
+                        <span class="member__gen">{m.generation}</span>
+                        <span class="member__unit">{m.unit}</span>
+                      </span>
+                      <span class="member__name" data-name={m.name}>
+                        {m.name}
+                      </span>
+                      {m.role && <span class="member__role">{m.role}</span>}
+                      <span class="member__reveal" aria-hidden="true">
+                        <span>{awardCount > 0 ? `${awardCount} award records` : "Profile"}</span>
+                        <span>→</span>
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+
+    <div class="panel-backdrop" data-panel-backdrop hidden></div>
+    <aside class="panel" role="dialog" aria-modal="true" aria-labelledby="panel-name" data-panel hidden>
+      <button class="panel__close" type="button" data-panel-close aria-label="프로필 닫기">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"></path></svg>
+      </button>
+      <p class="eyebrow eyebrow--accent" data-panel-gen></p>
+      <h2 class="panel__name" id="panel-name" data-panel-name></h2>
+      <p class="panel__role" data-panel-role></p>
+      <dl class="panel__facts">
+        <div><dt>Generation</dt><dd data-panel-generation></dd></div>
+        <div><dt>Unit</dt><dd data-panel-unit></dd></div>
+      </dl>
+      <button class="chip panel__nick" type="button" data-panel-nick>별명 보기</button>
+      <section class="panel__awards" data-panel-awards-wrap>
+        <h3 class="eyebrow">Award records</h3>
+        <ul data-panel-awards></ul>
+      </section>
+    </aside>
+
+    <script type="application/json" id="people-data" set:html={JSON.stringify(profiles)} />
+  </div>
+</BaseLayout>
+
+<style>
+  .hint {
+    color: var(--c-accent);
+    font-weight: 600;
+  }
+
+  .people-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 1.25rem;
+    border-block: 1px solid var(--c-line);
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .people-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .gen {
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .gen[hidden] {
+    display: none;
+  }
+
+  .gen__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+
+  .gen__title {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: clamp(2.4rem, 6vw, 5.5rem);
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .member-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+    border-top: 1px solid var(--c-line);
+    border-left: 1px solid var(--c-line);
+  }
+
+  .member-cell {
+    border-right: 1px solid var(--c-line);
+    border-bottom: 1px solid var(--c-line);
+  }
+
+  .member {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    gap: 0.5rem;
+    width: 100%;
+    min-height: 13.5rem;
+    padding: 1.25rem;
+    text-align: left;
+    overflow: hidden;
+    isolation: isolate;
+    transition: color var(--d-standard) var(--ease-standard);
+  }
+
+  .member::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--c-accent);
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 620ms var(--ease-out);
+  }
+
+  .member:hover,
+  .member:focus-visible {
+    color: var(--c-ink);
+  }
+
+  .member:hover::before,
+  .member:focus-visible::before {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .member__top {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .member__name {
+    align-self: end;
+    font-family: var(--f-text);
+    font-weight: 700;
+    font-size: clamp(1.9rem, 2.6vw, 2.5rem);
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+  }
+
+  .member.nickname-open .member__name {
+    color: var(--c-accent);
+  }
+
+  .member.nickname-open:hover .member__name {
+    color: var(--c-ink);
+  }
+
+  .member__role {
+    justify-self: start;
+    padding: 2px 9px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    opacity: 0.85;
+  }
+
+  .member__reveal {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--f-display);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity var(--d-micro),
+      transform var(--d-standard) var(--ease-out);
+  }
+
+  .member:hover .member__reveal,
+  .member:focus-visible .member__reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (hover: none) {
+    .member__reveal {
+      opacity: 0.6;
+      transform: none;
+    }
+  }
+
+  /* profile panel */
+  .panel-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    background: rgba(9, 10, 11, 0.6);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity var(--d-standard) var(--ease-standard);
+  }
+
+  .panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 71;
+    width: min(520px, 100%);
+    padding: calc(var(--header-h) + 1rem) clamp(1.25rem, 3vw, 2.5rem) 2rem;
+    overflow-y: auto;
+    background: var(--c-bg-2);
+    border-left: 1px solid var(--c-line);
+    transform: translateX(100%);
+    transition: transform 700ms var(--ease-out);
+  }
+
+  .panel[hidden],
+  .panel-backdrop[hidden] {
+    display: none;
+  }
+
+  :global(.panel-open) .panel {
+    transform: none;
+  }
+
+  :global(.panel-open) .panel-backdrop {
+    opacity: 1;
+  }
+
+  .panel__close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--c-line-strong);
+    border-radius: 50%;
+  }
+
+  .panel__close svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .panel__name {
+    margin-top: 1rem;
+    font-family: var(--f-text);
+    font-weight: 700;
+    font-size: clamp(3rem, 7vw, 4.6rem);
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .panel__role {
+    margin-top: 0.8rem;
+    color: var(--c-accent);
+    font-weight: 500;
+  }
+
+  .panel__role:empty {
+    display: none;
+  }
+
+  .panel__facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-block: 2rem 1.25rem;
+    border-top: 1px solid var(--c-line);
+  }
+
+  .panel__facts div {
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--c-line);
+  }
+
+  .panel__facts dt {
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+
+  .panel__facts dd {
+    font-family: var(--f-display);
+    font-size: 1.2rem;
+  }
+
+  .panel__awards {
+    margin-top: 2rem;
+  }
+
+  .panel__awards[hidden] {
+    display: none;
+  }
+
+  .panel__awards .eyebrow {
+    margin-bottom: 0.75rem;
+  }
+
+  .panel__awards :global(li) {
+    border-top: 1px solid var(--c-line);
+  }
+
+  .panel__awards :global(a) {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    padding-block: 0.8rem;
+    font-size: 0.92rem;
+  }
+
+  .panel__awards :global(a:hover) {
+    color: var(--c-accent);
+  }
+
+  .panel__awards :global(.award-tag) {
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    color: var(--c-accent);
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+  import "../scripts/people";
+</script>

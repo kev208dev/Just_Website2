@@ -1,0 +1,623 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  TIER_LABEL,
+  TIER_ORDER,
+  awardGenerations,
+  awards,
+  featuredAwards,
+  findMember,
+  getProject,
+  projectUrl,
+  stats,
+} from "../lib/data";
+import { url } from "../lib/paths";
+
+const yearKey = (y: number | null) => (y === null ? "archive" : String(y));
+const yearLabel = (y: number | null) => (y === null ? "이전 기록" : String(y));
+const tierRank = (t: string | null) => (t ? TIER_ORDER.indexOf(t as (typeof TIER_ORDER)[number]) : 99);
+
+// newest first; undated archive records last, original order kept within a year
+const ordered = awards
+  .map((a, i) => ({ a, i }))
+  .sort((x, y) => (y.a.year ?? 0) - (x.a.year ?? 0) || x.i - y.i)
+  .map(({ a }) => a);
+
+const total = stats.awardRecords;
+const yearsPresent = [2026, 2025, null].filter((y) => awards.some((a) => a.year === y));
+const tiersPresent = TIER_ORDER.filter((t) => awards.some((a) => a.tier === t));
+---
+
+<BaseLayout title="Awards" description="JUST의 수상 아카이브 — 대회명, 수상명, 수여기관, 기수와 참여자.">
+  <div class="page awards" data-awards>
+    <header class="page-head container">
+      <div class="page-head__meta">
+        <span class="eyebrow eyebrow--accent">Awards archive</span>
+        <span class="eyebrow">{awards.length} entries</span>
+      </div>
+      <h1 class="page-head__title" data-reveal="lines">
+        <span class="split-line"><span>Awards<sup>{total}</sup></span></span>
+      </h1>
+      <div class="page-head__intro">
+        <p class="lead" data-reveal="fade">
+          만든 것을 무대에서 증명해 온 기록입니다. 2025년 기록은 대회명·수상명·수여기관·참여자까지, 그 이전 기록은 기존 아카이브에 남아 있는
+          대회명과 등급으로 정리했습니다.
+        </p>
+      </div>
+    </header>
+
+    <section class="awards-stats container" aria-label="수상 요약">
+      <div class="stat" data-reveal="fade"><span class="stat__v">{String(total).padStart(2, "0")}</span><span class="stat__l">Award records</span></div>
+      <div class="stat" data-reveal="fade"><span class="stat__v">{String(stats.awards2025).padStart(2, "0")}</span><span class="stat__l">2025 records</span></div>
+      <div class="stat" data-reveal="fade"><span class="stat__v">{String(stats.grandPrizes).padStart(2, "0")}</span><span class="stat__l">Grand prizes</span></div>
+      <div class="stat" data-reveal="fade">
+        <span class="stat__v">{String(awards.filter((a) => a.year === 2026).length).padStart(2, "0")}</span><span class="stat__l">2026 archive projects</span>
+      </div>
+    </section>
+
+    <section class="featured container" aria-labelledby="featured-title">
+      <div class="section-label">
+        <span class="num">01</span>
+        <h2 id="featured-title" class="eyebrow">Grand prizes — 2025</h2>
+      </div>
+      <ul class="plaques">
+        {
+          featuredAwards.map((a, i) => (
+            <li class="plaque" data-reveal="fade" data-reveal-delay={String(i * 0.08)}>
+              <div class="plaque__inner">
+                <span class="plaque__no">No. {String(i + 1).padStart(2, "0")}</span>
+                <span class="plaque__rank">Grand Prize</span>
+                <h3 class="plaque__event">{a.event}</h3>
+                <p class="plaque__award">{a.award}</p>
+                <dl class="plaque__meta">
+                  <div>
+                    <dt>수여</dt>
+                    <dd>{a.institution}</dd>
+                  </div>
+                  <div>
+                    <dt>참여</dt>
+                    <dd>{a.members.join(", ")}</dd>
+                  </div>
+                </dl>
+                <span class="plaque__year">{a.year}</span>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="archive container" aria-labelledby="archive-title">
+      <div class="section-label">
+        <span class="num">02</span>
+        <h2 id="archive-title" class="eyebrow">Full archive</h2>
+      </div>
+
+      <form class="tools" role="search" data-award-tools onsubmit="return false">
+        <label class="tools__search">
+          <span class="sr-only">대회명 검색</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.5"></circle><path d="M10.5 10.5L14 14"></path></svg>
+          <input type="search" name="q" placeholder="대회명, 기관, 이름으로 검색" autocomplete="off" data-award-search />
+        </label>
+        <label class="tools__select">
+          <span class="eyebrow">Year</span>
+          <select name="year" data-award-year>
+            <option value="all">전체</option>
+            {yearsPresent.map((y) => <option value={yearKey(y)}>{yearLabel(y)}</option>)}
+          </select>
+        </label>
+        <label class="tools__select">
+          <span class="eyebrow">기수</span>
+          <select name="gen" data-award-gen>
+            <option value="all">전체</option>
+            {awardGenerations.map((g) => <option value={g}>{g}</option>)}
+          </select>
+        </label>
+        <label class="tools__select">
+          <span class="eyebrow">Sort</span>
+          <select name="sort" data-award-sort>
+            <option value="recent">최신순</option>
+            <option value="tier">등급순</option>
+            <option value="name">가나다순</option>
+          </select>
+        </label>
+        <div class="tools__tiers" role="group" aria-label="수상 등급 필터">
+          <button class="chip" type="button" data-tier="all" aria-pressed="true">전체</button>
+          {
+            tiersPresent.map((t) => (
+              <button class="chip" type="button" data-tier={t} aria-pressed="false">
+                {TIER_LABEL[t]}
+              </button>
+            ))
+          }
+        </div>
+      </form>
+
+      <p class="results-count" aria-live="polite"><span data-award-count>{awards.length}</span>건 표시</p>
+
+      <ol class="rows" data-award-rows>
+        {
+          ordered.map((a, i) => {
+            const project = a.project ? getProject(a.project) : undefined;
+            const search = [a.event, a.award, a.institution, ...a.members, ...a.generations, a.source].filter(Boolean).join(" ").toLowerCase();
+            return (
+              <li
+                class="row"
+                id={a.id}
+                data-year={yearKey(a.year)}
+                data-gens={a.generations.join(" ")}
+                data-tier={a.tier ?? "none"}
+                data-tier-rank={tierRank(a.tier)}
+                data-order={i}
+                data-search={search}
+                data-name={a.event}
+              >
+                <button class="row__head" type="button" aria-expanded="false" aria-controls={`${a.id}-detail`}>
+                  <span class="row__year">{yearLabel(a.year)}</span>
+                  <span class="row__event">{a.event}</span>
+                  <span class:list={["row__award", a.tier && `tier-${a.tier}`]}>{a.award ?? "세부 미기재"}</span>
+                  <span class="row__inst">{a.institution ?? "—"}</span>
+                  <span class="row__icon" aria-hidden="true"></span>
+                </button>
+                <div class="row__detail" id={`${a.id}-detail`} hidden>
+                  <dl>
+                    {a.institution && (
+                      <div>
+                        <dt>수여기관</dt>
+                        <dd>{a.institution}</dd>
+                      </div>
+                    )}
+                    {a.tier && (
+                      <div>
+                        <dt>등급</dt>
+                        <dd>{TIER_LABEL[a.tier]}</dd>
+                      </div>
+                    )}
+                    {a.generations.length > 0 && (
+                      <div>
+                        <dt>참여 기수</dt>
+                        <dd>{a.generations.join(", ")}</dd>
+                      </div>
+                    )}
+                    {a.members.length > 0 && (
+                      <div>
+                        <dt>참여자</dt>
+                        <dd class="people-links">
+                          {a.members.map((name) => {
+                            const m = findMember(name);
+                            return m ? (
+                              <a class="u-link" href={`${url("people")}#member-${m.id}`}>
+                                {name}
+                              </a>
+                            ) : (
+                              <span>{name}</span>
+                            );
+                          })}
+                        </dd>
+                      </div>
+                    )}
+                    {project && (
+                      <div>
+                        <dt>프로젝트</dt>
+                        <dd>
+                          <a class="u-link" href={projectUrl(project.slug)}>
+                            {project.title}
+                          </a>
+                        </dd>
+                      </div>
+                    )}
+                    <div>
+                      <dt>출처</dt>
+                      <dd>{a.source}</dd>
+                    </div>
+                  </dl>
+                </div>
+              </li>
+            );
+          })
+        }
+      </ol>
+      <p class="empty" data-award-empty hidden>조건에 맞는 기록이 없습니다.</p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .awards-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-block: 1px solid var(--c-line);
+    margin-bottom: var(--section);
+  }
+
+  .stat {
+    display: grid;
+    gap: 0.4rem;
+    padding: 1.4rem 1.2rem;
+    border-right: 1px solid var(--c-line);
+  }
+
+  .stat:first-child {
+    padding-left: 0;
+  }
+
+  .stat:last-child {
+    border-right: 0;
+  }
+
+  .stat__v {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(2.6rem, 6vw, 5.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+  }
+
+  .stat__l {
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+
+  /* plaques — the exhibit */
+  .featured {
+    padding-bottom: var(--section);
+  }
+
+  .plaques {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--gutter);
+  }
+
+  .plaque {
+    padding: 1px;
+    border-radius: var(--r-lg);
+    background: var(--g-amber);
+    box-shadow:
+      0 40px 80px -40px rgba(242, 174, 69, 0.35),
+      0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    transition: transform var(--d-standard) var(--ease-out);
+  }
+
+  .plaque:hover {
+    transform: translateY(-6px);
+  }
+
+  .plaque__inner {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto auto;
+    gap: 0.75rem;
+    height: 100%;
+    min-height: 26rem;
+    padding: 1.5rem;
+    border-radius: calc(var(--r-lg) - 1px);
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgba(242, 174, 69, 0.16), transparent 60%),
+      linear-gradient(180deg, #17181a, #0d0e0f);
+    overflow: hidden;
+  }
+
+  .plaque__no {
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    letter-spacing: 0.14em;
+    color: var(--c-muted);
+  }
+
+  .plaque__rank {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    background: var(--g-amber);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .plaque__event {
+    align-self: end;
+    font-family: var(--f-text);
+    font-weight: 700;
+    font-size: 1.35rem;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  .plaque__award {
+    color: var(--c-accent);
+    font-weight: 600;
+  }
+
+  .plaque__meta {
+    display: grid;
+    gap: 0.5rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--c-line);
+    font-size: 0.85rem;
+  }
+
+  .plaque__meta div {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0.6rem;
+  }
+
+  .plaque__meta dt {
+    color: var(--c-muted);
+  }
+
+  .plaque__year {
+    position: absolute;
+    right: -0.08em;
+    top: 0.55em;
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 5.2rem;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    color: rgba(241, 238, 232, 0.04);
+    pointer-events: none;
+  }
+
+  /* archive tools */
+  .archive {
+    padding-bottom: var(--section);
+  }
+
+  .tools {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    align-items: end;
+  }
+
+  .tools__search {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .tools__search svg {
+    position: absolute;
+    left: 14px;
+    width: 16px;
+    height: 16px;
+    color: var(--c-muted);
+  }
+
+  .tools input,
+  .tools select {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    border: 1px solid var(--c-line-strong);
+    border-radius: var(--r-sm);
+    background: var(--c-bg-2);
+    color: var(--c-text);
+    font-family: var(--f-text);
+    font-size: 0.95rem;
+    appearance: none;
+  }
+
+  .tools input {
+    padding-left: 40px;
+  }
+
+  .tools select {
+    background-image: linear-gradient(45deg, transparent 50%, var(--c-muted) 50%), linear-gradient(135deg, var(--c-muted) 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) 21px,
+      calc(100% - 13px) 21px;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+  }
+
+  .tools input:focus,
+  .tools select:focus {
+    outline: none;
+    border-color: var(--c-accent);
+  }
+
+  .tools__select {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .tools__tiers {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .results-count {
+    margin-block: 2rem 0.75rem;
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+
+  .rows {
+    border-top: 1px solid var(--c-line);
+  }
+
+  .row {
+    border-bottom: 1px solid var(--c-line);
+    scroll-margin-top: calc(var(--header-h) + 2rem);
+  }
+
+  .row[hidden] {
+    display: none;
+  }
+
+  .row__head {
+    display: grid;
+    grid-template-columns: 6rem minmax(0, 2.4fr) minmax(0, 1fr) minmax(0, 1.2fr) 1.5rem;
+    gap: 1rem;
+    align-items: center;
+    width: 100%;
+    padding-block: 1.1rem;
+    text-align: left;
+    transition: color var(--d-micro);
+  }
+
+  .row__head:hover {
+    color: var(--c-accent);
+  }
+
+  .row__year {
+    font-family: var(--f-mono);
+    font-size: 0.78rem;
+    color: var(--c-muted);
+  }
+
+  .row__event {
+    font-weight: 600;
+    font-size: 1.02rem;
+  }
+
+  .row__award {
+    font-size: 0.9rem;
+  }
+
+  .row__award.tier-grand {
+    color: var(--c-accent);
+    font-weight: 700;
+  }
+
+  .row__inst {
+    font-size: 0.85rem;
+    color: var(--c-muted);
+  }
+
+  .row__icon {
+    position: relative;
+    width: 14px;
+    height: 14px;
+  }
+
+  .row__icon::before,
+  .row__icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: currentColor;
+    transition: transform var(--d-standard) var(--ease-out);
+  }
+
+  .row__icon::after {
+    transform: rotate(90deg);
+  }
+
+  .row__head[aria-expanded="true"] .row__icon::after {
+    transform: rotate(0deg);
+  }
+
+  .row.is-target .row__head {
+    color: var(--c-accent);
+  }
+
+  .row__detail {
+    padding: 0 0 1.5rem 7rem;
+  }
+
+  .row__detail dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem 2rem;
+  }
+
+  .row__detail dt {
+    font-family: var(--f-mono);
+    font-size: var(--t-micro);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .people-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+  }
+
+  .empty {
+    padding-block: 3rem;
+    color: var(--c-muted);
+    text-align: center;
+  }
+
+  @media (max-width: 1100px) {
+    .plaques {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .awards-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .stat {
+      border-bottom: 1px solid var(--c-line);
+    }
+    .stat:nth-child(2n) {
+      border-right: 0;
+    }
+    .stat:nth-child(2n + 1) {
+      padding-left: 0;
+    }
+    .tools {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .tools__search {
+      grid-column: 1 / -1;
+    }
+    .row__head {
+      grid-template-columns: 4.2rem minmax(0, 1fr) 1.2rem;
+      row-gap: 0.25rem;
+    }
+    .row__award {
+      grid-column: 2;
+      grid-row: 2;
+    }
+    .row__inst {
+      display: none;
+    }
+    .row__icon {
+      grid-column: 3;
+      grid-row: 1;
+    }
+    .row__detail {
+      padding-left: 5.2rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .plaques {
+      grid-template-columns: 1fr;
+    }
+    .plaque__inner {
+      min-height: 20rem;
+    }
+    .row__detail {
+      padding-left: 0;
+    }
+  }
+</style>
+
+<script>
+  import "../scripts/awards";
+</script>
