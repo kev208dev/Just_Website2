@@ -47,7 +47,12 @@ with sync_playwright() as p:
         elif kind == "key": pg.keyboard.press(arg)
         elif kind == "dblclick":
             x, y = map(float, arg.split(",")); pg.mouse.dblclick(x, y)
-        elif kind == "eval": print("eval:", pg.evaluate(arg))
+        elif kind == "eval":
+            try:
+                print("eval:", pg.evaluate(arg))
+            except Exception:
+                pg.wait_for_load_state("load"); pg.wait_for_timeout(1500)
+                print("eval(retry):", pg.evaluate(arg))
         elif kind == "shot": pg.screenshot(path=arg, full_page=a.full)
         elif kind == "goto": pg.goto(arg, wait_until="load")
         elif kind == "scrollthrough":
