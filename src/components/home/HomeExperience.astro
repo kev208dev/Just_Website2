@@ -1,0 +1,571 @@
+---
+import { getAwards, getProjects, site } from '../../lib/data';
+import { routes, withBase } from '../../lib/paths';
+import { PLATE_ASPECT } from '../three/textures/plateTexture';
+import type { GalleryItem } from '../three/GalleryCard3D';
+
+const projects = await getProjects();
+const awards = await getAwards();
+const plates = awards.filter((a) => a.data.featured).slice(0, 3);
+
+const items: GalleryItem[] = [
+  ...projects.map((p, i) => ({
+    kind: 'project' as const,
+    id: p.id,
+    title: p.data.title,
+    category: p.data.category,
+    href: routes.project(p.id),
+    aspect: p.data.imageAspect,
+    number: String(i + 1).padStart(2, '0'),
+    image: withBase(p.data.image),
+  })),
+  ...plates.map((a) => ({
+    kind: 'award' as const,
+    id: a.id,
+    title: `${a.data.event} ${a.data.grade}`,
+    category: `Award · ${a.data.year}`,
+    href: `${routes.awards}#${a.id}`,
+    aspect: PLATE_ASPECT,
+    plate: {
+      eyebrow: `Award · ${a.data.year}`,
+      grade: a.data.grade,
+      title: a.data.event,
+      subtitle: `${a.data.institution} 수여 · ${a.data.generations.join(', ')}`,
+    },
+  })),
+];
+const total = String(projects.length).padStart(2, '0');
+---
+
+<section class="home" data-home aria-labelledby="home-title">
+  <div class="home__type">
+    <h1 id="home-title" class="home__headline t-display">
+      <span class="home__line home__line--a"><span>{site.headline[0]}</span></span>
+      <span class="home__line home__line--b"><span>{site.headline[1]}</span></span>
+    </h1>
+    <p class="home__tagline">
+      <span class="t-caps">{site.tagline}</span>
+      <span class="home__motto">{site.mottoKo}</span>
+    </p>
+  </div>
+
+  <div class="home__stage" data-stage></div>
+
+  <nav class="home__index" aria-label="Selected works" data-index>
+    <p class="t-caps t-muted home__index-title">Index</p>
+    <ol>
+      {
+        projects.map((p, i) => (
+          <li>
+            <a href={routes.project(p.id)} data-focus-item={p.id} data-cursor="view" data-cursor-label="VIEW">
+              <span class="home__index-thumb">
+                <img src={withBase(p.data.thumb)} alt="" loading="lazy" decoding="async" width="640" height="400" />
+              </span>
+              <span class="t-num home__index-num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="home__index-name">{p.data.title}</span>
+              <span class="home__index-cat t-caps">{p.data.category}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+    <a class="home__index-all link-arrow" href={routes.work}>
+      All works
+      <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6" fill="none" stroke="currentColor" stroke-width="1.4" /></svg>
+    </a>
+  </nav>
+
+  <div class="home__hover" data-hover aria-hidden="true">
+    <span class="home__hover-title" data-hover-title></span>
+    <span class="home__hover-cat t-caps" data-hover-cat></span>
+  </div>
+
+  <div class="home__ui">
+    <div class="home__current">
+      <span class="t-caps t-muted">Selected works</span>
+      <a class="home__current-link" href={routes.project(projects[0].id)} data-active-link>
+        <span class="t-num"><span data-active-num>01</span><span class="t-muted"> / {total}</span></span>
+        <span class="home__current-title" data-active-title>{projects[0].data.title}</span>
+      </a>
+    </div>
+
+    <p class="home__hint t-caps" aria-hidden="true">
+      <span class="home__hint-line"></span>
+      <span data-hint>Scroll to explore</span>
+    </p>
+
+    <div class="home__modes" role="group" aria-label="갤러리 배치">
+      <button type="button" class="home__mode" data-mode="rings" aria-pressed="true">Rings</button>
+      <span class="home__mode-sep" aria-hidden="true">/</span>
+      <button type="button" class="home__mode" data-mode="spiral" aria-pressed="false">Spiral</button>
+    </div>
+  </div>
+
+  <div class="home__transition" data-transition aria-hidden="true">
+    <span class="t-caps" data-transition-cat></span>
+    <span class="home__transition-title t-display" data-transition-title></span>
+  </div>
+
+  <p class="sr-only" aria-live="polite" data-live></p>
+
+  <script type="application/json" data-gallery-items set:html={JSON.stringify(items)} />
+</section>
+
+<style>
+  .home {
+    position: relative;
+    height: 100svh;
+    min-height: 560px;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 80% at 50% 46%, #17181b 0%, var(--c-bg) 62%) no-repeat,
+      var(--c-bg);
+  }
+
+  /* ---- Hero type (sits behind the canvas so cards pass in front of it) ---- */
+  .home__type {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .home__headline {
+    font-size: clamp(3.6rem, 1rem + 9.4vw, 12.5rem);
+    color: var(--c-text);
+  }
+
+  .home__line {
+    position: absolute;
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.04em;
+  }
+
+  .home__line > span {
+    display: block;
+  }
+
+  .js .home__line > span {
+    transform: translate3d(0, 104%, 0);
+    animation: line-in var(--dur-cine) var(--ease-out) forwards;
+  }
+
+  .js .home__line--b > span {
+    animation-delay: 120ms;
+  }
+
+  @keyframes line-in {
+    to {
+      transform: none;
+    }
+  }
+
+  .home__line--a {
+    top: calc(var(--header-h) + 3vh);
+    left: var(--gutter);
+  }
+
+  .home__line--b {
+    right: var(--gutter);
+    bottom: calc(96px + 4vh);
+    text-align: right;
+  }
+
+  .home__tagline {
+    position: absolute;
+    top: calc(var(--header-h) + 3vh + clamp(3.6rem, 1rem + 9.4vw, 12.5rem) * 0.9 + 20px);
+    left: var(--gutter);
+    display: grid;
+    gap: 6px;
+    max-width: 30ch;
+    color: var(--c-muted);
+  }
+
+  .home__motto {
+    font-size: var(--fs-small);
+  }
+
+  /* ---- Canvas ---- */
+  .home__stage {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    touch-action: none;
+    opacity: 0;
+    transition: opacity 1.2s var(--ease-out);
+  }
+
+  .home.is-ready .home__stage {
+    opacity: 1;
+  }
+
+  .home__stage :global(canvas) {
+    width: 100% !important;
+    height: 100% !important;
+    outline: none;
+  }
+
+  /* ---- Index list ---- */
+  .home__index {
+    position: absolute;
+    z-index: 3;
+    left: var(--gutter);
+    bottom: calc(110px + 2vh);
+    width: min(280px, 30vw);
+  }
+
+  .home__index-title {
+    margin-bottom: 12px;
+  }
+
+  .home__index ol {
+    display: grid;
+    gap: 2px;
+    margin-bottom: 16px;
+  }
+
+  .home__index a[data-focus-item] {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    align-items: baseline;
+    gap: 6px;
+    padding: 5px 0;
+    font-size: var(--fs-small);
+    color: var(--c-muted);
+    transition: color var(--dur-micro) var(--ease-out), transform var(--dur-std) var(--ease-out);
+  }
+
+  .home__index a[data-focus-item]:hover,
+  .home__index a[data-focus-item]:focus-visible,
+  .home__index a[data-focus-item].is-active {
+    color: var(--c-text);
+  }
+
+  .home__index a[data-focus-item].is-active .home__index-num {
+    color: var(--c-accent);
+  }
+
+  .home__index-num {
+    font-size: var(--fs-micro);
+  }
+
+  .home__index-cat {
+    font-size: 0.625rem;
+    opacity: 0.6;
+  }
+
+  .home__index-thumb {
+    display: none;
+  }
+
+  .home__index-all {
+    font-size: var(--fs-small);
+  }
+
+  /* ---- Hover label that follows the pointer ---- */
+  .home__hover {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 4;
+    display: grid;
+    gap: 2px;
+    padding-left: 56px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur-micro) var(--ease-out);
+    will-change: transform;
+  }
+
+  .home__hover.is-on {
+    opacity: 1;
+  }
+
+  .home__hover-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    text-shadow: 0 1px 18px rgb(0 0 0 / 0.65);
+  }
+
+  .home__hover-cat {
+    color: var(--c-accent);
+  }
+
+  /* ---- Bottom UI ---- */
+  .home__ui {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: end;
+    gap: 16px;
+    padding: 0 var(--gutter) calc(28px + env(safe-area-inset-bottom));
+    pointer-events: none;
+  }
+
+  .home__ui > * {
+    pointer-events: auto;
+  }
+
+  .home__current {
+    display: grid;
+    gap: 8px;
+    justify-self: start;
+  }
+
+  .home__current-link {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    font-family: var(--font-latin);
+  }
+
+  .home__current-title {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    transition: opacity var(--dur-micro) var(--ease-out);
+  }
+
+  .home__current-link:hover .home__current-title {
+    color: var(--c-accent);
+  }
+
+  .home__hint {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--c-muted);
+    justify-self: center;
+    pointer-events: none;
+  }
+
+  .home__hint-line {
+    position: relative;
+    width: 36px;
+    height: 1px;
+    overflow: hidden;
+    background: var(--c-line);
+  }
+
+  .home__hint-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--c-accent);
+    transform: translateX(-100%);
+    animation: hint 2.4s var(--ease-in-out) infinite;
+  }
+
+  @keyframes hint {
+    50% {
+      transform: none;
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .home__modes {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-latin);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .home__mode {
+    position: relative;
+    padding: 10px 2px;
+    color: var(--c-muted);
+    letter-spacing: inherit;
+    transition: color var(--dur-micro) var(--ease-out);
+  }
+
+  .home__mode::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4px;
+    height: 1px;
+    background: var(--c-accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur-std) var(--ease-out);
+  }
+
+  .home__mode[aria-pressed='true'] {
+    color: var(--c-text);
+  }
+
+  .home__mode[aria-pressed='true']::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .home__mode:hover {
+    color: var(--c-text);
+  }
+
+  .home__mode-sep {
+    color: var(--c-line-strong);
+  }
+
+  /* ---- Click transition overlay ---- */
+  .home__transition {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: calc(40px + 6vh);
+    z-index: 5;
+    display: grid;
+    gap: 14px;
+    pointer-events: none;
+  }
+
+  .home__transition > * {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+      opacity 700ms var(--ease-out),
+      transform 900ms var(--ease-out);
+  }
+
+  .home__transition-title {
+    font-size: var(--fs-h1);
+    text-shadow: 0 2px 40px rgb(0 0 0 / 0.35);
+  }
+
+  .home.is-leaving .home__transition > * {
+    opacity: 1;
+    transform: none;
+    transition-delay: 450ms;
+  }
+
+  .home.is-leaving .home__transition-title {
+    transition-delay: 520ms;
+  }
+
+  .home.is-leaving .home__ui,
+  .home.is-leaving .home__index,
+  .home.is-leaving .home__type,
+  .home.is-leaving .home__hover {
+    opacity: 0;
+    transition: opacity 400ms var(--ease-out);
+  }
+
+  /* ---- 2D fallback (no WebGL / no JS / ?mode=2d) ---- */
+  :is(.home.is-fallback, :global(html:not(.js)) .home) {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+
+  :is(.home.is-fallback, :global(html:not(.js)) .home) .home__type {
+    position: relative;
+    height: 88svh;
+    min-height: 520px;
+  }
+
+  :is(.home.is-fallback, :global(html:not(.js)) .home) .home__stage,
+  :is(.home.is-fallback, :global(html:not(.js)) .home) .home__ui,
+  :is(.home.is-fallback, :global(html:not(.js)) .home) .home__hover {
+    display: none;
+  }
+
+  :is(.home.is-fallback, :global(html:not(.js)) .home) .home__index {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: auto;
+    padding: 0 var(--gutter) 120px;
+  }
+
+  :is(.home.is-fallback, :global(html:not(.js)) .home) .home__index ol {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: 40px 24px;
+  }
+
+  :is(.home.is-fallback, :global(html:not(.js)) .home) .home__index a[data-focus-item] {
+    grid-template-columns: auto 1fr auto;
+    font-size: 1rem;
+    color: var(--c-text);
+  }
+
+  :is(.home.is-fallback, :global(html:not(.js)) .home) .home__index-thumb {
+    display: block;
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: var(--radius-s);
+    background: var(--c-surface);
+    margin-bottom: 10px;
+  }
+
+  :is(.home.is-fallback, :global(html:not(.js)) .home) .home__index-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 900ms var(--ease-out);
+  }
+
+  :is(.home.is-fallback, :global(html:not(.js)) .home) a:hover .home__index-thumb img {
+    transform: scale(1.04);
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 820px) {
+    .home__line--a {
+      top: calc(var(--header-h) + 2vh);
+    }
+
+    .home__line--b {
+      bottom: calc(150px + env(safe-area-inset-bottom));
+    }
+
+    .home:not(.is-fallback) .home__tagline,
+    .home:not(.is-fallback) .home__index {
+      display: none;
+    }
+
+    .home__ui {
+      grid-template-columns: 1fr auto;
+      row-gap: 18px;
+    }
+
+    .home__hint {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      justify-self: start;
+    }
+  }
+
+  @media (max-height: 640px) and (min-width: 821px) {
+    .home:not(.is-fallback) .home__index {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home__hint-line::after {
+      animation: none;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  import { initHome } from '../../scripts/home';
+  initHome();
+</script>
