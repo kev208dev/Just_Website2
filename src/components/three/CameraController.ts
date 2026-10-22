@@ -16,16 +16,20 @@ export class CameraController {
 
   constructor(readonly camera: PerspectiveCamera) {}
 
+  /** Returns true while the camera is still easing (pointer parallax). */
   update(dt: number, from: CameraPose, to: CameraPose, t: number, pointer: { x: number; y: number }, reduced: boolean) {
     const strength = reduced ? 0 : 1;
-    this.parallax.x += (pointer.x * strength - this.parallax.x) * damp(3, dt);
-    this.parallax.y += (pointer.y * strength - this.parallax.y) * damp(3, dt);
+    const px = pointer.x * strength - this.parallax.x;
+    const py = pointer.y * strength - this.parallax.y;
+    this.parallax.x += px * damp(3, dt);
+    this.parallax.y += py * damp(3, dt);
+    const moving = Math.abs(px) + Math.abs(py) > 0.002;
 
     // Arc the camera slightly upward mid-morph so the transition reads as a move, not a cut.
     const lift = Math.sin(t * Math.PI) * 1.4;
     pos.lerpVectors(from.position, to.position, t);
-    pos.x += this.parallax.x * 0.45;
-    pos.y += this.parallax.y * 0.28 + lift;
+    pos.x += this.parallax.x * 0.35;
+    pos.y += this.parallax.y * 0.2 + lift;
     target.lerpVectors(from.target, to.target, t);
     target.y += lift * 0.4;
 
@@ -38,6 +42,7 @@ export class CameraController {
     }
     this.fogNear = MathUtils.lerp(from.fogNear, to.fogNear, t);
     this.fogFar = MathUtils.lerp(from.fogFar, to.fogFar, t);
+    return moving;
   }
 
   /** World-space size of the view frustum at `distance` in front of the camera. */

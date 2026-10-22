@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="kv.css"><style>
+body { background: #050506; color: #f5f3ee; }
+.words { position: absolute; left: 40px; top: 120px; width: 1700px; transform: rotate(-4deg); transform-origin: 0 0; }
+.w { position: relative; display: block; font-family: 'Pretendard'; font-weight: 900; font-size: 205px; line-height: 0.86; letter-spacing: -0.07em; white-space: nowrap; }
+.w .ghost { position: absolute; left: 0; top: 0; opacity: 0.12; }
+.w .ghost.g2 { opacity: 0.05; }
+.label { position: absolute; right: 56px; top: 120px; width: 360px; text-align: right; display: grid; gap: 16px; z-index: 5; }
+.timer { font-family: 'SG Light'; font-size: 120px; letter-spacing: -0.06em; line-height: 0.9; }
+.timer small { font-size: 40px; }
+.rule2 { font-size: 22px; line-height: 1.5; color: #c9c4ba; }
+.level { font-size: 13px; letter-spacing: .18em; color: #c88f47; }
+.ui { position: absolute; right: 56px; bottom: 100px; width: 360px; height: 280px; z-index: 5; border-radius: 10px; box-shadow: 0 0 0 1px rgba(245,243,238,0.18); }
+.bar { position:absolute; left: 48px; right: 48px; bottom: 88px; height: 2px; background: rgba(245,243,238,.12); z-index: 5;}
+.bar i { position:absolute; left:0; top:0; bottom:0; width: 38%; background:#f5f3ee; }
+</style></head><body>
+<div class="frame"><div class="top caps"><span>JUST® Atelier</span><span>No. 04 — Game</span><span>Speed Challenge</span></div><div class="rule"></div>
+<div class="bottom caps"><span>JUST 순발력 게임 / Speed Challenge</span><span>HTML · CSS · JavaScript</span></div></div>
+<div class="words kr">
+  <span class="w" style="color:#3b6cff"><span class="ghost" style="transform:translateX(-46px)">빨강</span><span class="ghost g2" style="transform:translateX(-92px)">빨강</span>빨강 <span style="color:#f5f3ee">주황</span></span>
+  <span class="w" style="color:#ff5a3c;margin-left:280px"><span class="ghost" style="transform:translateX(-46px)">초록</span>초록 <span style="color:#9b5cff">노랑</span></span>
+  <span class="w" style="color:#ffc93c;margin-left:90px"><span class="ghost" style="transform:translateX(-60px)">파랑</span><span class="ghost g2" style="transform:translateX(-120px)">파랑</span>파랑 <span style="color:#35c46a">보라</span></span>
+</div>
+<div class="label kr">
+  <span class="level">LV. 1 — 제한 시간</span>
+  <span class="timer">3.0<small>s</small></span>
+  <span class="rule2">글자는 무시하고,<br>보이는 <b>색깔</b>의 버튼을 누르세요.</span>
+</div>
+<div class="shot ui"><img src="src/speed-ui.jpg"></div>
+<div class="bar"><i></i></div>
+</body></html>

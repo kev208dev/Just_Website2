@@ -1,0 +1,426 @@
+---
+import { getProjects } from '../../lib/data';
+import { routes, withBase } from '../../lib/paths';
+import type { GalleryItem } from '../three/GalleryCard3D';
+
+const projects = await getProjects();
+const total = String(projects.length).padStart(2, '0');
+const items: GalleryItem[] = projects.map((p, i) => ({
+  id: p.id,
+  title: p.data.title,
+  titleEn: p.data.titleEn,
+  category: p.data.category,
+  tagline: p.data.art.tagline,
+  year: p.data.year,
+  href: routes.project(p.id),
+  aspect: 1.6,
+  number: String(i + 1).padStart(2, '0'),
+  image: withBase(p.data.coverThumb),
+}));
+const first = items[0];
+---
+
+<section class="explore" data-explore aria-labelledby="explore-title">
+  <div class="explore__stage" data-stage></div>
+
+  <header class="explore__head">
+    <h1 class="explore__title" id="explore-title">JUST <em class="t-serif">Universe</em></h1>
+    <p class="t-caps t-muted">{total} works — Rings / Spiral</p>
+  </header>
+
+  <nav class="explore__index" aria-label="Works" data-index>
+    <ol>
+      {
+        items.map((it) => (
+          <li>
+            <a href={it.href} data-focus-item={it.id}>
+              <span class="t-num">{it.number}</span>
+              <span class="explore__index-name">{it.titleEn}</span>
+              <span class="explore__index-thumb">
+                <img src={it.image} alt="" loading="lazy" decoding="async" width="960" height="600" />
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  <div class="explore__hover" data-hover aria-hidden="true">
+    <span data-hover-title></span>
+    <span class="t-caps" data-hover-cat></span>
+  </div>
+
+  <div class="explore__caption">
+    <a class="explore__current" href={first.href} data-active-link>
+      <span class="explore__num t-num"><span data-active-num>{first.number}</span> / {total}</span>
+      <span class="explore__name" data-active-title>{first.titleEn}</span>
+      <span class="explore__tag t-serif" data-active-tag>{first.tagline}</span>
+    </a>
+  </div>
+
+  <div class="explore__ui">
+    <p class="explore__hint t-caps" aria-hidden="true" data-hint>Scroll · Drag · ← →</p>
+    <div class="explore__modes" role="group" aria-label="갤러리 배치">
+      <button type="button" class="explore__mode" data-mode="rings" aria-pressed="true">Rings</button>
+      <span aria-hidden="true">/</span>
+      <button type="button" class="explore__mode" data-mode="spiral" aria-pressed="false">Spiral</button>
+    </div>
+  </div>
+
+  <div class="explore__transition" data-transition aria-hidden="true">
+    <span class="t-caps" data-transition-cat></span>
+    <span class="explore__transition-title" data-transition-title></span>
+  </div>
+
+  <p class="sr-only" aria-live="polite" data-live></p>
+  <script type="application/json" data-gallery-items set:html={JSON.stringify(items)} />
+</section>
+
+<style>
+  .explore {
+    position: relative;
+    height: 100svh;
+    min-height: 600px;
+    overflow: hidden;
+    background:
+      radial-gradient(70% 60% at 50% 46%, #16171a 0%, rgb(8 9 11 / 0) 72%),
+      var(--c-bg);
+  }
+
+  .explore__stage {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    touch-action: none;
+    opacity: 0;
+    transition: opacity 1.2s var(--ease-out);
+  }
+
+  .explore.is-ready .explore__stage {
+    opacity: 1;
+  }
+
+  .explore__stage :global(canvas) {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .explore__head {
+    position: absolute;
+    left: var(--gutter);
+    top: calc(var(--header-h) + 18px);
+    z-index: 3;
+    display: grid;
+    gap: 10px;
+    pointer-events: none;
+  }
+
+  .explore__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.75rem, 1rem + 2vw, 3rem);
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  .explore__title em {
+    letter-spacing: -0.02em;
+  }
+
+  /* ---- index rail ---- */
+  .explore__index {
+    position: absolute;
+    right: var(--gutter);
+    top: calc(var(--header-h) + 18px);
+    z-index: 3;
+  }
+
+  .explore__index ol {
+    display: grid;
+    gap: 4px;
+  }
+
+  .explore__index a {
+    display: flex;
+    gap: 12px;
+    justify-content: end;
+    align-items: baseline;
+    padding: 4px 0;
+    font-size: var(--fs-small);
+    color: var(--c-muted);
+    transition: color var(--dur-micro) var(--ease-out);
+  }
+
+  .explore__index .t-num {
+    font-size: var(--fs-micro);
+  }
+
+  .explore__index a:hover,
+  .explore__index a:focus-visible,
+  .explore__index a.is-active {
+    color: var(--c-ivory);
+  }
+
+  .explore__index a.is-active .t-num {
+    color: var(--c-bronze);
+  }
+
+  .explore__index-thumb {
+    display: none;
+  }
+
+  /* ---- hover label ---- */
+  .explore__hover {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 4;
+    display: grid;
+    gap: 2px;
+    padding-left: 56px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur-micro) var(--ease-out);
+  }
+
+  .explore__hover.is-on {
+    opacity: 1;
+  }
+
+  .explore__hover [data-hover-title] {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+  }
+
+  .explore__hover [data-hover-cat] {
+    color: var(--c-bronze);
+  }
+
+  /* ---- caption ---- */
+  .explore__caption {
+    position: absolute;
+    left: var(--gutter);
+    right: 52%;
+    bottom: calc(84px + env(safe-area-inset-bottom));
+    z-index: 3;
+  }
+
+  .explore__caption::before {
+    content: '';
+    position: absolute;
+    inset: -40% -30% -60% -20%;
+    z-index: -1;
+    background: radial-gradient(closest-side, rgb(8 9 11 / 0.7), rgb(8 9 11 / 0));
+    pointer-events: none;
+  }
+
+  .explore__current {
+    display: grid;
+    gap: 10px;
+    justify-items: start;
+  }
+
+  .explore__num {
+    font-size: var(--fs-small);
+    color: var(--c-muted);
+  }
+
+  .explore__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.4rem, 0.8rem + 4vw, 5.5rem);
+    line-height: 0.86;
+    letter-spacing: -0.06em;
+    text-transform: uppercase;
+    transition: color var(--dur-std) var(--ease-out);
+  }
+
+  .explore__current:hover .explore__name {
+    color: var(--c-bone);
+  }
+
+  .explore__tag {
+    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+    color: var(--c-bone);
+  }
+
+  .explore__caption.is-swap .explore__current > * {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .explore__current > * {
+    transition:
+      opacity 420ms var(--ease-out),
+      transform 520ms var(--ease-out);
+  }
+
+  /* ---- bottom bar ---- */
+  .explore__ui {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    padding: 0 var(--gutter) calc(26px + env(safe-area-inset-bottom));
+    pointer-events: none;
+  }
+
+  .explore__ui > * {
+    pointer-events: auto;
+  }
+
+  .explore__hint {
+    color: var(--c-muted);
+  }
+
+  .explore__modes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-latin);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-line-strong);
+  }
+
+  .explore__mode {
+    position: relative;
+    padding: 10px 2px;
+    color: var(--c-muted);
+    letter-spacing: inherit;
+    transition: color var(--dur-micro) var(--ease-out);
+  }
+
+  .explore__mode::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4px;
+    height: 1px;
+    background: var(--c-bronze);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur-std) var(--ease-out);
+  }
+
+  .explore__mode[aria-pressed='true'] {
+    color: var(--c-ivory);
+  }
+
+  .explore__mode[aria-pressed='true']::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* ---- click transition (mirrors the project hero) ---- */
+  .explore__transition {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: 22px;
+    z-index: 5;
+    display: grid;
+    gap: 14px;
+    pointer-events: none;
+  }
+
+  .explore__transition > * {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+      opacity 700ms var(--ease-out),
+      transform 900ms var(--ease-out);
+  }
+
+  .explore__transition {
+    display: none;
+  }
+
+  .explore.is-leaving .explore__transition > * {
+    opacity: 1;
+    transform: none;
+    transition-delay: 450ms;
+  }
+
+  .explore.is-leaving :is(.explore__ui, .explore__index, .explore__head, .explore__caption, .explore__hover) {
+    opacity: 0;
+    transition: opacity 400ms var(--ease-out);
+  }
+
+  /* ---- 2D fallback ---- */
+  :is(.explore.is-fallback, :global(html:not(.js)) .explore) {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+    padding: calc(var(--header-h) + 140px) var(--gutter) 120px;
+  }
+
+  :is(.explore.is-fallback, :global(html:not(.js)) .explore) :is(.explore__stage, .explore__ui, .explore__hover, .explore__caption) {
+    display: none;
+  }
+
+  :is(.explore.is-fallback, :global(html:not(.js)) .explore) .explore__index {
+    position: static;
+    transform: none;
+    margin-top: 40px;
+  }
+
+  :is(.explore.is-fallback, :global(html:not(.js)) .explore) .explore__index ol {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: 40px 24px;
+  }
+
+  :is(.explore.is-fallback, :global(html:not(.js)) .explore) .explore__index a {
+    flex-direction: column-reverse;
+    align-items: start;
+    color: var(--c-ivory);
+    font-size: 1rem;
+  }
+
+  :is(.explore.is-fallback, :global(html:not(.js)) .explore) .explore__index-thumb {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  :is(.explore.is-fallback, :global(html:not(.js)) .explore) .explore__index-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 820px) {
+    .explore__index {
+      display: none;
+    }
+
+    .explore__caption {
+      right: var(--gutter);
+      bottom: calc(96px + env(safe-area-inset-bottom));
+    }
+
+    .explore__hint {
+      display: none;
+    }
+
+    .explore__ui {
+      justify-content: end;
+    }
+  }
+</style>
+
+<script>
+  import { initExplore } from '../../scripts/explore';
+  initExplore();
+</script>

@@ -23,6 +23,10 @@ export class InputController {
   readonly client = { x: -1, y: -1, inside: false };
   dragging = false;
   enabled = true;
+  /** performance.now() of the last wheel/drag input (used for snapping). */
+  lastInput = 0;
+  /** Set on every pointer move; the controller clears it after hit-testing. */
+  pointerMoved = false;
 
   private down = false;
   private startX = 0;
@@ -53,11 +57,11 @@ export class InputController {
 
   /** Slots travelled per pixel of drag. */
   private get dragFactor() {
-    return 5.2 / Math.max(window.innerWidth, 320);
+    return 2.6 / Math.max(window.innerWidth, 320);
   }
 
   nudge(slots: number) {
-    this.target += slots;
+    this.target = Math.round(this.target) + slots;
   }
 
   private onWheel = (e: WheelEvent) => {
@@ -65,7 +69,8 @@ export class InputController {
     e.preventDefault();
     const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
     const delta = (Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX) * unit;
-    this.target += Math.max(Math.min(delta * 0.0024, 1.4), -1.4);
+    this.target += Math.max(Math.min(delta * 0.0022, 0.9), -0.9);
+    this.lastInput = performance.now();
   };
 
   private onDown = (e: PointerEvent) => {
@@ -88,6 +93,7 @@ export class InputController {
       e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
     this.pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     this.pointer.y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+    this.pointerMoved = true;
 
     if (!this.down || e.pointerId !== this.pointerId || !this.enabled) return;
     const dx = e.clientX - this.lastX;
@@ -110,6 +116,7 @@ export class InputController {
     // Dragging left or up advances the gallery.
     const d = -(dx + dy * 0.8) * this.dragFactor;
     this.target += d;
+    this.lastInput = performance.now();
     const t = performance.now();
     this.samples.push({ d, t });
     while (this.samples.length && t - this.samples[0].t > 120) this.samples.shift();
@@ -127,19 +134,29 @@ export class InputController {
       const span = this.samples.length > 1 ? this.samples[this.samples.length - 1].t - this.samples[0].t : 0;
       if (span > 0 && !this.reduced) {
         const v = this.samples.reduce((a, s) => a + s.d, 0) / span; // slots per ms
-        this.target += Math.max(Math.min(v * 320, 6), -6);
+        this.target += Math.max(Math.min(v * 260, 2.5), -2.5);
+        this.lastInput = performance.now();
       }
     } else if (this.moved <= TAP_DISTANCE && performance.now() - this.startT < TAP_TIME) {
       this.cb.onTap?.(e.clientX, e.clientY, e.pointerType);
     }
   };
 
+  /** Returns true while the gallery is still travelling. */
   update(dt: number) {
+    // After wheel/drag inertia settles, ease onto the nearest work.
+    if (!this.dragging && performance.now() - this.lastInput > 260) {
+      const snapped = Math.round(this.target);
+      if (Math.abs(snapped - this.target) > 1e-4) this.target = snapped;
+    }
     const prev = this.current;
-    const lambda = this.reduced ? 30 : this.dragging ? 14 : 4.2;
+    const lambda = this.reduced ? 30 : this.dragging ? 14 : 3.6;
     this.current += (this.target - this.current) * damp(lambda, dt);
+    if (Math.abs(this.target - this.current) < 1e-4) this.current = this.target;
     const raw = dt > 0 ? (this.current - prev) / dt : 0;
     this.velocity += (raw - this.velocity) * damp(10, dt);
+    if (Math.abs(this.velocity) < 1e-4) this.velocity = 0;
+    return this.dragging || this.current !== prev || this.velocity !== 0;
   }
 
   dispose() {

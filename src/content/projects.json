@@ -15,7 +15,13 @@
       "점수와 최고 점수(localStorage) 기록, 게임 오버 후 재시작",
       "터치 입력 지원"
     ],
-    "stack": ["HTML", "CSS", "JavaScript", "Matter.js", "Canvas"],
+    "stack": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Matter.js",
+      "Canvas"
+    ],
     "members": [],
     "image": "images/projects/myeong-game.webp",
     "thumb": "images/projects/myeong-game-sm.webp",
@@ -24,6 +30,15 @@
     "links": {
       "live": "https://bingchilig.github.io/apple/",
       "github": "https://github.com/bingchilig/apple"
+    },
+    "cover": "images/keyvisuals/myeong-game.webp",
+    "coverThumb": "images/keyvisuals/myeong-game-sm.webp",
+    "art": {
+      "tagline": "Drop. Merge.",
+      "tone": "light",
+      "accent": "#5b4fc9",
+      "surface": "#e6e2f1",
+      "direction": "Playful object composition"
     }
   },
   {
@@ -40,7 +55,11 @@
       "가상 잔액과 베팅 금액 입력",
       "다섯 종류의 심볼과 배당표"
     ],
-    "stack": ["HTML", "CSS", "JavaScript"],
+    "stack": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
     "members": [],
     "image": "images/projects/myeong-casino.webp",
     "thumb": "images/projects/myeong-casino-sm.webp",
@@ -49,6 +68,15 @@
     "links": {
       "live": "https://bingchilig.github.io/wnsgus.cazino/",
       "github": "https://github.com/bingchilig/wnsgus.cazino"
+    },
+    "cover": "images/keyvisuals/myeong-casino.webp",
+    "coverThumb": "images/keyvisuals/myeong-casino-sm.webp",
+    "art": {
+      "tagline": "Spin.",
+      "tone": "dark",
+      "accent": "#c88f47",
+      "surface": "#12080d",
+      "direction": "Three reels, one bet"
     }
   },
   {
@@ -65,7 +93,12 @@
       "상황에 맞는 표현을 고르는 객관식 문제와 해설",
       "경험치(XP)에 따라 ‘인턴’부터 ‘조직문화 그 자체’까지 오르는 레벨 시스템"
     ],
-    "stack": ["React", "Tailwind CSS", "Babel Standalone", "lucide-react"],
+    "stack": [
+      "React",
+      "Tailwind CSS",
+      "Babel Standalone",
+      "lucide-react"
+    ],
     "members": [],
     "image": "images/projects/pangolingo.webp",
     "thumb": "images/projects/pangolingo-sm.webp",
@@ -74,6 +107,15 @@
     "links": {
       "live": "https://kev208dev.github.io/Pangolingo/",
       "github": "https://github.com/kev208dev/Pangolingo"
+    },
+    "cover": "images/keyvisuals/pangolingo.webp",
+    "coverThumb": "images/keyvisuals/pangolingo-sm.webp",
+    "art": {
+      "tagline": "Sync, the Pangyo way.",
+      "tone": "light",
+      "accent": "#3f8f12",
+      "surface": "#f3f1ea",
+      "direction": "Editorial learning app"
     }
   },
   {
@@ -89,7 +131,11 @@
       "다섯 문제를 맞힐 때마다 난이도 상승",
       "제한 시간 안에 응답, 최종 점수와 레벨 표시"
     ],
-    "stack": ["HTML", "CSS", "JavaScript"],
+    "stack": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
     "members": [],
     "image": "images/projects/just-speed.webp",
     "thumb": "images/projects/just-speed-sm.webp",
@@ -97,6 +143,15 @@
     "alt": "저스트 순발력 챌린지 안내 화면 — 규칙 설명과 시작 버튼",
     "links": {
       "live": "http://justspeed.kro.kr/"
+    },
+    "cover": "images/keyvisuals/just-speed.webp",
+    "coverThumb": "images/keyvisuals/just-speed-sm.webp",
+    "art": {
+      "tagline": "Ignore the word.",
+      "tone": "dark",
+      "accent": "#3b6cff",
+      "surface": "#050506",
+      "direction": "Kinetic typography"
     }
   },
   {
@@ -115,6 +170,15 @@
     "alt": "JUST 퀴즈 시작 화면 — Just 로고와 ‘Journey starts from me’, ‘터치해서 여정 시작하기’",
     "links": {
       "live": "https://부스.kro.kr/"
+    },
+    "cover": "images/keyvisuals/just-quiz.webp",
+    "coverThumb": "images/keyvisuals/just-quiz-sm.webp",
+    "art": {
+      "tagline": "Journey starts from me.",
+      "tone": "dark",
+      "accent": "#c88f47",
+      "surface": "#1b1c1f",
+      "direction": "Touch-first experience"
     }
   }
 ]

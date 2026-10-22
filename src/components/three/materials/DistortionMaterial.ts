@@ -6,7 +6,6 @@ import fragmentShader from '../shaders/card.frag.glsl?raw';
 export function createSharedUniforms() {
   return {
     uVelocity: { value: 0 },
-    uTime: { value: 0 },
     uDim: { value: 0 },
     uFogNear: { value: 10 },
     uFogFar: { value: 22 },
@@ -16,7 +15,7 @@ export function createSharedUniforms() {
 export type SharedUniforms = ReturnType<typeof createSharedUniforms>;
 
 /**
- * Card material with velocity-based vertex bend and chromatic shift.
+ * Card material: flat at rest, a subtle velocity curl only while moving fast.
  * Shared uniforms are passed by reference so a single write updates all cards.
  */
 export class DistortionMaterial extends ShaderMaterial {
@@ -34,7 +33,7 @@ export class DistortionMaterial extends ShaderMaterial {
         uPlaneAspect: { value: imageAspect },
         uHover: { value: 0 },
         uOpacity: { value: 0 },
-        uRadius: { value: 0.035 },
+        uRadius: { value: 0.012 },
       },
     });
   }

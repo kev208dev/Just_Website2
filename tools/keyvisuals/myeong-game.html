@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="kv.css"><style>
+body { background: #e6e2f1; color: #17151f; }
+.title { position: absolute; left: 44px; top: 170px; font-family: 'SG Bold'; font-size: 196px; line-height: 0.8; letter-spacing: -0.075em; }
+.title span { display: block; }
+.title .serif { font-family: 'Instrument Serif'; font-size: 92px; letter-spacing: -0.02em; margin: 30px 0 0 6px; color: #5b4fc9; }
+.copy { position: absolute; left: 56px; bottom: 112px; width: 440px; font-size: 19px; line-height: 1.55; color: #46415a; }
+.copy b { color: #17151f; font-weight: 600; }
+.jar { position: absolute; right: 120px; top: 110px; width: 500px; height: 780px; border-radius: 26px; border: 1.5px solid rgba(23,21,31,0.28); overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,0.4), rgba(255,255,255,0)); }
+.line { position: absolute; left: -40px; right: -40px; top: 240px; border-top: 2px dashed #e0525e; }
+.line-label { position: absolute; right: 22px; top: 210px; color: #e0525e; }
+.ball { position: absolute; border-radius: 50%; }
+.board { position: absolute; left: 706px; top: 170px; width: 300px; height: 545px; border-radius: 22px; box-shadow: 0 50px 80px -30px rgba(40,30,90,0.45), 0 0 0 1px rgba(23,21,31,0.08); transform: rotate(-6deg); }
+.next { position: absolute; right: 70px; top: 128px; display: grid; gap: 10px; justify-items: center; }
+.next i { display: block; width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid #17151f; }
+.next i + i { width: 30px; height: 30px; opacity: 0.5; }
+</style></head><body>
+<div class="frame"><div class="top caps"><span>JUST® Atelier</span><span>No. 01 — Game</span><span>2025</span></div><div class="rule"></div>
+<div class="bottom caps"><span>명준현 게임 / Myeong Game</span><span>Matter.js · Canvas</span></div></div>
+<h1 class="title"><span>DROP.</span><span>MERGE.</span><span class="serif">— and keep stacking</span></h1>
+<p class="copy kr"><b>같은 단계의 조각이 부딪히면 다음 단계로 합쳐집니다.</b> 멤버의 얼굴을 소재로 한 물리 퍼즐 — 떨어뜨리고, 충돌하고, 쌓아 올리는 게임.</p>
+<div class="shot board"><img src="src/game-board.jpg"></div>
+<div class="jar">
+  <div class="line"></div><span class="line-label caps">Game over line</span>
+  <div class="ball" style="width:260px;height:260px;left:-30px;bottom:-40px;background:#17151f"></div>
+  <div class="ball" style="width:200px;height:200px;left:205px;bottom:-30px;background:#5b4fc9"></div>
+  <div class="ball" style="width:150px;height:150px;left:395px;bottom:-20px;background:#c88f47"></div>
+  <div class="ball" style="width:150px;height:150px;left:120px;bottom:200px;background:#f5f3ee;box-shadow: inset 0 0 0 1.5px #17151f"></div>
+  <div class="ball" style="width:110px;height:110px;left:265px;bottom:165px;background:#9d93ea"></div>
+  <div class="ball" style="width:120px;height:120px;left:380px;bottom:125px;background:#28292c"></div>
+  <div class="ball" style="width:78px;height:78px;left:24px;bottom:220px;background:#c88f47"></div>
+  <div class="ball" style="width:70px;height:70px;left:300px;bottom:278px;background:#17151f"></div>
+  <div class="ball" style="width:56px;height:56px;left:240px;bottom:330px;background:#5b4fc9"></div>
+  <div class="ball" style="width:90px;height:90px;left:415px;bottom:248px;background:#e6e2f1;box-shadow: inset 0 0 0 1.5px #17151f"></div>
+  <div class="ball" style="width:46px;height:46px;left:240px;top:120px;background:#17151f"></div>
+</div>
+<div class="next caps"><span>Next</span><i></i><i></i></div>
+</body></html>

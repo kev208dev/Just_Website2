@@ -9,6 +9,7 @@ export function withBase(path = ''): string {
 export const routes = {
   home: withBase(),
   work: withBase('work/'),
+  explore: withBase('explore/'),
   project: (slug: string) => withBase(`work/${slug}/`),
   about: withBase('about/'),
   people: withBase('people/'),
@@ -18,6 +19,7 @@ export const routes = {
 
 export const navItems = [
   { label: 'Work', href: routes.work, key: 'work' },
+  { label: 'Explore', href: routes.explore, key: 'explore' },
   { label: 'About', href: routes.about, key: 'about' },
   { label: 'People', href: routes.people, key: 'people' },
   { label: 'Awards', href: routes.awards, key: 'awards' },

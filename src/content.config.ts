@@ -21,6 +21,16 @@ const projects = defineCollection({
     image: z.string(),
     thumb: z.string(),
     imageAspect: z.number(),
+    /** Art-directed key visual (16:10), rendered from tools/keyvisuals. */
+    cover: z.string(),
+    coverThumb: z.string(),
+    art: z.object({
+      tagline: z.string(),
+      tone: z.enum(['light', 'dark']),
+      accent: z.string(),
+      surface: z.string(),
+      direction: z.string(),
+    }),
     alt: z.string(),
     links: z.object({
       live: z.url().optional(),

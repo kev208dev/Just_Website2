@@ -1,0 +1,225 @@
+---
+import { getProjects } from '../../lib/data';
+import { routes, withBase } from '../../lib/paths';
+
+const projects = await getProjects();
+const n = (i: number) => String(i + 1).padStart(2, '0');
+---
+
+<section class="works" id="works" aria-labelledby="works-title">
+  <header class="works__head container">
+    <p class="t-caps t-muted">Scene 02</p>
+    <h2 class="works__title" id="works-title">Selected <em class="t-serif">works</em></h2>
+    <p class="works__count t-num">({n(projects.length - 1)})</p>
+  </header>
+
+  {
+    projects.map((p, i) => (
+      <article
+        class:list={['feature', i % 2 ? 'is-flip' : '', `tone-${p.data.art.tone}`]}
+        style={`--accent:${p.data.art.accent};--surface:${p.data.art.surface}`}
+      >
+        <a class="feature__link container" href={routes.project(p.id)} data-cursor="view" data-cursor-label="VIEW">
+          <header class="feature__head">
+            <p class="feature__index t-caps">
+              <span class="t-num">{n(i)}</span>
+              <span>{p.data.category}</span>
+              {p.data.year && <span class="t-num">{p.data.year}</span>}
+            </p>
+            <h3 class="feature__title">{p.data.titleEn}</h3>
+          </header>
+          <div class="feature__text">
+            <p class="feature__ko">{p.data.title}</p>
+            <p class="feature__tagline t-serif">{p.data.art.tagline}</p>
+            <p class="feature__summary">{p.data.summary}</p>
+            <span class="feature__cta t-caps">
+              View project <span aria-hidden="true">→</span>
+            </span>
+          </div>
+          <figure class="feature__media reveal-mask" data-reveal data-parallax>
+            <img
+              src={withBase(p.data.cover)}
+              alt={`${p.data.title} 키비주얼 — ${p.data.art.direction}`}
+              width="1920"
+              height="1200"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          </figure>
+        </a>
+      </article>
+    ))
+  }
+</section>
+
+<style>
+  .works {
+    padding-top: var(--section-y);
+    background: var(--c-bg);
+  }
+
+  .works__head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 24px 40px;
+    padding-bottom: clamp(56px, 8vw, 120px);
+  }
+
+  .works__head > .t-caps {
+    grid-column: 1 / -1;
+  }
+
+  .works__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-mega);
+    line-height: 0.82;
+    letter-spacing: -0.065em;
+    text-transform: uppercase;
+  }
+
+  .works__title em {
+    letter-spacing: -0.03em;
+  }
+
+  .works__count {
+    font-size: var(--fs-h3);
+    color: var(--c-muted);
+  }
+
+  .feature {
+    position: relative;
+    padding-block: clamp(48px, 7vw, 110px);
+    border-top: 1px solid var(--c-line);
+  }
+
+  .feature__link {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(16px, 2.4vw, 40px);
+    row-gap: clamp(24px, 3vw, 44px);
+    align-items: end;
+  }
+
+  .feature__head {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 18px;
+  }
+
+  .feature.is-flip .feature__head {
+    justify-items: end;
+    text-align: right;
+  }
+
+  .feature__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.8rem, 0.6rem + 8.4vw, 11rem);
+    line-height: 0.84;
+    letter-spacing: -0.065em;
+    text-transform: uppercase;
+    transition: color var(--dur-std) var(--ease-out);
+  }
+
+  .feature__link:hover .feature__title {
+    color: var(--c-bone);
+  }
+
+  .feature__media {
+    grid-column: 1 / span 8;
+    grid-row: 2;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    background: var(--surface);
+    border-radius: 2px;
+  }
+
+  .feature__text {
+    grid-column: 9 / span 4;
+    grid-row: 2;
+    display: grid;
+    gap: 18px;
+    align-content: end;
+  }
+
+  .feature.is-flip .feature__media {
+    grid-column: 5 / span 8;
+  }
+
+  .feature.is-flip .feature__text {
+    grid-column: 1 / span 4;
+  }
+
+  .feature__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: scale 1.4s var(--ease-out);
+  }
+
+  .feature__link:hover .feature__media img {
+    scale: 1.025;
+  }
+
+  .feature__index {
+    display: flex;
+    gap: 18px;
+    color: var(--c-muted);
+  }
+
+  .feature__index span:first-child {
+    color: var(--accent);
+  }
+
+  .feature__ko {
+    font-size: var(--fs-small);
+    color: var(--c-soft);
+  }
+
+  .feature__tagline {
+    font-size: clamp(1.75rem, 1rem + 2vw, 3rem);
+    line-height: 1;
+    color: var(--c-bone);
+  }
+
+  .feature__summary {
+    max-width: 38ch;
+    color: var(--c-muted);
+    font-size: 0.9375rem;
+  }
+
+  .feature__cta {
+    justify-self: start;
+    display: inline-flex;
+    gap: 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--c-line-strong);
+    transition: border-color var(--dur-std) var(--ease-out), gap var(--dur-std) var(--ease-out);
+  }
+
+  .feature__link:hover .feature__cta {
+    border-color: var(--accent);
+    gap: 18px;
+  }
+
+  @media (max-width: 900px) {
+    .feature__link {
+      grid-template-columns: 1fr;
+    }
+
+    .feature__head,
+    .feature.is-flip .feature__head,
+    .feature__media,
+    .feature.is-flip .feature__media,
+    .feature__text,
+    .feature.is-flip .feature__text {
+      grid-column: 1;
+      grid-row: auto;
+      justify-items: start;
+      text-align: left;
+    }
+  }
+</style>

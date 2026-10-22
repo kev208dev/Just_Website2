@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="kv.css"><style>
+body { background: #f3f1ea; color: #121310; }
+.green { color: #3f8f12; }
+.wordmark { position: absolute; left: 44px; top: 128px; font-family: 'SG Bold'; font-size: 176px; letter-spacing: -0.075em; line-height: 0.85; }
+.wordmark .serif { font-family:'Instrument Serif'; font-size: 176px; letter-spacing: -0.035em; color: #3f8f12; }
+.entry { position: absolute; left: 52px; top: 380px; width: 720px; border-top: 1px solid rgba(18,19,16,0.2); }
+.row { display: grid; grid-template-columns: 120px 1fr; padding: 26px 0; border-bottom: 1px solid rgba(18,19,16,0.14); align-items: baseline; }
+.row .k { font-size: 12px; letter-spacing: 0.16em; color: #74716a; }
+.plain { font-size: 34px; color: #8d8a83; text-decoration: line-through; text-decoration-thickness: 1.5px; }
+.pangyo { font-size: 50px; font-weight: 700; letter-spacing: -0.04em; }
+.note { font-size: 19px; line-height: 1.55; color: #4a4843; }
+.app { position: absolute; right: 96px; top: 120px; width: 600px; height: 760px; border-radius: 30px; background: #fff; box-shadow: 0 40px 90px -40px rgba(30,40,10,0.35), 0 0 0 1px rgba(18,19,16,0.06); overflow: hidden; }
+.app img { position:absolute; left: 50%; top: 92px; width: 440px; transform: translateX(-50%); }
+.app .cap { position:absolute; left: 34px; top: 30px; right: 34px; display:flex; justify-content:space-between; font-size: 12px; letter-spacing: .16em; color:#74716a; }
+.ladder { position: absolute; left: 34px; right: 34px; bottom: 34px; display:grid; gap: 8px; }
+.ladder div { display:flex; justify-content: space-between; font-size: 17px; padding-top: 8px; border-top: 1px solid rgba(18,19,16,0.1); }
+.ladder div span:last-child { font-family: 'Space Grotesk'; color:#74716a; font-size: 14px; }
+.ladder .on { color: #3f8f12; font-weight: 700; }
+</style></head><body>
+<div class="frame"><div class="top caps"><span>JUST® Atelier</span><span>No. 03 — Learning</span><span>2026</span></div><div class="rule"></div>
+<div class="bottom caps"><span>판교어 듀오링고 / Pangolingo</span><span>React · Tailwind CSS</span></div></div>
+<h1 class="wordmark">Pangol<span class="serif">ingo</span></h1>
+<div class="entry kr">
+  <div class="row"><span class="k">UNIT 01</span><span class="note">기본 판교어 — 가장 자주 쓰는 기본 표현</span></div>
+  <div class="row"><span class="k">PLAIN</span><span class="plain">회의하자</span></div>
+  <div class="row"><span class="k">PANGYO</span><span class="pangyo">싱크 한번 <span class="green">맞추시죠.</span></span></div>
+  <div class="row"><span class="k">NOTE</span><span class="note">짧고 자연스러운 회의 제안 표현으로 ‘싱크(Sync)’를 자주 사용합니다.</span></div>
+</div>
+<div class="app kr">
+  <div class="cap"><span>무료로 판교 말투를 배워보세요</span><span>XP</span></div>
+  <img src="src/pango-app.jpg">
+  <div class="ladder">
+    <div class="on"><span>인턴</span><span>0 XP</span></div>
+    <div><span>주니어</span><span>100</span></div>
+    <div><span>주니어인데 시니어 감성</span><span>250</span></div>
+    <div><span>PM 빙의자</span><span>500</span></div>
+    <div><span>판교 네이티브</span><span>900</span></div>
+    <div><span>조직문화 그 자체</span><span>1500</span></div>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,125 @@
+---
+import { getMembers, GROUP_ORDER } from '../../lib/data';
+import { routes } from '../../lib/paths';
+
+const members = await getMembers();
+const groups = GROUP_ORDER.map((g) => ({ g, people: members.filter((m) => m.data.group === g) })).filter((x) => x.people.length);
+---
+
+<section class="collective" aria-labelledby="collective-title">
+  <div class="container">
+    <header class="collective__head">
+      <p class="t-caps t-muted">Scene 06 — The collective</p>
+      <h2 class="collective__title" id="collective-title">{members.length} people,<br /><em class="t-serif">one habit.</em></h2>
+    </header>
+
+    {
+      groups.map(({ g, people }) => (
+        <div class="gen">
+          <p class="gen__tag t-caps">{g}</p>
+          <p class="gen__names">
+            {people.map((m) => (
+              <a href={`${routes.people}?member=${m.id}`} class="name" data-cursor="view" data-cursor-label="OPEN">
+                {m.data.name}
+                {m.data.role && <sup>{m.data.role}</sup>}
+              </a>
+            ))}
+          </p>
+        </div>
+      ))
+    }
+
+    <a class="collective__more link-arrow" href={routes.people}>
+      모든 멤버 보기
+      <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6" fill="none" stroke="currentColor" stroke-width="1.4" /></svg>
+    </a>
+  </div>
+</section>
+
+<style>
+  .collective {
+    padding-block: var(--section-y);
+    background: var(--c-bg);
+  }
+
+  .collective__head {
+    display: grid;
+    gap: 32px;
+    margin-bottom: clamp(56px, 8vw, 120px);
+  }
+
+  .collective__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-h1);
+    line-height: 0.86;
+    letter-spacing: -0.065em;
+    text-transform: uppercase;
+  }
+
+  .collective__title em {
+    letter-spacing: -0.03em;
+    color: var(--c-bone);
+  }
+
+  .gen {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    padding-block: 28px 32px;
+    border-top: 1px solid var(--c-line);
+  }
+
+  .gen__tag {
+    padding-top: 0.9em;
+    color: var(--c-bronze);
+  }
+
+  .gen__names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.05em 0.5em;
+    font-size: clamp(2rem, 1rem + 3.2vw, 4.75rem);
+    font-weight: 700;
+    letter-spacing: -0.06em;
+    line-height: 1.12;
+  }
+
+  .name {
+    position: relative;
+    color: var(--c-graphite);
+    color: rgb(245 243 238 / 0.32);
+    transition: color var(--dur-std) var(--ease-out);
+  }
+
+  .name:hover,
+  .name:focus-visible {
+    color: var(--c-ivory);
+  }
+
+  .name sup {
+    position: relative;
+    top: -1.6em;
+    margin-left: 4px;
+    font-size: 0.17em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--c-bronze);
+    vertical-align: baseline;
+  }
+
+  .collective__more {
+    margin-top: 40px;
+  }
+
+  @media (max-width: 720px) {
+    .gen {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .gen__tag {
+      padding-top: 0;
+    }
+  }
+</style>

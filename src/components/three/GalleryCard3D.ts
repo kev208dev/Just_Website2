@@ -4,22 +4,23 @@ import { createPose, type CardPose } from './layouts/types';
 import { damp } from '../../lib/motion';
 
 export interface GalleryItem {
-  kind: 'project' | 'award';
   id: string;
   title: string;
+  titleEn: string;
   category: string;
+  tagline: string;
+  year?: number;
   href: string;
   aspect: number;
   /** Project number among selected works, e.g. "03". */
-  number?: string;
-  image?: string;
-  plate?: { eyebrow: string; grade: string; title: string; subtitle: string };
+  number: string;
+  image: string;
 }
 
 /** Card height in world units; width follows the item aspect (clamped). */
-export const CARD_HEIGHT = 1.45;
+export const CARD_HEIGHT = 1.7;
 
-const geometry = new PlaneGeometry(1, 1, 32, 12);
+const geometry = new PlaneGeometry(1, 1, 24, 1);
 const tmpV = new Vector3();
 const tmpQ = new Quaternion();
 
@@ -62,13 +63,14 @@ export class GalleryCard3D {
   /** Apply the blended layout pose plus hover and focus overrides. */
   apply(pose: CardPose, dt: number, toCamera: Vector3) {
     this.hover += (this.hoverTarget - this.hover) * damp(9, dt);
-    const lift = this.hover * 0.55;
+    if (Math.abs(this.hoverTarget - this.hover) < 0.001) this.hover = this.hoverTarget;
+    const lift = this.hover * 0.35;
 
     // Base pose, nudged toward the camera when hovered.
     tmpV.copy(toCamera).sub(pose.position).normalize().multiplyScalar(lift);
     this.mesh.position.copy(pose.position).add(tmpV);
     this.mesh.quaternion.copy(pose.quaternion);
-    const s = pose.scale * (1 + this.hover * 0.14);
+    const s = pose.scale * (1 + this.hover * 0.06);
     let sx = this.width * s;
     let sy = CARD_HEIGHT * s;
 
@@ -86,11 +88,16 @@ export class GalleryCard3D {
     u.uPlaneAspect.value = sx / sy;
     // Drop the hover zoom while focusing so the final frame matches the detail hero's cover crop.
     u.uHover.value = this.hover * (1 - this.focus);
-    u.uRadius.value = 0.035 * (1 - this.focus);
+    u.uRadius.value = 0.012 * (1 - this.focus);
     const opacity = pose.visibility * this.fade * this.appear;
     u.uOpacity.value = Math.max(opacity, this.focus);
     this.mesh.visible = u.uOpacity.value > 0.003;
     this.mesh.renderOrder = this.focus > 0 ? 10 : 0;
+  }
+
+  /** True while the hover tween is still moving (the canvas must keep rendering). */
+  get animating() {
+    return this.hover !== this.hoverTarget;
   }
 
   dispose() {

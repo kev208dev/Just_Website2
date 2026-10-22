@@ -1,0 +1,177 @@
+---
+import { site } from '../../lib/data';
+---
+
+<section class="manifesto" data-manifesto aria-labelledby="manifesto-title">
+  <div class="container">
+    <p class="t-caps manifesto__label">Scene 03 — The manifesto</p>
+    <h2 class="manifesto__title" id="manifesto-title">
+      <span class="ml"><span>We don’t</span></span>
+      <span class="ml ml--in"><span>just think.</span></span>
+      <span class="ml"><span>We <em class="t-serif">build.</em></span></span>
+    </h2>
+
+    <div class="manifesto__body">
+      <p class="manifesto__lead">{site.mottoKo}</p>
+      <p class="manifesto__text">
+        아이디어를 발견하고, 실험하고, 기술로 실제 결과물을 만듭니다. 생각에서 멈추지 않고 직접 만들고, 대회와 창업 프로그램에 나가 만든 것을 검증받습니다.
+      </p>
+      <p class="manifesto__sign t-serif">Journey starts from me — Build. Prove.</p>
+    </div>
+
+    <ol class="manifesto__fields">
+      {
+        site.fields.map((f, i) => (
+          <li>
+            <span class="t-num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{f.title}</h3>
+            <p class="t-serif">{f.en}</p>
+            <p class="desc">{f.description}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .manifesto {
+    --m-bg: var(--c-bg);
+    --m-fg: var(--c-ivory);
+    --m-muted: var(--c-muted);
+    --m-line: var(--c-line);
+    position: relative;
+    padding-block: var(--section-y);
+    background: var(--m-bg);
+    color: var(--m-fg);
+  }
+
+  /* Dark → ivory, driven by scroll in scripts/home.ts. Without JS it is simply ivory. */
+  :global(html:not(.js)) .manifesto,
+  .manifesto.is-light {
+    --m-bg: var(--c-ivory);
+    --m-fg: var(--c-ink);
+    --m-muted: var(--c-ink-muted);
+    --m-line: var(--c-ink-line);
+  }
+
+  .manifesto__label {
+    color: var(--m-muted);
+    margin-bottom: clamp(40px, 6vw, 80px);
+  }
+
+  .manifesto__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-mega);
+    line-height: 0.82;
+    letter-spacing: -0.065em;
+    text-transform: uppercase;
+  }
+
+  .manifesto__title em {
+    letter-spacing: -0.03em;
+    color: var(--c-bronze);
+  }
+
+  .ml {
+    display: block;
+  }
+
+  .ml--in {
+    padding-left: 1.2em;
+  }
+
+  .manifesto__body {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(16px, 2.4vw, 40px);
+    row-gap: 28px;
+    margin-top: clamp(64px, 9vw, 140px);
+  }
+
+  .manifesto__lead {
+    grid-column: 1 / span 6;
+    font-size: clamp(1.75rem, 1rem + 2.2vw, 3.25rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.045em;
+  }
+
+  .manifesto__text {
+    grid-column: 8 / span 5;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--m-muted);
+  }
+
+  .manifesto__sign {
+    grid-column: 8 / span 5;
+    font-size: 1.5rem;
+  }
+
+  .manifesto__fields {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: clamp(80px, 10vw, 160px);
+    border-top: 1px solid var(--m-line);
+  }
+
+  .manifesto__fields li {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    padding: 28px 24px 0 0;
+  }
+
+  .manifesto__fields li + li {
+    padding-left: 24px;
+    border-left: 1px solid var(--m-line);
+  }
+
+  .manifesto__fields .t-num {
+    font-size: var(--fs-small);
+    color: var(--c-bronze);
+  }
+
+  .manifesto__fields h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .manifesto__fields .t-serif {
+    font-size: 1.25rem;
+    color: var(--m-muted);
+  }
+
+  .manifesto__fields .desc {
+    font-size: var(--fs-small);
+    color: var(--m-muted);
+  }
+
+  @media (max-width: 900px) {
+    .manifesto__lead,
+    .manifesto__text,
+    .manifesto__sign {
+      grid-column: 1 / -1;
+    }
+
+    .manifesto__fields {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .manifesto__fields li:nth-child(3) {
+      padding-left: 0;
+      border-left: 0;
+    }
+
+    .manifesto__fields li:nth-child(n + 3) {
+      padding-top: 40px;
+    }
+
+    .ml--in {
+      padding-left: 0;
+    }
+  }
+</style>

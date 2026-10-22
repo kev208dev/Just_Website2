@@ -11,65 +11,59 @@ import {
 const euler = new Euler();
 
 /**
- * Cards on stacked horizontal rings around the logo. The camera sits inside
- * the cylinder, so nearby cards sweep past large while far ones sit behind
- * the logo — the K95-style "orbit" read.
+ * One card per work on a single orbit around the logo, seen from slightly
+ * above. The ring's radius follows the number of works, so adding a project
+ * widens the orbit instead of duplicating cards.
  */
 export class RingsLayout implements GalleryLayout {
   readonly mode = 'rings' as const;
   readonly camera: CameraPose = {
-    position: new Vector3(0, 0, 4.2),
-    target: new Vector3(0, 0, -3),
-    fov: 52,
+    position: new Vector3(-1.6, 3.1, 11.5),
+    target: new Vector3(-1.6, 0.35, 0),
+    fov: 36,
     fogNear: 9,
-    fogFar: 21,
+    fogFar: 17,
   };
 
-  rows = 3;
-  perRing = 12;
-  radius = 7.5;
-  rowGap = 2.05;
+  count = 5;
+  radius = 4.3;
   cardScale = 1;
-  /** Each ring turns at a slightly different rate for parallax. */
-  private speeds = [1, 0.86, 1.14, 0.94];
+  /** Faint concentric orbits drawn around the ring (radius, tilt). */
+  readonly orbits: { radius: number; tilt: number; y: number }[] = [];
 
   configure({ aspect, count }: LayoutViewport) {
     const portrait = aspect < 0.85;
-    this.rows = portrait ? 4 : 3;
-    this.perRing = Math.ceil(count / this.rows);
-    this.radius = portrait ? 6.2 : 7.5;
-    this.cardScale = portrait ? 0.82 : 1;
-    this.rowGap = portrait ? 1.75 : 2.05;
-    this.camera.position.set(0, 0, portrait ? 3.4 : 4.2);
-    this.camera.fov = portrait ? 66 : 52;
-    this.camera.fogNear = portrait ? 7 : 9;
-    this.camera.fogFar = portrait ? 18 : 21;
-  }
-
-  private slot(index: number) {
-    const row = index % this.rows;
-    const column = Math.floor(index / this.rows);
-    const offset = row % 2 === 1 ? 0.5 : 0;
-    return { row, column, offset, speed: this.speeds[row % this.speeds.length] };
+    this.count = count;
+    // Keep roughly constant arc spacing between neighbours.
+    this.radius = Math.max(3.8, (count * 3.4) / (Math.PI * 2)) * (portrait ? 0.72 : 1);
+    this.cardScale = portrait ? 0.74 : 1;
+    // Desktop: the orbit sits right of the caption (a lateral camera move keeps the zoom maths exact).
+    const shift = portrait ? 0 : -1.5;
+    this.camera.position.set(shift, portrait ? 3.4 : 3.2, portrait ? 15.5 : 14);
+    this.camera.target.set(shift, portrait ? 0.4 : -0.35, 0);
+    this.camera.fov = portrait ? 50 : 34;
+    this.orbits.length = 0;
+    this.orbits.push(
+      { radius: this.radius, tilt: 0, y: -0.55 - 0.95 * this.cardScale },
+      { radius: this.radius * 1.55, tilt: 0.05, y: -0.4 },
+      { radius: this.radius * 2.3, tilt: -0.03, y: 0.2 },
+    );
   }
 
   pose(index: number, scroll: number, out: CardPose) {
-    const { row, column, offset, speed } = this.slot(index);
-    const step = (Math.PI * 2) / this.perRing;
-    const theta = (column + offset - scroll * speed) * step;
-    const y = (row - (this.rows - 1) / 2) * this.rowGap;
-
-    out.position.set(Math.sin(theta) * this.radius, y, -Math.cos(theta) * this.radius);
-    // Face the cylinder axis, with a slight tilt toward the camera for outer rows.
-    euler.set(-y * 0.035, -theta, 0, 'YXZ');
+    const step = (Math.PI * 2) / this.count;
+    const theta = (index - scroll) * step;
+    out.position.set(Math.sin(theta) * this.radius, -0.55, Math.cos(theta) * this.radius);
+    // Face outward (towards the camera when in front), with a slight lean back.
+    euler.set(-0.04, theta, 0, 'YXZ');
     out.quaternion.setFromEuler(euler);
     out.scale = this.cardScale;
-    out.visibility = smoothstep(-0.3, 0.12, Math.cos(theta));
+    // Cards behind the logo recede into the fog but stay faintly present.
+    out.visibility = 0.35 + 0.65 * smoothstep(-0.6, 0.6, Math.cos(theta));
     return out;
   }
 
   focusScroll(index: number, from: number) {
-    const { column, offset, speed } = this.slot(index);
-    return nearestPeriodic((column + offset) / speed, this.perRing / speed, from);
+    return nearestPeriodic(index, this.count, from);
   }
 }

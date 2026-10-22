@@ -1,9 +1,8 @@
-// Gallery card fragment shader — cover-fit image, RGB split on velocity,
-// rounded corners, hover zoom, depth fade.
+// Gallery card fragment shader: cover-fit image, rounded corners, hover lift,
+// back-face darkening and a depth fade into the room. One texture fetch.
 uniform sampler2D uMap;
 uniform float uImageAspect;
 uniform float uPlaneAspect;
-uniform float uVelocity;
 uniform float uHover;
 uniform float uOpacity;
 uniform float uDim;
@@ -13,7 +12,7 @@ uniform float uRadius;
 
 varying vec2 vUv;
 varying float vDepth;
-varying float vBend;
+varying float vCurl;
 
 vec2 coverUv(vec2 uv) {
   float r = uPlaneAspect / uImageAspect;
@@ -24,18 +23,10 @@ vec2 coverUv(vec2 uv) {
 void main() {
   vec2 uv = vUv;
   if (!gl_FrontFacing) uv.x = 1.0 - uv.x;
-
   vec2 cuv = coverUv(uv);
-  cuv = (cuv - 0.5) * (1.0 - uHover * 0.06) + 0.5;
+  cuv = (cuv - 0.5) * (1.0 - uHover * 0.035) + 0.5;
+  vec3 col = texture2D(uMap, cuv).rgb;
 
-  float shift = uVelocity * 0.008;
-  vec3 col = vec3(
-    texture2D(uMap, cuv + vec2(shift, 0.0)).r,
-    texture2D(uMap, cuv).g,
-    texture2D(uMap, cuv - vec2(shift, 0.0)).b
-  );
-
-  // Rounded-rect mask in plane space.
   vec2 size = vec2(uPlaneAspect, 1.0);
   vec2 q = (vUv - 0.5) * size;
   vec2 halfSize = size * 0.5 - uRadius;
@@ -44,15 +35,11 @@ void main() {
   float mask = 1.0 - smoothstep(-aa, aa, d);
   if (mask <= 0.001) discard;
 
-  // Bend shading: the curled middle catches a little light.
-  col *= 1.0 - vBend * 0.12;
-  col += vBend * 0.05;
-
-  col *= mix(1.0, 0.42, uDim * (1.0 - uHover));
-  col *= 1.0 + uHover * 0.06;
-  if (!gl_FrontFacing) col *= 0.22;
+  col *= 1.0 - vCurl * 0.08;
+  col *= mix(1.0, 0.38, uDim * (1.0 - uHover));
+  if (!gl_FrontFacing) col *= 0.18;
 
   float fog = smoothstep(uFogNear, uFogFar, vDepth);
-  gl_FragColor = vec4(col, mask * uOpacity * (1.0 - fog * 0.88));
+  gl_FragColor = vec4(col, mask * uOpacity * (1.0 - fog * 0.8));
   #include <colorspace_fragment>
 }

@@ -1,0 +1,188 @@
+---
+import { getProjects } from '../../lib/data';
+import { routes, withBase } from '../../lib/paths';
+
+const projects = await getProjects();
+const step = 360 / projects.length;
+---
+
+<section class="universe" aria-labelledby="universe-title">
+  <a class="universe__link" href={routes.explore} data-cursor="explore" data-cursor-label="ENTER">
+    <div class="universe__scene" aria-hidden="true">
+      <div class="universe__ring" style={`--n:${projects.length}`}>
+        {
+          projects.map((p, i) => (
+            <span class="universe__card" style={`--a:${i * step}deg`}>
+              <img src={withBase(p.data.coverThumb)} alt="" loading="lazy" decoding="async" width="960" height="600" />
+            </span>
+          ))
+        }
+      </div>
+      <span class="universe__orbit universe__orbit--a"></span>
+      <span class="universe__orbit universe__orbit--b"></span>
+    </div>
+
+    <div class="universe__copy container">
+      <p class="t-caps t-muted">Scene 04 — Explore</p>
+      <h2 class="universe__title" id="universe-title">JUST <em class="t-serif">Universe</em></h2>
+      <p class="universe__sub">Rings / Spiral — {projects.length}개의 작품이 떠 있는 3D 공간을 직접 탐험하세요.</p>
+      <span class="universe__enter"><span>Enter</span></span>
+    </div>
+  </a>
+</section>
+
+<style>
+  .universe {
+    position: relative;
+    background: var(--c-bg);
+    overflow: hidden;
+  }
+
+  .universe__link {
+    position: relative;
+    display: grid;
+    min-height: 100svh;
+    align-items: end;
+    padding-block: clamp(80px, 10vw, 140px) clamp(48px, 6vw, 80px);
+  }
+
+  .universe__scene {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    perspective: 1600px;
+    perspective-origin: 50% 30%;
+  }
+
+  .universe__ring {
+    position: relative;
+    width: clamp(220px, 24vw, 380px);
+    aspect-ratio: 16 / 10;
+    transform-style: preserve-3d;
+    transform: translateY(-6vh) rotateX(-14deg) rotateY(0deg);
+    animation: ring-spin 60s linear infinite;
+  }
+
+  .universe__link:hover .universe__ring {
+    animation-duration: 24s;
+  }
+
+  .universe__card {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(var(--a)) translateZ(clamp(300px, 34vw, 560px));
+    backface-visibility: hidden;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.8);
+  }
+
+  .universe__card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @keyframes ring-spin {
+    to {
+      transform: translateY(-6vh) rotateX(-14deg) rotateY(-360deg);
+    }
+  }
+
+  .universe__orbit {
+    position: absolute;
+    left: 50%;
+    top: 44%;
+    width: 120vw;
+    height: 26vw;
+    border: 1px solid var(--c-line);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotate(-4deg);
+    pointer-events: none;
+  }
+
+  .universe__orbit--b {
+    width: 84vw;
+    height: 14vw;
+    transform: translate(-50%, -50%) rotate(3deg);
+  }
+
+  .universe__copy {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 18px 40px;
+  }
+
+  .universe__copy > .t-caps,
+  .universe__title {
+    grid-column: 1;
+  }
+
+  .universe__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-h1);
+    line-height: 0.84;
+    letter-spacing: -0.065em;
+    text-transform: uppercase;
+  }
+
+  .universe__title em {
+    letter-spacing: -0.03em;
+  }
+
+  .universe__sub {
+    grid-column: 1;
+    color: var(--c-muted);
+  }
+
+  .universe__enter {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: end;
+    display: grid;
+    place-items: center;
+    width: clamp(120px, 12vw, 180px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid var(--c-line-strong);
+    font-family: var(--font-latin);
+    font-size: 0.875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition:
+      background-color var(--dur-std) var(--ease-out),
+      color var(--dur-std) var(--ease-out),
+      border-color var(--dur-std) var(--ease-out),
+      transform var(--dur-cine) var(--ease-out);
+  }
+
+  .universe__link:hover .universe__enter {
+    background: var(--c-bronze);
+    border-color: var(--c-bronze);
+    color: var(--c-ink);
+    transform: rotate(-12deg) scale(1.06);
+  }
+
+  @media (max-width: 720px) {
+    .universe__copy {
+      grid-template-columns: 1fr;
+    }
+
+    .universe__enter {
+      grid-column: 1;
+      grid-row: auto;
+      width: 110px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .universe__ring {
+      animation: none;
+    }
+  }
+</style>

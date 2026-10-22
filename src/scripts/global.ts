@@ -42,17 +42,24 @@ export function initReveals(scope: ParentNode = document) {
     targets.forEach((t) => t.classList.add('is-in'));
     return;
   }
+  // Chrome intersects against the target's own clip-path, so a fully clipped
+  // mask (clip-path: inset(100% …)) never "enters". Observe its parent instead.
+  const watched = new Map<Element, HTMLElement[]>();
   const io = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
-        entry.target.classList.add('is-in');
+        watched.get(entry.target)?.forEach((el) => el.classList.add('is-in'));
         io.unobserve(entry.target);
       }
     },
     { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
   );
-  targets.forEach((t) => io.observe(t));
+  targets.forEach((t) => {
+    const observed = t.classList.contains('reveal-mask') && t.parentElement ? t.parentElement : t;
+    watched.set(observed, [...(watched.get(observed) ?? []), t]);
+    io.observe(observed);
+  });
 }
 
 export function initGlobal() {

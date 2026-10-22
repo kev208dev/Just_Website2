@@ -1,30 +1,18 @@
-// Gallery card vertex shader — velocity driven paper bend.
-uniform float uVelocity; // signed, normalised to [-1, 1]
-uniform float uTime;
-uniform float uHover;
+// Gallery card vertex shader.
+// The card stays perfectly flat at rest; only fast scroll/drag adds a subtle
+// paper-like curl (uVelocity is already dead-zoned and eased on the CPU).
+uniform float uVelocity; // signed, [-1, 1]
 
 varying vec2 vUv;
 varying float vDepth;
-varying float vBend;
-
-const float PI = 3.141592653589793;
+varying float vCurl;
 
 void main() {
   vUv = uv;
   vec3 p = position; // unit plane, x/y in [-0.5, 0.5]
-
-  float v = uVelocity;
-  // Parabolic curl across the width, like a sheet catching air.
-  float curl = 1.0 - pow(p.x * 2.0, 2.0);
-  p.z += curl * v * 0.42;
-  // A soft wave travelling across the card while it moves.
-  p.z += sin(p.x * PI * 2.0 + uTime * 5.0) * 0.035 * abs(v);
-  // Slight shear so the trailing edge lags behind.
-  p.y += p.x * v * 0.06;
-  // Hover lifts the centre a touch.
-  p.z += curl * uHover * 0.06;
-
-  vBend = curl * abs(v);
+  float curl = 1.0 - (p.x * 2.0) * (p.x * 2.0);
+  p.z += curl * uVelocity * 0.28;
+  vCurl = curl * abs(uVelocity);
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   vDepth = -mv.z;
   gl_Position = projectionMatrix * mv;

@@ -2,6 +2,8 @@
 @import '@fontsource/space-grotesk/400.css';
 @import '@fontsource/space-grotesk/500.css';
 @import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/instrument-serif/400.css';
+@import '@fontsource/instrument-serif/400-italic.css';
 @import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 @import './tokens.css';
 
@@ -125,6 +127,37 @@ ol {
   transform: none;
 }
 
+/* ---------- Light scope (ivory pages / sections) ----------
+   Re-maps the colour tokens so every nested component inverts coherently. */
+.theme-light {
+  --c-bg: var(--c-ivory);
+  --c-bg-2: #ece9e2;
+  --c-surface: #e9e6df;
+  --c-surface-2: #dcd8cf;
+  --c-text: var(--c-ink);
+  --c-soft: #3b3935;
+  --c-muted: var(--c-ink-muted);
+  --c-line: rgb(13 14 16 / 0.13);
+  --c-line-strong: rgb(13 14 16 / 0.3);
+  --c-accent: var(--c-accent-deep);
+  --c-accent-soft: rgb(154 106 49 / 0.12);
+  background: var(--c-bg);
+  color: var(--c-text);
+  color-scheme: light;
+}
+
+.theme-light ::selection {
+  background: var(--c-ink);
+  color: var(--c-ivory);
+}
+
+.theme-light .chip[aria-pressed='true'],
+.theme-light .chip.is-active {
+  color: var(--c-ivory);
+  background: var(--c-ink);
+  border-color: var(--c-ink);
+}
+
 /* ---------- Typography primitives ---------- */
 
 .t-display {
@@ -146,6 +179,15 @@ ol {
 
 .t-muted {
   color: var(--c-muted);
+}
+
+/* Editorial serif accent — used sparingly inside display type. */
+.t-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
 }
 
 .t-accent {
@@ -300,6 +342,11 @@ ol {
 /* ---------- Motion primitives ---------- */
 
 /* Mask line reveal — the JS adds .is-in; without JS the text is visible. */
+.manifesto .ml {
+  overflow: hidden;
+  padding-bottom: 0.04em;
+}
+
 .js .reveal-lines .line {
   display: block;
   overflow: hidden;
@@ -343,13 +390,13 @@ ol {
 }
 
 .js .reveal-mask img {
-  transform: scale(1.18);
-  transition: transform 1.6s var(--ease-out);
+  scale: 1.12;
+  transition: scale 1.6s var(--ease-out);
   transition-delay: var(--delay, 0ms);
 }
 
 .js .reveal-mask.is-in img {
-  transform: none;
+  scale: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {

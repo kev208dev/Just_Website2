@@ -1,6 +1,7 @@
 ---
 import { navItems, routes } from '../../lib/paths';
 import { site } from '../../lib/data';
+
 interface Props {
   cta?: boolean;
 }
@@ -12,111 +13,131 @@ const year = new Date().getFullYear();
   <div class="container">
     {
       cta && (
-        <>
-          <a class="footer-cta" href={routes.contact} data-cursor="link">
-            <span class="t-caps t-muted">Contact</span>
-            <span class="footer-cta__type t-display">
-              Let’s make
-              <br />
-              something real.
-            </span>
-          </a>
-          <hr class="rule" />
-        </>
+        <a class="footer-cta" href={routes.contact} data-cursor="link">
+          <span class="t-caps t-muted">Contact</span>
+          <span class="footer-cta__type">
+            Let’s make <em class="t-serif">something real.</em>
+          </span>
+        </a>
       )
     }
 
     <div class="footer-grid">
-      <div class="footer-brand">
-        <strong>JUST<sup>®</sup></strong>
-        <p class="t-muted">{site.tagline}<br />{site.mottoKo}</p>
-      </div>
+      <p class="footer-brand">
+        {site.tagline}
+        <br />
+        <span class="t-muted">{site.mottoKo}</span>
+      </p>
       <ul class="footer-nav">
         {navItems.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
       </ul>
       <ul class="footer-contact">
         <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
         <li>
-          <a href={site.contact.instagram.url} target="_blank" rel="noopener noreferrer">
-            Instagram {site.contact.instagram.handle}
-          </a>
+          <a href={site.contact.instagram.url} target="_blank" rel="noopener noreferrer">Instagram {site.contact.instagram.handle}</a>
         </li>
       </ul>
     </div>
+  </div>
 
-    <div class="footer-base t-caps t-muted">
-      <span>© {year} JUST Digital Atelier</span>
-      <span>Build. Prove.</span>
-    </div>
+  <p class="footer-mark" aria-hidden="true">JUST<sup>®</sup></p>
+
+  <div class="footer-base container t-caps t-muted">
+    <span>© {year} JUST Atelier</span>
+    <span>From zero. To anything.</span>
+    <span>Build. Prove.</span>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    padding-block: clamp(56px, 8vw, 120px) 32px;
-    border-top: 1px solid var(--c-line);
+    position: relative;
+    padding-top: clamp(80px, 11vw, 160px);
     background: var(--c-bg);
+    border-top: 1px solid var(--c-line);
+    overflow: hidden;
   }
 
   .footer-cta {
     display: grid;
-    padding-top: calc(var(--section-y) - clamp(56px, 8vw, 120px));
-    gap: 24px;
-    padding-bottom: clamp(48px, 7vw, 96px);
+    gap: 20px;
+    padding-bottom: clamp(56px, 8vw, 110px);
   }
 
   .footer-cta__type {
-    font-size: var(--fs-h1);
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    text-transform: uppercase;
     transition: color var(--dur-std) var(--ease-out);
   }
 
-  .footer-cta:hover .footer-cta__type {
-    color: var(--c-accent);
+  .footer-cta__type em {
+    letter-spacing: -0.03em;
+  }
+
+  .footer-cta:hover .footer-cta__type em {
+    color: var(--c-bronze);
   }
 
   .footer-grid {
     display: grid;
     grid-template-columns: 2fr 1fr 1.2fr;
     gap: 40px;
-    padding-block: 40px 72px;
-  }
-
-  .footer-brand strong {
-    display: block;
-    font-family: var(--font-latin);
-    font-size: 1.5rem;
-    letter-spacing: -0.06em;
-    margin-bottom: 12px;
-  }
-
-  .footer-brand sup {
-    font-size: 0.5em;
-    font-weight: 400;
+    padding-block: 36px;
+    border-top: 1px solid var(--c-line);
+    font-size: var(--fs-small);
   }
 
   .footer-nav,
   .footer-contact {
     display: grid;
-    gap: 8px;
+    gap: 6px;
     align-content: start;
     font-family: var(--font-latin);
   }
 
   .footer-nav a,
   .footer-contact a {
-    color: var(--c-muted);
+    color: var(--c-soft);
     transition: color var(--dur-micro) var(--ease-out);
   }
 
   .footer-nav a:hover,
   .footer-contact a:hover {
-    color: var(--c-text);
+    color: var(--c-ivory);
+  }
+
+  .footer-mark {
+    margin: clamp(24px, 4vw, 60px) 0 0;
+    padding-inline: calc(var(--gutter) * 0.5);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 33.5vw;
+    line-height: 0.74;
+    letter-spacing: -0.075em;
+    color: var(--c-ivory);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .footer-mark sup {
+    font-size: 0.12em;
+    font-weight: 400;
+    letter-spacing: 0;
+    vertical-align: top;
+    position: relative;
+    top: 0.5em;
+    color: var(--c-bronze);
   }
 
   .footer-base {
     display: flex;
     justify-content: space-between;
     gap: 16px;
+    padding-block: 22px 28px;
   }
 
   @media (max-width: 720px) {
@@ -126,6 +147,10 @@ const year = new Date().getFullYear();
 
     .footer-brand {
       grid-column: 1 / -1;
+    }
+
+    .footer-base span:nth-child(2) {
+      display: none;
     }
   }
 </style>

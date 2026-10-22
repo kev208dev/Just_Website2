@@ -1,8 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HomeExperience from '../components/home/HomeExperience.astro';
+import Hero from '../components/home/Hero.astro';
+import SelectedWorks from '../components/home/SelectedWorks.astro';
+import Manifesto from '../components/home/Manifesto.astro';
+import UniverseEntry from '../components/home/UniverseEntry.astro';
+import ArchiveScene from '../components/home/ArchiveScene.astro';
+import Collective from '../components/home/Collective.astro';
 ---
 
-<BaseLayout current="home" footer={false} bodyClass="is-home">
-  <HomeExperience />
+<BaseLayout current="home" bodyClass="is-home" footerCta={false}>
+  <Hero />
+  <SelectedWorks />
+  <Manifesto />
+  <UniverseEntry />
+  <ArchiveScene />
+  <Collective />
 </BaseLayout>
+
+<script>
+  import { initHome } from '../scripts/home';
+  initHome();
+</script>

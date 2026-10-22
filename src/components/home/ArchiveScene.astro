@@ -1,0 +1,191 @@
+---
+import { getArchive, getAwards, site } from '../../lib/data';
+import { routes } from '../../lib/paths';
+
+const [awards, archive] = await Promise.all([getAwards(), getArchive()]);
+const grand = awards.filter((a) => a.data.tier === 1);
+const stats = [
+  { value: String(awards.length), label: '2025 수상 기록' },
+  { value: String(grand.length), label: '대상' },
+  { value: site.prize2025.amountManwon.toLocaleString('ko-KR'), unit: '만원', label: '2025 입상 상금' },
+  { value: String(archive.length), label: '이전 수상·본선 기록' },
+];
+---
+
+<section class="archive" aria-labelledby="archive-title">
+  <div class="container">
+    <header class="archive__head">
+      <p class="t-caps archive__label">Scene 05 — The archive</p>
+      <h2 class="archive__title" id="archive-title">Proof, <em class="t-serif">not promises.</em></h2>
+    </header>
+
+    <dl class="archive__stats">
+      {
+        stats.map((s) => (
+          <div>
+            <dd class="t-num">
+              {s.value}
+              {s.unit && <small>{s.unit}</small>}
+            </dd>
+            <dt>{s.label}</dt>
+          </div>
+        ))
+      }
+    </dl>
+
+    <ol class="archive__list">
+      {
+        grand.map((a, i) => (
+          <li>
+            <a href={`${routes.awards}#${a.id}`}>
+              <span class="t-num idx">{String(i + 1).padStart(2, '0')}</span>
+              <span class="event">{a.data.event}</span>
+              <span class="grade t-serif">{a.data.grade}</span>
+              <span class="inst">{a.data.institution} 수여 · {a.data.year}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+
+    <a class="archive__more link-arrow" href={routes.awards}>
+      전체 수상 아카이브
+      <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6" fill="none" stroke="currentColor" stroke-width="1.4" /></svg>
+    </a>
+  </div>
+</section>
+
+<style>
+  .archive {
+    padding-block: var(--section-y);
+    background: var(--c-ivory);
+    color: var(--c-ink);
+  }
+
+  .archive__label {
+    color: var(--c-ink-muted);
+  }
+
+  .archive__head {
+    display: grid;
+    gap: 32px;
+    margin-bottom: clamp(56px, 8vw, 120px);
+  }
+
+  .archive__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-h1);
+    line-height: 0.84;
+    letter-spacing: -0.065em;
+    text-transform: uppercase;
+  }
+
+  .archive__title em {
+    letter-spacing: -0.03em;
+    color: var(--c-accent-deep);
+  }
+
+  .archive__stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--c-ink-line);
+    margin-bottom: clamp(64px, 9vw, 140px);
+  }
+
+  .archive__stats > div {
+    display: grid;
+    gap: 12px;
+    padding: 28px 24px 0 0;
+  }
+
+  .archive__stats > div + div {
+    padding-left: 24px;
+    border-left: 1px solid var(--c-ink-line);
+  }
+
+  .archive__stats dd {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(3rem, 1.2rem + 5.4vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: -0.07em;
+  }
+
+  .archive__stats small {
+    font-size: 0.26em;
+    letter-spacing: 0;
+    margin-left: 6px;
+  }
+
+  .archive__stats dt {
+    font-size: var(--fs-small);
+    color: var(--c-ink-muted);
+  }
+
+  .archive__list {
+    border-top: 1px solid var(--c-ink);
+  }
+
+  .archive__list a {
+    display: grid;
+    grid-template-columns: 70px minmax(0, 1fr) 120px 260px;
+    align-items: baseline;
+    gap: 20px;
+    padding-block: clamp(22px, 2.6vw, 36px);
+    border-bottom: 1px solid var(--c-ink-line);
+    transition: padding var(--dur-std) var(--ease-out);
+  }
+
+  .archive__list a:hover {
+    padding-left: 14px;
+  }
+
+  .archive__list .idx {
+    font-size: var(--fs-small);
+    color: var(--c-ink-muted);
+  }
+
+  .archive__list .event {
+    font-size: clamp(1.4rem, 0.9rem + 1.6vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+  }
+
+  .archive__list .grade {
+    font-size: clamp(1.4rem, 1rem + 1vw, 2rem);
+    color: var(--c-accent-deep);
+  }
+
+  .archive__list .inst {
+    font-size: var(--fs-small);
+    color: var(--c-ink-muted);
+    text-align: right;
+  }
+
+  .archive__more {
+    margin-top: 48px;
+  }
+
+  @media (max-width: 900px) {
+    .archive__stats {
+      grid-template-columns: 1fr 1fr;
+      row-gap: 32px;
+    }
+
+    .archive__stats > div:nth-child(3) {
+      padding-left: 0;
+      border-left: 0;
+    }
+
+    .archive__list a {
+      grid-template-columns: 40px 1fr auto;
+    }
+
+    .archive__list .inst {
+      grid-column: 2 / -1;
+      text-align: left;
+    }
+  }
+</style>

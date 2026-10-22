@@ -15,7 +15,7 @@ const placements = ['wide', 'narrow-low', 'narrow', 'wide-low', 'mid'];
   <div class="page">
     <PageHero
       kicker="Selected works"
-      lines={['Work']}
+      lines={['All <em class="t-serif">works</em>']}
       count={`(${String(projects.length).padStart(2, '0')})`}
       intro="아이디어를 발견하고, 실험하고, 기술로 실제 결과물을 만듭니다. JUST 멤버들이 직접 만든 작업들입니다."
     />
@@ -44,22 +44,22 @@ const placements = ['wide', 'narrow-low', 'narrow', 'wide-low', 'mid'];
         {
           projects.map((p, i) => (
             <li class={`work-item is-${placements[i % placements.length]}`} data-category={p.data.category} data-flip-id={p.id}>
-              <a href={routes.project(p.id)} class="work-item__link" data-cursor="view" data-preview={withBase(p.data.thumb)}>
+              <a href={routes.project(p.id)} class="work-item__link" data-cursor="view" data-preview={withBase(p.data.coverThumb)} style={`--accent:${p.data.art.accent}`}>
                 <figure class="work-item__media reveal-mask" data-reveal>
                   <img
-                    src={withBase(p.data.image)}
-                    alt={p.data.alt}
-                    width="1280"
-                    height={Math.round(1280 / p.data.imageAspect)}
+                    src={withBase(p.data.cover)}
+                    alt={`${p.data.title} 키비주얼 — ${p.data.art.direction}`}
+                    width="1920"
+                    height="1200"
                     loading={i < 2 ? 'eager' : 'lazy'}
                     decoding="async"
                   />
                 </figure>
                 <div class="work-item__meta">
                   <span class="work-item__num t-num">{String(i + 1).padStart(2, '0')}</span>
-                  <h2 class="work-item__title">{p.data.title}</h2>
+                  <h2 class="work-item__title">{p.data.titleEn}</h2>
                   <span class="work-item__cat t-caps">{p.data.category}</span>
-                  <span class="work-item__stack">{p.data.stack.slice(0, 3).join(' · ')}</span>
+                  <span class="work-item__stack"><span class="work-item__ko">{p.data.title}</span> — <span class="t-serif">{p.data.art.tagline}</span></span>
                   <span class="work-item__year t-num">{p.data.year ?? '—'}</span>
                 </div>
               </a>
@@ -161,7 +161,7 @@ const placements = ['wide', 'narrow-low', 'narrow', 'wide-low', 'mid'];
   .work-item__media {
     position: relative;
     overflow: hidden;
-    border-radius: var(--radius-s);
+    border-radius: 2px;
     background: var(--c-surface);
     aspect-ratio: 16 / 10;
   }
@@ -174,7 +174,7 @@ const placements = ['wide', 'narrow-low', 'narrow', 'wide-low', 'mid'];
   }
 
   .work-item__link:hover .work-item__media img {
-    transform: scale(1.045);
+    transform: scale(1.025);
   }
 
   .work-item__meta {
@@ -192,15 +192,25 @@ const placements = ['wide', 'narrow-low', 'narrow', 'wide-low', 'mid'];
 
   .work-item__title {
     font-family: var(--font-display);
-    font-size: var(--fs-h3);
+    font-size: clamp(1.75rem, 1rem + 1.8vw, 3rem);
     font-weight: 500;
-    letter-spacing: -0.035em;
-    line-height: 1.1;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    text-transform: uppercase;
     transition: color var(--dur-micro) var(--ease-out);
   }
 
   .work-item__link:hover .work-item__title {
-    color: var(--c-accent);
+    color: var(--c-bone);
+  }
+
+  .work-item__num {
+    color: var(--accent);
+  }
+
+  .work-item__stack .t-serif {
+    font-size: 1.125em;
+    color: var(--c-soft);
   }
 
   .work-item__cat {

@@ -1,24 +1,34 @@
 :root {
-  /* Color */
-  --c-bg: #090a0b;
-  --c-bg-2: #141517;
-  --c-surface: #1a1b1d;
-  --c-surface-2: #222326;
-  --c-accent: #f2ae45;
-  --c-accent-deep: #c9822a;
-  --c-accent-soft: rgb(242 174 69 / 0.14);
-  --c-text: #f1eee8;
-  --c-muted: #999999;
-  --c-line: rgb(241 238 232 / 0.12);
-  --c-line-strong: rgb(241 238 232 / 0.28);
-  --c-paper: #f1eee8;
-  --c-ink: #0e0f10;
-  --c-ink-muted: #5d5b57;
+  /* Color — JUST ATELIER: Obsidian, Graphite, Bone, Bronze, Ivory.
+     Bronze is reserved for the brand object and key interactions. */
+  --c-obsidian: #08090b;
+  --c-graphite: #28292c;
+  --c-bone: #d6d0c5;
+  --c-bronze: #c88f47;
+  --c-ivory: #f5f3ee;
 
-  --metal-amber: linear-gradient(135deg, #f8d08a 0%, #f2ae45 32%, #a8661c 62%, #f2ae45 82%, #fbe0ad 100%);
+  --c-bg: var(--c-obsidian);
+  --c-bg-2: #111214;
+  --c-surface: #17181b;
+  --c-surface-2: var(--c-graphite);
+  --c-accent: var(--c-bronze);
+  --c-accent-deep: #9a6a31;
+  --c-accent-soft: rgb(200 143 71 / 0.12);
+  --c-text: var(--c-ivory);
+  --c-soft: var(--c-bone);
+  --c-muted: #8b877f;
+  --c-line: rgb(214 208 197 / 0.12);
+  --c-line-strong: rgb(214 208 197 / 0.26);
+  --c-paper: var(--c-ivory);
+  --c-ink: #0d0e10;
+  --c-ink-muted: #6b675f;
+  --c-ink-line: rgb(13 14 16 / 0.14);
+
+  --metal-amber: linear-gradient(135deg, #d9b07a 0%, #c88f47 45%, #8d5f2c 100%);
 
   /* Type */
   --font-display: 'Space Grotesk', 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', 'Pretendard Variable', Georgia, serif;
   --font-body: 'Pretendard Variable', Pretendard, 'Space Grotesk', system-ui, sans-serif;
   --font-latin: 'Space Grotesk', 'Pretendard Variable', system-ui, sans-serif;
 
@@ -29,7 +39,7 @@
   --fs-h3: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
   --fs-h2: clamp(2.5rem, 1.4rem + 4.4vw, 5.5rem);
   --fs-h1: clamp(3.4rem, 1.2rem + 9vw, 11.5rem);
-  --fs-mega: clamp(4rem, 0.8rem + 13vw, 17rem);
+  --fs-mega: clamp(4rem, 0.6rem + 13.5vw, 19rem);
 
   --tracking-tight: -0.045em;
   --tracking-display: -0.06em;
