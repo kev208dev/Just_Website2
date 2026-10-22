@@ -45,6 +45,7 @@ export function initHome() {
       gallery = await createGallery(stage, {
         items,
         reduced,
+        wheelTarget: root,
         ui: {
           onReady() {
             root.classList.add('is-ready');

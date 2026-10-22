@@ -1,0 +1,649 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import RevealText from '../components/motion/RevealText.astro';
+import { getArchive, getAwards, getMembers, linkParticipants, site } from '../lib/data';
+import { routes } from '../lib/paths';
+
+const [awards, archive, members] = await Promise.all([getAwards(), getArchive(), getMembers()]);
+const featured = awards.filter((a) => a.data.featured);
+
+const TIER_LABEL: Record<number, string> = {
+  1: '대상',
+  2: '금상 · 최우수',
+  3: '은상 · 우수 · 특별',
+  4: '장려 · 동상',
+  5: '선정 · 본선',
+};
+
+type Row = {
+  id: string;
+  year: number | null;
+  event: string;
+  grade: string;
+  tier: number;
+  institution?: string;
+  generations: string[];
+  members: { name: string; id?: string }[];
+  source: 'record' | 'archive';
+};
+
+const rows: Row[] = [
+  ...awards.map((a) => ({
+    id: a.id,
+    year: a.data.year,
+    event: a.data.event,
+    grade: a.data.grade,
+    tier: a.data.tier,
+    institution: a.data.institution,
+    generations: a.data.generations,
+    members: linkParticipants(a.data.members, members),
+    source: 'record' as const,
+  })),
+  ...archive.map((a) => ({
+    id: a.id,
+    year: null,
+    event: a.data.title,
+    grade: a.data.grade,
+    tier: a.data.tier,
+    generations: [],
+    members: [],
+    source: 'archive' as const,
+  })),
+];
+
+const gens = [...new Set(awards.flatMap((a) => a.data.generations))].sort();
+const tiers = [...new Set(rows.map((r) => r.tier))].sort();
+const memberHref = (id: string) => `${routes.people}?member=${id}`;
+---
+
+<BaseLayout title="Awards" current="awards" description="JUST 수상 아카이브 — 2025년 19건의 수상 기록과 이전 기록.">
+  <div class="page">
+    <PageHero kicker="Awards archive" lines={['Awards']} count={`(${rows.length})`}>
+      <dl class="award-stats">
+        <div>
+          <dt class="t-caps t-muted">2025 records</dt>
+          <dd class="t-num">{awards.length}</dd>
+        </div>
+        <div>
+          <dt class="t-caps t-muted">Grand prizes</dt>
+          <dd class="t-num">{featured.length}</dd>
+        </div>
+        <div>
+          <dt class="t-caps t-muted">{site.prize2025.label}</dt>
+          <dd class="t-num">{site.prize2025.amountManwon.toLocaleString('ko-KR')}<small>만원</small></dd>
+        </div>
+        <div>
+          <dt class="t-caps t-muted">Archive</dt>
+          <dd class="t-num">{archive.length}</dd>
+        </div>
+      </dl>
+    </PageHero>
+
+    <section class="exhibit container" aria-labelledby="exhibit-title">
+      <div class="exhibit__head">
+        <p class="section-label t-caps">Exhibit — 2025</p>
+        <RevealText as="h2" id="exhibit-title" lines={['Grand prizes']} class="exhibit__title t-display" />
+      </div>
+      <ul class="exhibit__grid">
+        {
+          featured.map((a, i) => (
+            <li>
+              <article class="plaque" data-tilt id={`plaque-${a.id}`}>
+                <div class="plaque__inner">
+                  <p class="plaque__top t-caps">
+                    <span>No. {String(i + 1).padStart(2, '0')}</span>
+                    <span>{a.data.year}</span>
+                  </p>
+                  <p class="plaque__grade">{a.data.grade}</p>
+                  <h3 class="plaque__event">{a.data.event}</h3>
+                  <p class="plaque__inst">{a.data.institution} 수여</p>
+                  <p class="plaque__members">
+                    {linkParticipants(a.data.members, members).map((m, j) => (
+                      <>
+                        {j > 0 && ', '}
+                        {m.id ? <a href={memberHref(m.id)}>{m.name}</a> : <span>{m.name}</span>}
+                      </>
+                    ))}
+                  </p>
+                  <span class="plaque__sheen" aria-hidden="true" />
+                </div>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="highlight container" aria-labelledby="highlight-title">
+      <p class="section-label t-caps" id="highlight-title">2026 — Awarded projects</p>
+      <ul class="highlight__list">
+        {
+          site.awarded2026.map((p, i) => (
+            <li class="reveal-fade" data-reveal style={`--delay:${i * 90}ms`}>
+              <span class="t-num t-muted">{String(i + 1).padStart(2, '0')}</span>
+              <span>{p.title}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="records container" data-records aria-labelledby="records-title">
+      <div class="records__head">
+        <h2 class="records__title t-display" id="records-title">All records</h2>
+        <p class="t-muted t-num" aria-live="polite"><span data-result-count>{rows.length}</span> / {rows.length}</p>
+      </div>
+
+      <div class="records__tools">
+        <label class="search">
+          <span class="sr-only">대회명 검색</span>
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.4" /><path d="m11 11 3.5 3.5" stroke="currentColor" stroke-width="1.4" /></svg>
+          <input type="search" placeholder="대회명, 기관, 참여자 검색" data-search autocomplete="off" />
+        </label>
+        <div class="records__selects">
+          <label>
+            <span class="t-caps t-muted">Year</span>
+            <select data-filter-year>
+              <option value="all">전체</option>
+              <option value="2025">2025</option>
+              <option value="archive">Archive</option>
+            </select>
+          </label>
+          <label>
+            <span class="t-caps t-muted">Generation</span>
+            <select data-filter-gen>
+              <option value="all">전체</option>
+              {gens.map((g) => <option value={g}>{g}</option>)}
+            </select>
+          </label>
+          <label>
+            <span class="t-caps t-muted">Grade</span>
+            <select data-filter-tier>
+              <option value="all">전체</option>
+              {tiers.map((t) => <option value={String(t)}>{TIER_LABEL[t]}</option>)}
+            </select>
+          </label>
+          <label>
+            <span class="t-caps t-muted">Sort</span>
+            <select data-sort>
+              <option value="tier">등급순</option>
+              <option value="year">연도순</option>
+              <option value="name">대회명순</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <ol class="records__list" data-list>
+        {
+          rows.map((r, i) => (
+            <li
+              class="record"
+              id={r.id}
+              data-row
+              data-index={i}
+              data-year={r.year ?? 'archive'}
+              data-gens={r.generations.join('|')}
+              data-tier={r.tier}
+              data-name={r.event}
+              data-search-text={[r.event, r.grade, r.institution, ...r.members.map((m) => m.name)].filter(Boolean).join(' ').toLowerCase()}
+            >
+              <button class="record__row" type="button" aria-expanded="false" aria-controls={`${r.id}-detail`}>
+                <span class="record__year t-num">{r.year ?? 'Archive'}</span>
+                <span class="record__event">{r.event}</span>
+                <span class={`record__grade tier-${r.tier}`}>{r.grade}</span>
+                <span class="record__gen t-muted">{r.generations.join(', ') || '—'}</span>
+                <span class="record__toggle" aria-hidden="true" />
+              </button>
+              <div class="record__detail" id={`${r.id}-detail`} hidden>
+                <dl>
+                  {r.institution && (
+                    <div>
+                      <dt class="t-caps t-muted">수여 기관</dt>
+                      <dd>{r.institution}</dd>
+                    </div>
+                  )}
+                  <div>
+                    <dt class="t-caps t-muted">등급</dt>
+                    <dd>{TIER_LABEL[r.tier]}</dd>
+                  </div>
+                  {r.members.length > 0 && (
+                    <div>
+                      <dt class="t-caps t-muted">참여자</dt>
+                      <dd class="record__members">
+                        {r.members.map((m) => (m.id ? <a href={memberHref(m.id)}>{m.name}</a> : <span>{m.name}</span>))}
+                      </dd>
+                    </div>
+                  )}
+                  {r.source === 'archive' && (
+                    <div>
+                      <dt class="t-caps t-muted">출처</dt>
+                      <dd class="t-muted">기존 웹사이트 ‘프로젝트 아카이브’ (연도·기관 미기재)</dd>
+                    </div>
+                  )}
+                </dl>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="records__empty t-muted" data-empty hidden>조건에 맞는 기록이 없습니다.</p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .award-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--c-line);
+  }
+
+  .award-stats > div {
+    padding: 20px 16px 0 0;
+  }
+
+  .award-stats dd {
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 1.2rem + 3vw, 4.5rem);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .award-stats small {
+    font-size: 0.35em;
+    margin-left: 4px;
+    letter-spacing: 0;
+  }
+
+  /* ---------- Exhibit ---------- */
+  .exhibit {
+    padding-bottom: var(--section-y);
+  }
+
+  .exhibit__head {
+    display: grid;
+    gap: 24px;
+    margin-bottom: clamp(40px, 6vw, 80px);
+  }
+
+  .exhibit__title {
+    font-size: var(--fs-h2);
+  }
+
+  .exhibit__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(16px, 2.4vw, 32px);
+    perspective: 1400px;
+  }
+
+  .plaque {
+    --rx: 0deg;
+    --ry: 0deg;
+    --mx: 50%;
+    --my: 50%;
+    position: relative;
+    height: 100%;
+    padding: 1px;
+    border-radius: var(--radius-m);
+    background: linear-gradient(140deg, rgb(242 174 69 / 0.75), rgb(242 174 69 / 0.08) 40%, rgb(242 174 69 / 0.35));
+    transform: rotateX(var(--rx)) rotateY(var(--ry));
+    transform-style: preserve-3d;
+    transition: transform 600ms var(--ease-out);
+  }
+
+  .plaque__inner {
+    position: relative;
+    display: grid;
+    gap: 12px;
+    height: 100%;
+    min-height: clamp(300px, 30vw, 420px);
+    padding: clamp(24px, 3vw, 40px);
+    border-radius: calc(var(--radius-m) - 1px);
+    background:
+      radial-gradient(90% 70% at 100% 0%, rgb(242 174 69 / 0.18), transparent 60%),
+      linear-gradient(160deg, #1e1f22, #111214);
+    overflow: hidden;
+  }
+
+  .plaque__top {
+    display: flex;
+    justify-content: space-between;
+    color: var(--c-muted);
+  }
+
+  .plaque__grade {
+    margin-top: auto;
+    font-size: clamp(4rem, 2rem + 6vw, 8rem);
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    background: var(--metal-amber);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    transform: translateZ(40px);
+  }
+
+  .plaque__event {
+    font-size: clamp(1.125rem, 0.9rem + 0.8vw, 1.625rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+
+  .plaque__inst,
+  .plaque__members {
+    color: var(--c-muted);
+    font-size: var(--fs-small);
+  }
+
+  .plaque__members a {
+    color: var(--c-text);
+    text-decoration: underline;
+    text-decoration-color: var(--c-line-strong);
+    text-underline-offset: 3px;
+  }
+
+  .plaque__members a:hover {
+    color: var(--c-accent);
+  }
+
+  .plaque__sheen {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(500px circle at var(--mx) var(--my), rgb(255 230 180 / 0.12), transparent 45%);
+    opacity: 0;
+    transition: opacity var(--dur-std) var(--ease-out);
+    pointer-events: none;
+  }
+
+  .plaque:hover .plaque__sheen {
+    opacity: 1;
+  }
+
+  /* ---------- 2026 ---------- */
+  .highlight {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    padding-bottom: var(--section-y);
+  }
+
+  .highlight__list {
+    border-top: 1px solid var(--c-line);
+  }
+
+  .highlight__list li {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    padding-block: 22px;
+    border-bottom: 1px solid var(--c-line);
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  /* ---------- Records ---------- */
+  .records {
+    padding-bottom: var(--section-y);
+  }
+
+  .records__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .records__title {
+    font-size: var(--fs-h2);
+  }
+
+  .records__tools {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    align-items: end;
+    justify-content: space-between;
+    padding-block: 14px;
+    background: linear-gradient(var(--c-bg) 80%, transparent);
+  }
+
+  .search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1 1 280px;
+    max-width: 440px;
+    height: 46px;
+    padding: 0 18px;
+    border: 1px solid var(--c-line);
+    border-radius: 999px;
+    color: var(--c-muted);
+    transition: border-color var(--dur-micro) var(--ease-out);
+  }
+
+  .search:focus-within {
+    border-color: var(--c-accent);
+  }
+
+  .search input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    background: none;
+    border: 0;
+    outline: none;
+    color: var(--c-text);
+  }
+
+  .records__selects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .records__selects label {
+    display: grid;
+    gap: 4px;
+  }
+
+  .records__selects select {
+    height: 40px;
+    padding: 0 34px 0 14px;
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-s);
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23999' stroke-width='1.4'/%3E%3C/svg%3E")
+        right 12px center / 10px no-repeat,
+      var(--c-bg-2);
+    appearance: none;
+    font-size: var(--fs-small);
+  }
+
+  .records__list {
+    margin-top: 16px;
+    border-top: 1px solid var(--c-line);
+  }
+
+  .record {
+    border-bottom: 1px solid var(--c-line);
+  }
+
+  .record[hidden] {
+    display: none;
+  }
+
+  .record:target .record__row {
+    background: var(--c-accent-soft);
+  }
+
+  .record__row {
+    display: grid;
+    grid-template-columns: 90px minmax(0, 1fr) 140px 110px 24px;
+    gap: 16px;
+    align-items: center;
+    width: 100%;
+    padding: 18px 8px;
+    text-align: left;
+    transition: background-color var(--dur-micro) var(--ease-out);
+  }
+
+  .record__row:hover {
+    background: rgb(241 238 232 / 0.03);
+  }
+
+  .record__year {
+    font-size: var(--fs-small);
+    color: var(--c-muted);
+  }
+
+  .record__event {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .record__grade {
+    justify-self: start;
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-size: var(--fs-small);
+    border: 1px solid var(--c-line);
+  }
+
+  .record__grade.tier-1 {
+    background: var(--c-accent);
+    border-color: var(--c-accent);
+    color: var(--c-ink);
+    font-weight: 600;
+  }
+
+  .record__grade.tier-2 {
+    border-color: var(--c-accent);
+    color: var(--c-accent);
+  }
+
+  .record__gen {
+    font-size: var(--fs-small);
+  }
+
+  .record__toggle {
+    position: relative;
+    width: 14px;
+    height: 14px;
+  }
+
+  .record__toggle::before,
+  .record__toggle::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1.4px;
+    background: currentColor;
+    transition: transform var(--dur-std) var(--ease-out);
+  }
+
+  .record__toggle::after {
+    transform: rotate(90deg);
+  }
+
+  .record__row[aria-expanded='true'] .record__toggle::after {
+    transform: rotate(0deg);
+  }
+
+  .record__detail {
+    padding: 4px 8px 28px 114px;
+  }
+
+  .record__detail dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px 32px;
+  }
+
+  .record__detail dt {
+    margin-bottom: 6px;
+  }
+
+  .record__members {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+
+  .record__members a {
+    text-decoration: underline;
+    text-decoration-color: var(--c-line-strong);
+    text-underline-offset: 3px;
+  }
+
+  .record__members a:hover {
+    color: var(--c-accent);
+  }
+
+  .records__empty {
+    padding-block: 40px;
+  }
+
+  @media (max-width: 820px) {
+    .award-stats {
+      grid-template-columns: 1fr 1fr;
+      row-gap: 24px;
+    }
+
+    .exhibit__grid,
+    .highlight {
+      grid-template-columns: 1fr;
+    }
+
+    .record__row {
+      grid-template-columns: 1fr auto 18px;
+      grid-template-areas:
+        'year grade toggle'
+        'event event event';
+      row-gap: 8px;
+    }
+
+    .record__year {
+      grid-area: year;
+    }
+
+    .record__event {
+      grid-area: event;
+    }
+
+    .record__grade {
+      grid-area: grade;
+    }
+
+    .record__gen {
+      display: none;
+    }
+
+    .record__toggle {
+      grid-area: toggle;
+    }
+
+    .record__detail {
+      padding-left: 8px;
+    }
+  }
+</style>
+
+<script>
+  import { initAwards } from '../scripts/awards';
+  initAwards();
+</script>

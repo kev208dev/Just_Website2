@@ -84,7 +84,8 @@ export class GalleryCard3D {
     this.mesh.scale.set(sx, sy, 1);
     const u = this.uniforms;
     u.uPlaneAspect.value = sx / sy;
-    u.uHover.value = Math.max(this.hover, this.focus);
+    // Drop the hover zoom while focusing so the final frame matches the detail hero's cover crop.
+    u.uHover.value = this.hover * (1 - this.focus);
     u.uRadius.value = 0.035 * (1 - this.focus);
     const opacity = pose.visibility * this.fade * this.appear;
     u.uOpacity.value = Math.max(opacity, this.focus);

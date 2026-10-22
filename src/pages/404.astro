@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { routes } from '../lib/paths';
+---
+
+<BaseLayout title="Not found" footer={false} description="페이지를 찾을 수 없습니다.">
+  <section class="nf container">
+    <p class="section-label t-caps">404</p>
+    <h1 class="nf__title t-display">Zero<br />found.</h1>
+    <p class="t-lead t-muted">찾는 페이지가 없습니다. 여기서 다시 0부터 시작해 보세요.</p>
+    <div class="nf__links">
+      <a class="button" href={routes.home}>Home</a>
+      <a class="button button--ghost" href={routes.work}>Work</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    min-height: 100svh;
+    display: grid;
+    align-content: center;
+    gap: 28px;
+    padding-top: var(--header-h);
+  }
+
+  .nf__title {
+    font-size: var(--fs-mega);
+    line-height: 0.84;
+  }
+
+  .nf__links {
+    display: flex;
+    gap: 12px;
+  }
+</style>

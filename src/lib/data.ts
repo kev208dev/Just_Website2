@@ -1,5 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import site from '../content/site.json';
+import membersSource from '../content/members.json';
 
 export type Project = CollectionEntry<'projects'>;
 export type Member = CollectionEntry<'members'>;
@@ -16,7 +17,13 @@ export async function getProjects() {
 
 export async function getMembers() {
   const members = await getCollection('members');
-  return members.sort((a, b) => GROUP_ORDER.indexOf(a.data.group) - GROUP_ORDER.indexOf(b.data.group));
+  // Keep the source-file order within each group (collections are keyed, not ordered).
+  const order = new Map(membersSource.map((m, i) => [m.id, i]));
+  return members.sort(
+    (a, b) =>
+      GROUP_ORDER.indexOf(a.data.group) - GROUP_ORDER.indexOf(b.data.group) ||
+      (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0),
+  );
 }
 
 export async function getAwards() {

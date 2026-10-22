@@ -304,8 +304,10 @@ const total = String(projects.length).padStart(2, '0');
     grid-template-columns: 1fr auto 1fr;
     align-items: end;
     gap: 16px;
-    padding: 0 var(--gutter) calc(28px + env(safe-area-inset-bottom));
+    padding: 64px var(--gutter) calc(28px + env(safe-area-inset-bottom));
     pointer-events: none;
+    /* Scrim keeps the UI legible when bright cards pass behind it. */
+    background: linear-gradient(to top, rgb(9 10 11 / 0.82), rgb(9 10 11 / 0.4) 55%, transparent);
   }
 
   .home__ui > * {

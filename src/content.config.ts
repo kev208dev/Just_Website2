@@ -23,8 +23,8 @@ const projects = defineCollection({
     imageAspect: z.number(),
     alt: z.string(),
     links: z.object({
-      live: z.string().url().optional(),
-      github: z.string().url().optional(),
+      live: z.url().optional(),
+      github: z.url().optional(),
     }),
   }),
 });

@@ -25,6 +25,8 @@ export interface GalleryOptions {
   ui: GalleryUI;
   reduced: boolean;
   slots?: number;
+  /** Wheel input target, so scrolling over overlay UI still drives the gallery. */
+  wheelTarget?: HTMLElement;
 }
 
 /**
@@ -131,6 +133,7 @@ export async function createGallery(container: HTMLElement, options: GalleryOpti
       },
     },
     reduced,
+    options.wheelTarget,
   );
 
   const resize = (w: number, h: number) => gallery.configure(w / h);

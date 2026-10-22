@@ -1,0 +1,476 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RevealText from '../components/motion/RevealText.astro';
+import { getArchive, getAwards, getMembers, getProjects, site, GROUP_ORDER } from '../lib/data';
+import { routes } from '../lib/paths';
+
+const [awards, archive, members, projects] = await Promise.all([getAwards(), getArchive(), getMembers(), getProjects()]);
+const grandPrizes = awards.filter((a) => a.data.tier === 1).length;
+
+const stats = [
+  { value: String(awards.length), unit: '', label: '2025 수상 기록', note: `대상 ${grandPrizes}건 포함` },
+  { value: site.prize2025.amountManwon.toLocaleString('ko-KR'), unit: '만원', label: site.prize2025.label, note: '' },
+  { value: String(archive.length), unit: '', label: '이전 수상·본선 기록', note: '아카이브' },
+  { value: String(members.length), unit: '', label: '멤버', note: GROUP_ORDER.join(' · ') },
+];
+
+const generations = [
+  {
+    tag: '23기',
+    title: 'JUST 4기',
+    people: members.filter((m) => m.data.group === '23기'),
+  },
+  {
+    tag: '24기',
+    title: 'JUST 5기',
+    people: members.filter((m) => m.data.group === '24기'),
+  },
+  {
+    tag: '25기',
+    title: '25기',
+    people: members.filter((m) => m.data.group === '25기'),
+  },
+  {
+    tag: 'One Flap',
+    title: 'One Flap',
+    people: members.filter((m) => m.data.group === 'One Flap'),
+  },
+];
+
+const values = [
+  { en: 'Start from zero', ko: '0에서 1을 만든다', text: site.mottoKo },
+  { en: 'Build', ko: '생각에서 멈추지 않는다', text: '아이디어를 발견하고, 실험하고, 기술로 실제 결과물을 만듭니다.' },
+  { en: 'Prove', ko: '밖에서 검증받는다', text: '대회와 창업 프로그램에 직접 나가 결과물을 검증받습니다.' },
+];
+---
+
+<BaseLayout title="About" current="about" description={`${site.mottoKo} ${site.tagline}`}>
+  <div class="page about">
+    <header class="about-hero container">
+      <p class="section-label t-caps">About JUST</p>
+      <RevealText as="h1" lines={["We don’t", 'just think.', '<em>We build.</em>']} class="about-hero__title t-display" />
+      <div class="about-hero__foot">
+        <p class="t-lead reveal-fade" data-reveal style="--delay:400ms">{site.mottoKo}</p>
+        <p class="t-caps t-muted reveal-fade" data-reveal style="--delay:500ms">{site.tagline}</p>
+      </div>
+    </header>
+
+    <section class="manifesto container" aria-label="Manifesto">
+      <p class="manifesto__text" data-words>
+        From zero. To anything. JUST는 아이디어를 발견하고, 실험하고, 기술로 <em>실제 결과물</em>을 만드는 창작 동아리입니다. 생각에서
+        멈추지 않고 <em>직접 만들고</em>, 만든 것을 세상에 내놓아 <em>검증받습니다.</em>
+      </p>
+      <p class="manifesto__sign t-caps t-muted">Journey starts from me — Build. Prove.</p>
+    </section>
+
+    <section class="fields container" aria-labelledby="fields-title">
+      <div class="fields__head">
+        <p class="section-label t-caps">What we do</p>
+        <RevealText as="h2" id="fields-title" lines={['Four fields,', 'one habit.']} class="fields__title t-display" />
+      </div>
+      <ol class="fields__list">
+        {
+          site.fields.map((f, i) => (
+            <li class="field reveal-fade" data-reveal style={`--delay:${i * 90}ms`}>
+              <span class="field__num t-num">{String(i + 1).padStart(2, '0')}</span>
+              <div class="field__body">
+                <h3 class="field__title">{f.title}</h3>
+                <p class="field__en t-caps t-muted">{f.en}</p>
+              </div>
+              <p class="field__desc">{f.description}</p>
+              <ul class="field__tags">
+                {f.tags.map((t) => (
+                  <li>{t}</li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="light" aria-labelledby="numbers-title">
+      <div class="container">
+        <div class="light__head">
+          <p class="section-label t-caps">In numbers</p>
+          <RevealText as="h2" id="numbers-title" lines={['Proof,', 'not promises.']} class="light__title t-display" />
+        </div>
+        <dl class="stats">
+          {
+            stats.map((s, i) => (
+              <div class="stat reveal-fade" data-reveal style={`--delay:${i * 90}ms`}>
+                <dt class="stat__label">{s.label}</dt>
+                <dd class="stat__value t-num" data-count={s.value.replace(/,/g, '')}>
+                  {s.value}
+                  <span class="stat__unit">{s.unit}</span>
+                </dd>
+                {s.note && <dd class="stat__note t-caps">{s.note}</dd>}
+              </div>
+            ))
+          }
+        </dl>
+        <div class="light__links">
+          <a class="link-arrow" href={routes.awards}>
+            수상 아카이브 보기
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6" fill="none" stroke="currentColor" stroke-width="1.4" /></svg>
+          </a>
+          <a class="link-arrow" href={routes.work}>
+            프로젝트 {projects.length}개 보기
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6" fill="none" stroke="currentColor" stroke-width="1.4" /></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="values container" aria-labelledby="values-title">
+      <p class="section-label t-caps" id="values-title">Values</p>
+      <ol class="values__list">
+        {
+          values.map((v, i) => (
+            <li class="value">
+              <span class="value__num t-num t-muted">{String(i + 1).padStart(2, '0')}</span>
+              <RevealText as="h3" lines={[v.en]} class="value__title t-display" />
+              <div class="value__body reveal-fade" data-reveal>
+                <p class="value__ko">{v.ko}</p>
+                <p class="t-muted">{v.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="history container" aria-labelledby="history-title">
+      <div class="history__head">
+        <p class="section-label t-caps">Generations</p>
+        <RevealText as="h2" id="history-title" lines={['The people', 'who started it.']} class="history__title t-display" />
+      </div>
+      <ol class="timeline">
+        {
+          generations.map((g) => (
+            <li class="timeline__item reveal-fade" data-reveal>
+              <p class="timeline__tag t-caps">{g.tag}</p>
+              <h3 class="timeline__title">{g.title}</h3>
+              <ul class="timeline__roles">
+                {g.people
+                  .filter((m) => m.data.role)
+                  .map((m) => (
+                    <li>
+                      <span class="t-muted">{m.data.role}</span> {m.data.name}
+                    </li>
+                  ))}
+              </ul>
+              <p class="timeline__count t-num t-muted">{g.people.length} members</p>
+            </li>
+          ))
+        }
+      </ol>
+      <a class="link-arrow" href={routes.people}>
+        모든 멤버 보기
+        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6" fill="none" stroke="currentColor" stroke-width="1.4" /></svg>
+      </a>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .about-hero {
+    display: grid;
+    gap: clamp(32px, 5vw, 64px);
+    padding-bottom: var(--section-y);
+  }
+
+  .about-hero__title {
+    font-size: var(--fs-mega);
+    line-height: 0.84;
+  }
+
+  .about-hero__title :global(em) {
+    font-style: normal;
+    color: var(--c-accent);
+  }
+
+  .about-hero__foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: 24px;
+  }
+
+  .manifesto {
+    padding-bottom: var(--section-y);
+  }
+
+  .manifesto__text {
+    max-width: 22ch;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1rem + 3.6vw, 4.75rem);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.045em;
+  }
+
+  .manifesto__text :global(.w) {
+    opacity: 0.18;
+    transition: opacity 400ms linear;
+  }
+
+  .manifesto__text :global(.w.is-lit) {
+    opacity: 1;
+  }
+
+  .manifesto__text em {
+    font-style: normal;
+    color: var(--c-accent);
+  }
+
+  .manifesto__sign {
+    margin-top: 40px;
+  }
+
+  .fields {
+    padding-bottom: var(--section-y);
+  }
+
+  .fields__head,
+  .light__head,
+  .history__head {
+    display: grid;
+    gap: 28px;
+    margin-bottom: clamp(48px, 7vw, 96px);
+  }
+
+  .fields__title,
+  .light__title,
+  .history__title {
+    font-size: var(--fs-h2);
+  }
+
+  .fields__list {
+    border-top: 1px solid var(--c-line);
+  }
+
+  .field {
+    display: grid;
+    grid-template-columns: 70px 1.2fr 1.4fr 1fr;
+    gap: 24px;
+    align-items: baseline;
+    padding-block: clamp(24px, 3vw, 40px);
+    border-bottom: 1px solid var(--c-line);
+    transition: background-color var(--dur-std) var(--ease-out);
+  }
+
+  .field:hover {
+    background: linear-gradient(90deg, var(--c-accent-soft), transparent 70%);
+  }
+
+  .field__num {
+    color: var(--c-accent);
+    font-size: var(--fs-small);
+  }
+
+  .field__title {
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .field__en {
+    margin-top: 6px;
+  }
+
+  .field__desc {
+    color: var(--c-muted);
+  }
+
+  .field__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: end;
+  }
+
+  .field__tags li {
+    padding: 4px 12px;
+    border: 1px solid var(--c-line);
+    border-radius: 999px;
+    font-size: var(--fs-small);
+    color: var(--c-muted);
+  }
+
+  /* ---------- Light section ---------- */
+  .light {
+    background: var(--c-paper);
+    color: var(--c-ink);
+    padding-block: var(--section-y);
+  }
+
+  .light .section-label {
+    color: var(--c-ink-muted);
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgb(14 15 16 / 0.16);
+  }
+
+  .stat {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    padding: 28px 24px 40px 0;
+  }
+
+  .stat + .stat {
+    padding-left: 24px;
+    border-left: 1px solid rgb(14 15 16 / 0.16);
+  }
+
+  .stat__label {
+    color: var(--c-ink-muted);
+    font-size: var(--fs-small);
+  }
+
+  .stat__value {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 1.4rem + 5vw, 7rem);
+    font-weight: 500;
+    letter-spacing: -0.06em;
+    line-height: 0.9;
+  }
+
+  .stat__unit {
+    font-size: 0.32em;
+    letter-spacing: -0.02em;
+    margin-left: 4px;
+  }
+
+  .stat__note {
+    color: var(--c-ink-muted);
+  }
+
+  .light__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    margin-top: 56px;
+  }
+
+  /* ---------- Values ---------- */
+  .values {
+    padding-block: var(--section-y);
+  }
+
+  .values__list {
+    margin-top: 48px;
+    border-top: 1px solid var(--c-line);
+  }
+
+  .value {
+    display: grid;
+    grid-template-columns: 70px 1.4fr 1fr;
+    gap: 24px;
+    align-items: end;
+    padding-block: clamp(28px, 4vw, 56px);
+    border-bottom: 1px solid var(--c-line);
+  }
+
+  .value__title {
+    font-size: var(--fs-h2);
+  }
+
+  .value__ko {
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- History ---------- */
+  .history {
+    padding-bottom: var(--section-y);
+  }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-bottom: 48px;
+    border-top: 1px solid var(--c-line);
+  }
+
+  .timeline__item {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    padding: 32px 24px 32px 0;
+  }
+
+  .timeline__item::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--c-accent);
+  }
+
+  .timeline__tag {
+    color: var(--c-accent);
+  }
+
+  .timeline__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+
+  .timeline__roles {
+    display: grid;
+    gap: 4px;
+    font-size: var(--fs-small);
+  }
+
+  @media (max-width: 960px) {
+    .field {
+      grid-template-columns: 48px 1fr;
+    }
+
+    .field__desc,
+    .field__tags {
+      grid-column: 2;
+      justify-content: start;
+    }
+
+    .stats,
+    .timeline {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .stat:nth-child(3) {
+      padding-left: 0;
+      border-left: 0;
+    }
+
+    .stat:nth-child(n + 3) {
+      border-top: 1px solid rgb(14 15 16 / 0.16);
+    }
+
+    .value {
+      grid-template-columns: 48px 1fr;
+    }
+
+    .value__body {
+      grid-column: 2;
+    }
+  }
+</style>
+
+<script>
+  import { initAbout } from '../scripts/about';
+  initAbout();
+</script>

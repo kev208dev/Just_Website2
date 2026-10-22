@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RevealText from '../components/motion/RevealText.astro';
+import { site } from '../lib/data';
+---
+
+<BaseLayout title="Contact" current="contact" footerCta={false} description="JUST에 연락하기 — 이메일과 인스타그램.">
+  <div class="page contact">
+    <section class="container contact__hero">
+      <p class="section-label t-caps">Contact</p>
+      <RevealText as="h1" lines={['Let’s make', '<em>something real.</em>']} class="contact__title t-display" />
+    </section>
+
+    <section class="container contact__channels" aria-label="연락 채널">
+      <div class="channel reveal-fade" data-reveal>
+        <p class="t-caps t-muted">Email</p>
+        <a class="channel__value" href={`mailto:${site.contact.email}`} data-cursor="link">{site.contact.email}</a>
+        <button class="chip" type="button" data-copy={site.contact.email} aria-live="polite">Copy</button>
+      </div>
+      <div class="channel reveal-fade" data-reveal style="--delay:120ms">
+        <p class="t-caps t-muted">Instagram</p>
+        <a class="channel__value" href={site.contact.instagram.url} target="_blank" rel="noopener noreferrer" data-cursor="link">
+          {site.contact.instagram.handle}
+        </a>
+        <a class="chip" href={site.contact.instagram.url} target="_blank" rel="noopener noreferrer">Open ↗</a>
+      </div>
+    </section>
+
+    <section class="container contact__note">
+      <p class="t-lead t-muted reveal-fade" data-reveal>
+        협업 제안, 대회·프로그램 문의, 프로젝트에 대한 이야기 모두 환영합니다. {site.mottoKo}
+      </p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .contact__hero {
+    display: grid;
+    gap: 32px;
+    padding-bottom: clamp(64px, 10vw, 160px);
+  }
+
+  .contact__title {
+    font-size: var(--fs-mega);
+    line-height: 0.84;
+  }
+
+  .contact__title :global(em) {
+    font-style: normal;
+    color: var(--c-accent);
+  }
+
+  .contact__channels {
+    display: grid;
+    border-top: 1px solid var(--c-line);
+  }
+
+  .channel {
+    display: grid;
+    grid-template-columns: 160px 1fr auto;
+    align-items: center;
+    gap: 24px;
+    padding-block: clamp(24px, 3vw, 40px);
+    border-bottom: 1px solid var(--c-line);
+  }
+
+  .channel__value {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 0.8rem + 3.4vw, 4rem);
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    line-height: 1.1;
+    word-break: break-all;
+    transition: color var(--dur-micro) var(--ease-out);
+  }
+
+  .channel__value:hover {
+    color: var(--c-accent);
+  }
+
+  .contact__note {
+    padding-block: clamp(48px, 7vw, 96px) var(--section-y);
+  }
+
+  .contact__note p {
+    max-width: 40ch;
+  }
+
+  @media (max-width: 720px) {
+    .channel {
+      grid-template-columns: 1fr auto;
+    }
+
+    .channel > p {
+      grid-column: 1 / -1;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy!);
+        btn.textContent = 'Copied';
+      } catch {
+        btn.textContent = 'Copy failed';
+      }
+      window.setTimeout(() => (btn.textContent = 'Copy'), 1800);
+    });
+  });
+</script>

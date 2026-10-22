@@ -39,9 +39,11 @@ export class InputController {
     private readonly el: HTMLElement,
     private readonly cb: InputCallbacks = {},
     private readonly reduced = false,
+    /** Element that receives wheel input (defaults to `el`); drag and tap always use `el`. */
+    wheelTarget: HTMLElement = el,
   ) {
     const opts = { signal: this.ac.signal };
-    el.addEventListener('wheel', this.onWheel, { ...opts, passive: false });
+    wheelTarget.addEventListener('wheel', this.onWheel, { ...opts, passive: false });
     el.addEventListener('pointerdown', this.onDown, opts);
     window.addEventListener('pointermove', this.onMove, { ...opts, passive: true });
     window.addEventListener('pointerup', this.onUp, opts);
