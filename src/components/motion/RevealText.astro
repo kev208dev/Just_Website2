@@ -1,0 +1,24 @@
+---
+/**
+ * Mask line-reveal headline. Lines are authored explicitly so line breaks are
+ * art-directed instead of depending on runtime text measurement.
+ */
+interface Props {
+  lines: string[];
+  as?: 'h1' | 'h2' | 'h3' | 'p';
+  class?: string;
+  delay?: number;
+  id?: string;
+}
+const { lines, as: Tag = 'h2', class: className = '', delay = 0, id } = Astro.props;
+---
+
+<Tag class:list={['reveal-lines', className]} data-reveal style={`--delay:${delay}ms`} id={id} aria-label={lines.join(' ')}>
+  {
+    lines.map((line, i) => (
+      <span class="line" aria-hidden="true" style={`--i:${i}`}>
+        <span set:html={line} />
+      </span>
+    ))
+  }
+</Tag>

@@ -1,0 +1,336 @@
+[
+  {
+    "id": "a25-01",
+    "year": 2025,
+    "event": "2025 경기도 미래창업가 발굴프로그램",
+    "award": "1위 / 대상",
+    "grade": "대상",
+    "tier": 1,
+    "institution": "경기도교육감",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현",
+      "황태경",
+      "배주원",
+      "손하윤"
+    ],
+    "featured": true
+  },
+  {
+    "id": "a25-02",
+    "year": 2025,
+    "event": "2025 비즈쿨 캠프 경진대회 IR 결선",
+    "award": "1위 / 대상",
+    "grade": "대상",
+    "tier": 1,
+    "institution": "중소벤처기업부 장관",
+    "generations": [
+      "24기",
+      "23기"
+    ],
+    "members": [
+      "명준현",
+      "정하은"
+    ],
+    "featured": true
+  },
+  {
+    "id": "a25-03",
+    "year": 2025,
+    "event": "제 18회 전국 창업발명경진대회",
+    "award": "1위 / 대상",
+    "grade": "대상",
+    "tier": 1,
+    "institution": "중소벤처기업부 장관",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현"
+    ],
+    "featured": true
+  },
+  {
+    "id": "a25-04",
+    "year": 2025,
+    "event": "제 18회 전국 창업발명경진대회",
+    "award": "1위 / 대상",
+    "grade": "대상",
+    "tier": 1,
+    "institution": "환경부 장관",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현"
+    ],
+    "featured": true
+  },
+  {
+    "id": "a25-05",
+    "year": 2025,
+    "event": "비즈쿨 창업동아리 연합 STARTUPTHON",
+    "award": "1위 / 금상",
+    "grade": "금상",
+    "tier": 2,
+    "institution": "디미고",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "박초연",
+      "한준혁",
+      "조경윤",
+      "김도연"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-06",
+    "year": 2025,
+    "event": "제 7회 대구 빅데이터 분석 경진대회",
+    "award": "1위 / 최우수상",
+    "grade": "최우수상",
+    "tier": 2,
+    "institution": "대구미래교육연구원장",
+    "generations": [
+      "23기"
+    ],
+    "members": [
+      "박재현"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-07",
+    "year": 2025,
+    "event": "제 4회 청소년 메이커 경진대회",
+    "award": "최우수상",
+    "grade": "최우수상",
+    "tier": 2,
+    "institution": "서울시의회의장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-08",
+    "year": 2025,
+    "event": "제 18회 전국 창업발명경진대회",
+    "award": "최우수상",
+    "grade": "최우수상",
+    "tier": 2,
+    "institution": "특허청장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-09",
+    "year": 2025,
+    "event": "제 11회 부산창업아이디어 경진대회",
+    "award": "대학총장상",
+    "grade": "대학총장상",
+    "tier": 3,
+    "institution": "동의대학교 총장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-10",
+    "year": 2025,
+    "event": "제 27회 전국학생통계활용대회",
+    "award": "은상",
+    "grade": "은상",
+    "tier": 3,
+    "institution": "통계청장",
+    "generations": [
+      "23기"
+    ],
+    "members": [
+      "정하은",
+      "이한영",
+      "황혜린"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-11",
+    "year": 2025,
+    "event": "제 9회 벤처창업 아이템 경진대회",
+    "award": "은상",
+    "grade": "은상",
+    "tier": 3,
+    "institution": "창업진흥원장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "박초연",
+      "한준혁",
+      "이예진",
+      "손하윤"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-12",
+    "year": 2025,
+    "event": "2025년 창업 인큐베이팅 경진대회",
+    "award": "창의상",
+    "grade": "창의상",
+    "tier": 3,
+    "institution": "창업진흥원장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현",
+      "박초연",
+      "배주원"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-13",
+    "year": 2025,
+    "event": "2025 경기도 미래창업가 발굴프로그램",
+    "award": "우수상",
+    "grade": "우수상",
+    "tier": 3,
+    "institution": "한국엔젤투자협회장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "박초연",
+      "한준혁",
+      "김도연",
+      "조경윤"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-14",
+    "year": 2025,
+    "event": "안산시 공공데이터 활용·분석 경진대회",
+    "award": "우수상",
+    "grade": "우수상",
+    "tier": 3,
+    "institution": "안산시",
+    "generations": [
+      "23기"
+    ],
+    "members": [
+      "박재현"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-15",
+    "year": 2025,
+    "event": "2025 여름 ERICA 고교 딥테크 오디션",
+    "award": "우수상",
+    "grade": "우수상",
+    "tier": 3,
+    "institution": "ERICA 창업교육센터장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "박초연",
+      "한준혁",
+      "김도연",
+      "이예진"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-16",
+    "year": 2025,
+    "event": "제 7회 공공데이터 분석활용 대회",
+    "award": "우수상",
+    "grade": "우수상",
+    "tier": 3,
+    "institution": "경기도교육감",
+    "generations": [
+      "23기"
+    ],
+    "members": [
+      "정하은",
+      "이한영",
+      "황혜린"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-17",
+    "year": 2025,
+    "event": "2025 외교 공공데이터 활용 경진대회",
+    "award": "장려상",
+    "grade": "장려상",
+    "tier": 4,
+    "institution": "한국국제협력단 이사장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "박초연",
+      "한준혁",
+      "손하윤",
+      "이예진"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-18",
+    "year": 2025,
+    "event": "제 9회 벤처창업 아이템 경진대회",
+    "award": "동상",
+    "grade": "동상",
+    "tier": 4,
+    "institution": "한국반도체산업협회장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "조경윤",
+      "김도연"
+    ],
+    "featured": false
+  },
+  {
+    "id": "a25-19",
+    "year": 2025,
+    "event": "2025 학생창업유망팀 300",
+    "award": "최종선정",
+    "grade": "최종선정",
+    "tier": 5,
+    "institution": "교육부 장관",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현",
+      "김도연",
+      "배주원",
+      "황태경"
+    ],
+    "featured": false
+  }
+]

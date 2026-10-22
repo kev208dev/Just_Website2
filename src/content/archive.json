@@ -1,0 +1,236 @@
+[
+  {
+    "id": "legacy-01",
+    "title": "2024 디스플레이 챌린지 공모전 대상(장관상)",
+    "grade": "대상",
+    "tier": 1
+  },
+  {
+    "id": "legacy-02",
+    "title": "고교 CID 대회 대상",
+    "grade": "대상",
+    "tier": 1
+  },
+  {
+    "id": "legacy-03",
+    "title": "JA-삼성 Entrepreneur’s Playground(창업놀이터) 대상",
+    "grade": "대상",
+    "tier": 1
+  },
+  {
+    "id": "legacy-04",
+    "title": "대기업-청소년 아이디어 경진대회 최우수상 (부문 1등)",
+    "grade": "최우수",
+    "tier": 2
+  },
+  {
+    "id": "legacy-05",
+    "title": "국민대-JA Korea 온라인 창업 캠프 최우수상",
+    "grade": "최우수",
+    "tier": 2
+  },
+  {
+    "id": "legacy-06",
+    "title": "고교 CID 대회 우수상",
+    "grade": "우수",
+    "tier": 3
+  },
+  {
+    "id": "legacy-07",
+    "title": "대-스쿨 해결사 대교부문 최우수상",
+    "grade": "최우수",
+    "tier": 2
+  },
+  {
+    "id": "legacy-08",
+    "title": "JA-삼성 Entrepreneur’s Playground(창업놀이터) 최우수상",
+    "grade": "최우수",
+    "tier": 2
+  },
+  {
+    "id": "legacy-09",
+    "title": "Hello New World 해커톤 우수상",
+    "grade": "우수",
+    "tier": 3
+  },
+  {
+    "id": "legacy-10",
+    "title": "2022 국제로봇올림피아드 CAMP 미션형창작 3위",
+    "grade": "3위",
+    "tier": 3
+  },
+  {
+    "id": "legacy-11",
+    "title": "대-스쿨 해결사 롯데케미칼부문 최우수상",
+    "grade": "최우수",
+    "tier": 2
+  },
+  {
+    "id": "legacy-12",
+    "title": "스마틴 앱 챌린지 2024 장려상",
+    "grade": "장려",
+    "tier": 4
+  },
+  {
+    "id": "legacy-13",
+    "title": "대구콘텐츠코리아랩 주니어 콘텐츠 창업 캠프 최우수상",
+    "grade": "최우수",
+    "tier": 2
+  },
+  {
+    "id": "legacy-14",
+    "title": "2025 시스코 이노베이션 챌린지 Best Idea",
+    "grade": "Best Idea",
+    "tier": 3
+  },
+  {
+    "id": "legacy-15",
+    "title": "건식저장시설 홍보 아이디어 공모전 3위",
+    "grade": "3위",
+    "tier": 3
+  },
+  {
+    "id": "legacy-16",
+    "title": "한양대 에리카 퇴근시간 버스승차인원 예측 경진대회 대상",
+    "grade": "대상",
+    "tier": 1
+  },
+  {
+    "id": "legacy-17",
+    "title": "경기도상업경진대회 창업실무 금상",
+    "grade": "금상",
+    "tier": 2
+  },
+  {
+    "id": "legacy-18",
+    "title": "PAAS-TA - 한국지능정보사회진흥원장상 은상",
+    "grade": "은상",
+    "tier": 3
+  },
+  {
+    "id": "legacy-19",
+    "title": "대-스쿨 해결사 대교부문 우수상",
+    "grade": "우수",
+    "tier": 3
+  },
+  {
+    "id": "legacy-20",
+    "title": "삼성 주니어 소프트웨어 창작대회 개발상",
+    "grade": "개발상",
+    "tier": 3
+  },
+  {
+    "id": "legacy-21",
+    "title": "레드브릭 게임 콘테스트 우수상",
+    "grade": "우수",
+    "tier": 3
+  },
+  {
+    "id": "legacy-22",
+    "title": "제2회 학교안전사고 데이터 분석 활용 경진대회 특별상",
+    "grade": "특별",
+    "tier": 4
+  },
+  {
+    "id": "legacy-23",
+    "title": "경기도상업경진대회 홍보크리에이터 금상",
+    "grade": "금상",
+    "tier": 2
+  },
+  {
+    "id": "legacy-24",
+    "title": "비즈쿨 창업영재 새싹캠프 장려상",
+    "grade": "장려",
+    "tier": 4
+  },
+  {
+    "id": "legacy-25",
+    "title": "전국상업경진대회 홍보크리에이터 금상",
+    "grade": "금상",
+    "tier": 2
+  },
+  {
+    "id": "legacy-26",
+    "title": "네이버 청소년 크리에이터 스쿨 장려상",
+    "grade": "장려",
+    "tier": 4
+  },
+  {
+    "id": "legacy-27",
+    "title": "한국정보올림피아드 - KOI 본선 동상",
+    "grade": "동상",
+    "tier": 4
+  },
+  {
+    "id": "legacy-28",
+    "title": "KAIST IP CEO & CNAI ACCEL 해커톤 특별상",
+    "grade": "특별",
+    "tier": 4
+  },
+  {
+    "id": "legacy-29",
+    "title": "학생 창업유망팀 300 성장트랙 최종 선정",
+    "grade": "선정",
+    "tier": 5
+  },
+  {
+    "id": "legacy-30",
+    "title": "고교 SID 대회 본선 진출",
+    "grade": "본선",
+    "tier": 5
+  },
+  {
+    "id": "legacy-31",
+    "title": "우리가 바꾸는 경기 프로젝트 - 차세대융합기술연구원상장 장려상",
+    "grade": "장려",
+    "tier": 4
+  },
+  {
+    "id": "legacy-32",
+    "title": "2023 대한민국 고등학생 소프트웨어 개발 공모전 본선 진출",
+    "grade": "본선",
+    "tier": 5
+  },
+  {
+    "id": "legacy-33",
+    "title": "한국디지털미디어고등학교 창의 IT 발표회 동상",
+    "grade": "동상",
+    "tier": 4
+  },
+  {
+    "id": "legacy-34",
+    "title": "[연암공대] 버스승차인원 예측 경진대회 노력상",
+    "grade": "노력",
+    "tier": 4
+  },
+  {
+    "id": "legacy-35",
+    "title": "JA-삼성SDS 2021 SmartHackathon 본선 진출",
+    "grade": "본선",
+    "tier": 5
+  },
+  {
+    "id": "legacy-36",
+    "title": "2021 한경 청소년 경제 체험대회 본선 진출",
+    "grade": "본선",
+    "tier": 5
+  },
+  {
+    "id": "legacy-37",
+    "title": "K-ICT 빅데이터 센터 데이터 크리에이터 캠프 본선 진출",
+    "grade": "본선",
+    "tier": 5
+  },
+  {
+    "id": "legacy-38",
+    "title": "제1회 WONDERCHILD 창의발명대회 온라인 유통기술 본선 진출",
+    "grade": "본선",
+    "tier": 5
+  },
+  {
+    "id": "legacy-39",
+    "title": "한국디지털미디어고등학교 콘솔게임 프로그래밍 대회 본선 진출",
+    "grade": "본선",
+    "tier": 5
+  }
+]

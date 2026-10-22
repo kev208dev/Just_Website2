@@ -1,0 +1,66 @@
+---
+import '../styles/base.css';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+import Cursor from '../components/motion/Cursor.astro';
+import { withBase, type NavKey } from '../lib/paths';
+import { site } from '../lib/data';
+
+interface Props {
+  title?: string;
+  description?: string;
+  current?: NavKey;
+  bodyClass?: string;
+  footer?: boolean;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = `${site.concept} — ${site.tagline} ${site.mottoKo}`,
+  current = 'home',
+  bodyClass = '',
+  footer = true,
+  ogImage = 'images/brand/og-image.jpg',
+} = Astro.props;
+
+const fullTitle = title ? `${title} — JUST®` : 'JUST® — From Zero. To Anything.';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogUrl = new URL(withBase(ogImage), Astro.site);
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#090A0B" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href={withBase('images/brand/favicon.png')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    <slot name="head" />
+  </head>
+  <body class={bodyClass} data-page={current}>
+    <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+    <Header current={current} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    {footer && <Footer />}
+    <Cursor />
+    <script>
+      import { initGlobal } from '../scripts/global';
+      initGlobal();
+    </script>
+  </body>
+</html>

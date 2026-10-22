@@ -1,0 +1,75 @@
+:root {
+  /* Color */
+  --c-bg: #090a0b;
+  --c-bg-2: #141517;
+  --c-surface: #1a1b1d;
+  --c-surface-2: #222326;
+  --c-accent: #f2ae45;
+  --c-accent-deep: #c9822a;
+  --c-accent-soft: rgb(242 174 69 / 0.14);
+  --c-text: #f1eee8;
+  --c-muted: #999999;
+  --c-line: rgb(241 238 232 / 0.12);
+  --c-line-strong: rgb(241 238 232 / 0.28);
+  --c-paper: #f1eee8;
+  --c-ink: #0e0f10;
+  --c-ink-muted: #5d5b57;
+
+  --metal-amber: linear-gradient(135deg, #f8d08a 0%, #f2ae45 32%, #a8661c 62%, #f2ae45 82%, #fbe0ad 100%);
+
+  /* Type */
+  --font-display: 'Space Grotesk', 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+  --font-body: 'Pretendard Variable', Pretendard, 'Space Grotesk', system-ui, sans-serif;
+  --font-latin: 'Space Grotesk', 'Pretendard Variable', system-ui, sans-serif;
+
+  --fs-micro: 0.6875rem;
+  --fs-small: 0.8125rem;
+  --fs-body: 1rem;
+  --fs-lead: clamp(1.125rem, 0.9rem + 0.8vw, 1.5rem);
+  --fs-h3: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
+  --fs-h2: clamp(2.5rem, 1.4rem + 4.4vw, 5.5rem);
+  --fs-h1: clamp(3.4rem, 1.2rem + 9vw, 11.5rem);
+  --fs-mega: clamp(4rem, 0.8rem + 13vw, 17rem);
+
+  --tracking-tight: -0.045em;
+  --tracking-display: -0.06em;
+  --tracking-caps: 0.14em;
+
+  /* Space & layout */
+  --gutter: clamp(16px, 3.2vw, 48px);
+  --header-h: 72px;
+  --section-y: clamp(96px, 14vw, 200px);
+  --radius-s: 6px;
+  --radius-m: 14px;
+  --max-w: 1680px;
+
+  /* Motion — keep in sync with src/lib/motion.ts */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 200ms;
+  --dur-std: 500ms;
+  --dur-cine: 1100ms;
+
+  --z-canvas: 1;
+  --z-ui: 10;
+  --z-header: 50;
+  --z-menu: 60;
+  --z-cursor: 100;
+  --z-transition: 90;
+
+  color-scheme: dark;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --header-h: 60px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-micro: 1ms;
+    --dur-std: 1ms;
+    --dur-cine: 1ms;
+  }
+}

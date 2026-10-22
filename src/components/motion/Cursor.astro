@@ -1,0 +1,115 @@
+---
+// Desktop-only custom cursor. States: default, link, view, drag, explore.
+---
+
+<div class="cursor" data-cursor-root aria-hidden="true">
+  <div class="cursor__ring"><span class="cursor__label" data-cursor-label></span></div>
+  <div class="cursor__dot"></div>
+</div>
+
+<style>
+  .cursor {
+    position: fixed;
+    inset: 0 auto auto 0;
+    z-index: var(--z-cursor);
+    pointer-events: none;
+    display: none;
+    mix-blend-mode: difference;
+  }
+
+  :global(html.has-cursor) .cursor {
+    display: block;
+  }
+
+  :global(html.has-cursor),
+  :global(html.has-cursor *) {
+    cursor: none !important;
+  }
+
+  .cursor__dot,
+  .cursor__ring {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    will-change: transform;
+  }
+
+  .cursor__dot {
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    background: #fff;
+    transition: opacity var(--dur-micro) var(--ease-out);
+  }
+
+  .cursor__ring {
+    width: 34px;
+    height: 34px;
+    margin: -17px 0 0 -17px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgb(255 255 255 / 0.5);
+    transition:
+      width var(--dur-std) var(--ease-out),
+      height var(--dur-std) var(--ease-out),
+      margin var(--dur-std) var(--ease-out),
+      background-color var(--dur-std) var(--ease-out),
+      border-color var(--dur-std) var(--ease-out),
+      opacity var(--dur-micro) var(--ease-out);
+  }
+
+  .cursor__label {
+    font-family: var(--font-latin);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: #000;
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+      opacity var(--dur-micro) var(--ease-out),
+      transform var(--dur-std) var(--ease-out);
+  }
+
+  .cursor[data-state='link'] .cursor__ring {
+    width: 56px;
+    height: 56px;
+    margin: -28px 0 0 -28px;
+    border-color: #fff;
+  }
+
+  .cursor[data-state='view'] .cursor__ring,
+  .cursor[data-state='drag'] .cursor__ring,
+  .cursor[data-state='explore'] .cursor__ring {
+    width: 92px;
+    height: 92px;
+    margin: -46px 0 0 -46px;
+    background: #fff;
+    border-color: #fff;
+  }
+
+  .cursor[data-state='drag'] .cursor__ring {
+    width: 72px;
+    height: 72px;
+    margin: -36px 0 0 -36px;
+  }
+
+  .cursor[data-state='view'] .cursor__label,
+  .cursor[data-state='drag'] .cursor__label,
+  .cursor[data-state='explore'] .cursor__label {
+    opacity: 1;
+    transform: none;
+  }
+
+  .cursor[data-state='view'] .cursor__dot,
+  .cursor[data-state='drag'] .cursor__dot,
+  .cursor[data-state='explore'] .cursor__dot {
+    opacity: 0;
+  }
+
+  .cursor.is-hidden .cursor__ring,
+  .cursor.is-hidden .cursor__dot {
+    opacity: 0;
+  }
+</style>

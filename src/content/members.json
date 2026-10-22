@@ -1,0 +1,22 @@
+[
+  { "id": "hong-sea", "name": "홍세아", "group": "23기", "dept": "HD", "role": "Just 4기 동장", "nickname": "토끼" },
+  { "id": "oh-seungchan", "name": "오승찬", "group": "23기", "dept": "WP", "role": "Just 4기 창동장", "nickname": "빠꾸봇" },
+  { "id": "park-choyeon", "name": "박초연", "group": "24기", "dept": "DC", "role": "Just 5기 동장", "nickname": "꽐라만시" },
+  { "id": "myeong-junhyeon", "name": "명준현", "group": "24기", "dept": "EB", "role": "Just 5기 창동장", "nickname": "브로콜리" },
+  { "id": "kim-doyeon", "name": "김도연", "group": "24기", "dept": "EB", "role": "Just 초대 대통령", "nickname": "새끼돼지", "easterEgg": "spider-drop" },
+  { "id": "lee-yejin", "name": "이예진", "group": "24기", "dept": "WP", "nickname": "No see" },
+  { "id": "son-hayun", "name": "손하윤", "group": "24기", "dept": "WP", "nickname": "세균맨" },
+  { "id": "hwang-taegyeong", "name": "황태경", "group": "24기", "dept": "WP", "nickname": "황태경" },
+  { "id": "kim-jina", "name": "김지나", "group": "24기", "dept": "HD", "nickname": "야옹마마" },
+  { "id": "bae-juwon", "name": "배주원", "group": "24기", "dept": "WP", "nickname": "원숭이두창" },
+  { "id": "kim-arin", "name": "김아린", "group": "24기", "dept": "HD", "nickname": "외노자" },
+  { "id": "yu-seohui", "name": "유서희", "group": "25기", "dept": "EB", "nickname": "서희브" },
+  { "id": "park-haneul", "name": "박하늘", "group": "25기", "dept": "WP", "nickname": "스키" },
+  { "id": "kim-cheonghwi", "name": "김청휘", "group": "25기", "dept": "DC", "nickname": "명청휘", "review": "기존 members.json에는 ‘김정휘’, 기존 사이트 화면에는 ‘김청휘’로 표기되어 있어 확인이 필요합니다." },
+  { "id": "seong-ajin", "name": "성아진", "group": "25기", "dept": "DC", "nickname": "틀니" },
+  { "id": "oh-taehyeon", "name": "오태현", "group": "25기", "dept": "WP", "nickname": "로보카 폴리" },
+  { "id": "ahn-jiho", "name": "안지호", "group": "25기", "dept": "WP", "nickname": "지땡" },
+  { "id": "lee-chaeho", "name": "이채호", "group": "25기", "dept": "WP", "nickname": "켈빈클라인", "easterEgg": "flashbang" },
+  { "id": "park-yuchan", "name": "박유찬", "group": "25기", "dept": "WP", "nickname": "비키니 마우스" },
+  { "id": "amir", "name": "아미르", "group": "One Flap", "dept": "EB", "role": "One Flap 대표", "nickname": "개미르", "review": "기존 members.json에는 ‘아!미르!’ / ‘구석기’로, 기존 사이트 화면에는 ‘아미르’ / ‘One Flap’으로 표기되어 있습니다." }
+]

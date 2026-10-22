@@ -1,0 +1,23 @@
+{
+  "name": "JUST",
+  "concept": "JUST Digital Atelier",
+  "headline": ["FROM ZERO.", "TO ANYTHING."],
+  "tagline": "An independent creative technology collective.",
+  "mottoKo": "JUST는 0에서 1을 창조하는 동아리입니다.",
+  "legacyTaglines": ["Journey starts from me", "Build. Prove."],
+  "contact": {
+    "email": "start.justup@gmail.com",
+    "instagram": { "handle": "@start_justup", "url": "https://www.instagram.com/start_justup/" }
+  },
+  "fields": [
+    { "title": "창업 솔루션", "en": "Venture Solutions", "description": "대회와 창업 프로그램에서 검증받는 아이디어형 프로젝트", "tags": ["아이디어", "사업화", "발표"] },
+    { "title": "공공데이터 분석", "en": "Public Data", "description": "공공데이터를 분석해 실제 제안으로 연결하는 프로젝트", "tags": ["데이터", "분석", "시각화"] },
+    { "title": "메이커 프로토타입", "en": "Maker Prototypes", "description": "직접 구현하고 검증하는 제작 중심 프로젝트", "tags": ["프로토타입", "메이커", "검증"] },
+    { "title": "브랜딩·피칭", "en": "Branding & Pitching", "description": "아이디어를 명확하게 보여주는 발표와 디자인 작업", "tags": ["디자인", "자료", "피칭"] }
+  ],
+  "prize2025": { "amountManwon": 4750, "label": "2025년 대회 입상 상금", "source": "기존 웹사이트 기재 수치 (대회별 상금 내역은 원본 데이터에 없음)" },
+  "awarded2026": [
+    { "id": "p26-01", "title": "청각장애인의 수어번역 프로그램 다이노수어" },
+    { "id": "p26-02", "title": "유휴공간 연결 플랫폼 CrocTick" }
+  ]
+}
