@@ -72,7 +72,7 @@ const strip = projects.filter((p) => p.image);
         JUST는 <span class="digit">0</span>에서 <span class="digit">1</span>을<br />창조하는 동아리입니다.
       </h2>
       <p class="lead manifesto__lead" data-reveal="fade">
-        {SITE.description} 아이디어를 발견하고, 직접 실험하고, 기술로 결과물을 만들어 대회와 무대에서 검증받습니다.
+        아이디어를 발견하고, 직접 실험하고, 기술로 실제 결과물을 만듭니다. 그리고 그 결과물을 대회와 무대에서 검증받습니다.
       </p>
     </section>
 
@@ -382,7 +382,7 @@ const strip = projects.filter((p) => p.image);
   .value__phrase {
     font-family: var(--f-display);
     font-weight: 600;
-    font-size: clamp(2rem, 5.6vw, 5.8rem);
+    font-size: clamp(1.9rem, 4.6vw, 5rem);
     line-height: 0.95;
     letter-spacing: -0.05em;
     text-transform: uppercase;
@@ -446,6 +446,7 @@ const strip = projects.filter((p) => p.image);
     padding-inline: var(--gutter);
     padding-bottom: 1rem;
     scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
     scrollbar-width: thin;
   }
 

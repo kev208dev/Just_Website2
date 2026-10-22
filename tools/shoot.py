@@ -45,9 +45,17 @@ with sync_playwright() as p:
         elif kind == "drag":
             x1, y1, x2, y2 = map(float, arg.split(",")); pg.mouse.move(x1, y1); pg.mouse.down(); pg.mouse.move(x2, y2, steps=12); pg.mouse.up()
         elif kind == "key": pg.keyboard.press(arg)
+        elif kind == "dblclick":
+            x, y = map(float, arg.split(",")); pg.mouse.dblclick(x, y)
         elif kind == "eval": print("eval:", pg.evaluate(arg))
         elif kind == "shot": pg.screenshot(path=arg, full_page=a.full)
         elif kind == "goto": pg.goto(arg, wait_until="load")
+        elif kind == "scrollthrough":
+            h = pg.evaluate("document.body.scrollHeight")
+            for y in range(0, h, 400):
+                pg.evaluate(f"window.scrollTo(0,{y})"); pg.wait_for_timeout(120)
+            pg.wait_for_timeout(1500); pg.evaluate("window.scrollTo(0,0)"); pg.wait_for_timeout(400)
+            print("reveals:", pg.evaluate("document.querySelectorAll('[data-reveal]').length"), "revealed:", pg.evaluate("document.querySelectorAll('.is-revealed').length"))
     pg.screenshot(path=a.out, full_page=a.full)
     print("\n".join(logs[:40]) or "no console errors")
     b.close()
