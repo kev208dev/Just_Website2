@@ -8,7 +8,7 @@ import { site } from '../lib/data';
   <div class="page contact">
     <section class="container contact__hero">
       <p class="section-label t-caps">Contact</p>
-      <RevealText as="h1" lines={['Let’s make', '<em>something real.</em>']} class="contact__title t-display" />
+      <RevealText as="h1" lines={['Let’s make', '<em class="t-serif">something real.</em>']} class="contact__title t-display" />
     </section>
 
     <section class="container contact__channels" aria-label="연락 채널">
@@ -47,8 +47,8 @@ import { site } from '../lib/data';
   }
 
   .contact__title :global(em) {
-    font-style: normal;
-    color: var(--c-accent);
+    color: var(--c-bone);
+    letter-spacing: -0.03em;
   }
 
   .contact__channels {

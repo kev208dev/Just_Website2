@@ -51,7 +51,7 @@
   --section-y: clamp(96px, 14vw, 200px);
   --radius-s: 6px;
   --radius-m: 14px;
-  --max-w: 1680px;
+  --max-w: none;
 
   /* Motion — keep in sync with src/lib/motion.ts */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

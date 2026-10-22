@@ -1,9 +1,54 @@
-# JUST Website 2.0 — JUST Digital Atelier
+# JUST ATELIER 3.0
 
-**FROM ZERO. TO ANYTHING.**
-The next-generation website of JUST, an independent creative technology collective.
-The homepage is a real-time Three.js gallery: the JUST wordmark extruded in amber metal at the
-centre, with the club's real projects and award records orbiting it on 3D rings or a spiral.
+**FROM ZERO. TO ANYTHING.** — *A digital gallery of ideas, technology, and creation.*
+
+The website of JUST, an independent creative technology collective, art-directed as a digital
+exhibition. The home page is a sequence of six scenes opening on a 3D sculpture of the JUST
+wordmark (dark brushed chrome, bronze bevels, studio lighting); the 3D Rings / Spiral gallery of
+the club's real works lives at `/explore`.
+
+## Art direction
+
+- **Palette:** Obsidian `#08090B`, Graphite `#28292C`, Bone `#D6D0C5`, Bronze `#C88F47`, Ivory `#F5F3EE`.
+  Bronze is reserved for the brand object and key interactions. `.theme-light` re-maps the tokens
+  for ivory pages/sections (Awards archive, home Archive scene, About numbers).
+- **Type:** Space Grotesk (display, uppercase, tight tracking), Instrument Serif italic (sparse
+  editorial accents), Pretendard (Korean/body).
+- **Key visuals:** each project has its own poster (16:10) — `tools/keyvisuals/*.html` are HTML
+  compositions built only from the project's real screenshots and app content, rendered to
+  `public/images/keyvisuals/` by `node tools/keyvisuals/render.mjs`. They share one frame system so the
+  five read as a series.
+
+| Project | Direction |
+| --- | --- |
+| 명준현 게임 | Playful object composition — physics pile, game-over line, real board |
+| 명준현 도박장 | Three reels, one bet — oxblood, real reel crops, payout ladder from the code |
+| 판교어 듀오링고 | Editorial learning app — dictionary entry and level ladder from the app data |
+| JUST 순발력 게임 | Kinetic typography — Stroop colour words, real 3.0s limit and rules |
+| JUST 퀴즈 | Touch-first experience — ripple rings, journey path, real start screen |
+
+## Home scenes
+
+1. **Identity** — headline + 3D sculpture (`components/three/brand/LogoStage`). A pre-rendered still
+   (`public/images/brand/hero-logo*.webp`, `tools/render-hero-poster.mjs`) paints instantly and is the
+   no-WebGL fallback; the live canvas fades in over it.
+2. **Selected works** — one work per viewport, key visual + giant title, per-project accent.
+3. **Manifesto** — "We don't just think. We build."; the section turns from obsidian to ivory on scroll.
+4. **JUST Universe** — CSS 3D ring of the five key visuals, entry to `/explore`.
+5. **Archive** — verified 2025 records and grand prizes, ivory.
+6. **Collective** — members as a typographic wall, then the giant JUST® wordmark footer.
+
+## Performance policy
+
+- One card per real work in `/explore` (no duplicated slots); 5 cards ≈ 10–16 draw calls.
+- Render on demand: the rAF loop ticks, but the GPU draws only when something moves (input, inertia,
+  morph, hover easing, camera parallax). After the last interaction the logo drifts at 30 fps for 8 s,
+  then the scene is fully static (0 renders). The hero stops entirely when scrolled out of view.
+- Pixel ratio capped at 1.25 (desktop) / 1.0 (touch), stepping down to 1.0 if frames run slow.
+- Hit-testing only on pointer movement or while cards slide under the cursor.
+- Card shader: one texture fetch; the velocity curl has a dead zone so browsing stays perfectly flat.
+- Measured with SwiftShader (relative numbers): 2.0 home 5.7/5.6/6.1 fps (idle/scroll/hover, 1440)
+  → 3.0 explore 9.7/9.1/11.4 fps; at 390px 9.7/12.2/14.2 → 39.5/23.6/30.8 fps.
 
 - Live (once Pages is enabled): https://kev208dev.github.io/Just_Website2/
 - Legacy site (unchanged, content source): https://github.com/kev208dev/JustWebsite
@@ -36,11 +81,11 @@ Node 22.12+ is required (Astro 7).
 
 ```
 src/
-  pages/                 index, work/, work/[slug], about, people, awards, contact, 404
+  pages/                 index, explore, work/, work/[slug], about, people, awards, contact, 404
   layouts/BaseLayout     head/meta, header, footer, cursor, global script
   components/
     three/               the WebGL experience (see below)
-    home/                HomeExperience — 3D stage + HTML overlay UI + 2D fallback
+    home/                home scenes (Hero … Collective) + ExploreExperience (/explore UI, 2D fallback)
     navigation/          Header (desktop + mobile menu), Footer
     motion/              Cursor, RevealText (mask line reveal)
     ui/                  PageHero
@@ -49,8 +94,8 @@ src/
   lib/                   data helpers (cross-linking), paths (base-aware), motion tokens
   scripts/               client scripts per page (home, works, project, people, awards, …)
   styles/                tokens.css (design + motion tokens), base.css
-public/images/           optimised WebP project shots, brand assets
-tools/                   one-off asset/data migration scripts
+public/images/           key visuals, hero stills, project screenshots (WebP), brand assets
+tools/                   key-visual posters + renderers, logo tracer, data migration
 ```
 
 ### 3D architecture (`src/components/three`)
@@ -59,24 +104,24 @@ tools/                   one-off asset/data migration scripts
 | --- | --- |
 | `ExperienceCanvas` | Renderer, scene, camera, environment map, frame loop, DPR cap, resize, visibility pause, disposal |
 | `GalleryController` | Orchestrates everything: texture loading, input → scroll, hover raycast, mode morph, click-to-zoom transition, keyboard, bfcache reset |
-| `ProjectGallery3D` | Card set; blends Rings/Spiral poses with a per-card staggered morph; hit-testing; "front-most card" detection |
+| `ProjectGallery3D` | One card per work; blends Rings/Spiral poses with a staggered morph; hit-testing; orbit guides |
 | `GalleryCard3D` | One card: pose application, hover lift, focus (full-screen) override |
-| `layouts/RingsLayout` | Stacked horizontal rings around the logo, camera inside the cylinder |
-| `layouts/SpiralLayout` | Tilted helix seen from outside, wrap-around with end fades |
+| `layouts/RingsLayout` | A single orbit sized to the number of works, seen from above; concentric guide orbits |
+| `layouts/SpiralLayout` | A helix window around the focused work; the loop seam is faded out |
+| `brand/LogoAsset`, `brand/StudioEnvironment`, `brand/LogoStage` | Shared wordmark geometry + materials, baked studio PMREM, home hero stage |
 | `CameraController` | Camera blend between layout presets + pointer parallax |
 | `InputController` | Wheel / drag / touch with inertia, tap-vs-drag detection |
-| `JustLogo3D` | Extruded wordmark (traced from the original logo), metal materials, orbiting rim light |
-| `materials/DistortionMaterial` + `shaders/` | Velocity bend, wave, RGB shift, cover-fit UVs, rounded corners, depth fade |
-| `textures/plateTexture` | Canvas-drawn "award plates" for real award records |
+| `JustLogo3D` | The wordmark at the centre of `/explore` |
+| `materials/DistortionMaterial` + `shaders/` | Cover-fit UVs, rounded corners, depth fade, subtle velocity curl only while moving fast |
 
 The logo geometry comes from `tools/trace-logo.py`, which traces the original
 `just-logo-transparent.png` into polygons (`logo-shape.json`) so the 3D mark matches the real logo.
 
 ### Fallbacks & accessibility
 
-- No WebGL2, a WebGL error, or `?mode=2d` → a regular 2D project grid. Without JS the grid is shown too.
+- No WebGL2, a WebGL error, or `?mode=2d` → the hero keeps its pre-rendered still and `/explore` shows a 2D grid of key visuals. Without JS the same fallbacks apply.
 - `prefers-reduced-motion`: no idle motion, inertia, distortion or long transitions.
-- Keyboard: arrow keys / PageUp / PageDown rotate the gallery; the index list is focusable and focusing an
+- Keyboard: arrow keys move the `/explore` gallery one work at a time; the index list is focusable and focusing an
   item brings it to the front. All interactive elements have visible focus styles.
 - The custom cursor is desktop-only (`hover: hover` and `pointer: fine`).
 
