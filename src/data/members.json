@@ -1,0 +1,25 @@
+[
+  { "id": "hong-sea", "name": "홍세아", "generation": "23기", "unit": "HD", "role": "Just 4기 동장", "nickname": "토끼" },
+  { "id": "oh-seungchan", "name": "오승찬", "generation": "23기", "unit": "WP", "role": "Just 4기 창동장", "nickname": "빠꾸봇" },
+
+  { "id": "park-choyeon", "name": "박초연", "generation": "24기", "unit": "DC", "role": "Just 5기 동장", "nickname": "꽐라만시" },
+  { "id": "myung-junhyeon", "name": "명준현", "generation": "24기", "unit": "EB", "role": "Just 5기 창동장", "nickname": "브로콜리" },
+  { "id": "kim-doyeon", "name": "김도연", "generation": "24기", "unit": "EB", "role": "Just 초대 대통령", "nickname": "새끼돼지", "easterEgg": "spider-drop" },
+  { "id": "lee-yejin", "name": "이예진", "generation": "24기", "unit": "WP", "role": null, "nickname": "No see" },
+  { "id": "son-hayun", "name": "손하윤", "generation": "24기", "unit": "WP", "role": null, "nickname": "세균맨" },
+  { "id": "hwang-taekyung", "name": "황태경", "generation": "24기", "unit": "WP", "role": null, "nickname": "황태경" },
+  { "id": "kim-jina", "name": "김지나", "generation": "24기", "unit": "HD", "role": null, "nickname": "야옹마마" },
+  { "id": "bae-juwon", "name": "배주원", "generation": "24기", "unit": "WP", "role": null, "nickname": "원숭이두창" },
+  { "id": "kim-arin", "name": "김아린", "generation": "24기", "unit": "HD", "role": null, "nickname": "외노자" },
+
+  { "id": "yoo-seohee", "name": "유서희", "generation": "25기", "unit": "EB", "role": null, "nickname": "서희브" },
+  { "id": "park-haneul", "name": "박하늘", "generation": "25기", "unit": "WP", "role": null, "nickname": "스키" },
+  { "id": "kim-cheonghwi", "name": "김청휘", "generation": "25기", "unit": "DC", "role": null, "nickname": "명청휘", "review": "기존 members.json에는 '김정휘'로 표기 — 확인 필요" },
+  { "id": "sung-ajin", "name": "성아진", "generation": "25기", "unit": "DC", "role": null, "nickname": "틀니" },
+  { "id": "oh-taehyun", "name": "오태현", "generation": "25기", "unit": "WP", "role": null, "nickname": "로보카 폴리" },
+  { "id": "ahn-jiho", "name": "안지호", "generation": "25기", "unit": "WP", "role": null, "nickname": "지땡" },
+  { "id": "lee-chaeho", "name": "이채호", "generation": "25기", "unit": "WP", "role": null, "nickname": "켈빈클라인", "easterEgg": "flare" },
+  { "id": "park-yuchan", "name": "박유찬", "generation": "25기", "unit": "WP", "role": null, "nickname": "비키니 마우스" },
+
+  { "id": "amir", "name": "아미르", "generation": "One Flap", "unit": "EB", "role": "One Flap 대표", "nickname": "개미르", "review": "기존 members.json에는 '아!미르!' / 구석기로 표기" }
+]

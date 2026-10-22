@@ -1,0 +1,90 @@
+/* ==========================================================================
+   JUST Digital Atelier — design tokens
+   ========================================================================== */
+
+:root {
+  /* colour */
+  --c-bg: #090a0b;
+  --c-bg-2: #141517;
+  --c-surface: #1a1b1d;
+  --c-surface-2: #222326;
+  --c-line: rgba(241, 238, 232, 0.12);
+  --c-line-strong: rgba(241, 238, 232, 0.24);
+  --c-accent: #f2ae45;
+  --c-accent-deep: #c9852a;
+  --c-accent-soft: rgba(242, 174, 69, 0.14);
+  --c-text: #f1eee8;
+  --c-muted: #999999;
+  --c-paper: #f1eee8;
+  --c-ink: #0d0e0f;
+
+  /* metallic amber — used sparingly for plaques and brand marks */
+  --g-amber: linear-gradient(135deg, #8a5a1c 0%, #f2ae45 32%, #ffe0a8 50%, #e39a35 68%, #7a4c16 100%);
+
+  /* typography */
+  --f-display: "Space Grotesk Variable", "Space Grotesk", "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  --f-text: "Pretendard Variable", Pretendard, "Space Grotesk Variable", -apple-system, system-ui, sans-serif;
+  --f-mono: "Space Grotesk Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --t-mega: clamp(4rem, 13.5vw, 15rem);
+  --t-display: clamp(3rem, 8.2vw, 9rem);
+  --t-h1: clamp(2.4rem, 5.4vw, 5.6rem);
+  --t-h2: clamp(1.8rem, 3.4vw, 3.2rem);
+  --t-h3: clamp(1.25rem, 1.8vw, 1.6rem);
+  --t-lead: clamp(1.1rem, 1.5vw, 1.35rem);
+  --t-body: 1rem;
+  --t-small: 0.875rem;
+  --t-micro: 0.72rem;
+
+  --lh-tight: 0.9;
+  --lh-snug: 1.15;
+  --lh-body: 1.65;
+  --ls-display: -0.045em;
+  --ls-tight: -0.02em;
+  --ls-caps: 0.14em;
+
+  /* spacing — 4px base, fluid gutters */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 9rem;
+  --gutter: clamp(1rem, 3.2vw, 2.75rem);
+  --section: clamp(5rem, 11vw, 10rem);
+  --max: 1680px;
+  --header-h: 72px;
+
+  /* shape */
+  --r-sm: 4px;
+  --r-md: 10px;
+  --r-lg: 18px;
+
+  /* motion tokens */
+  --d-micro: 200ms;
+  --d-standard: 480ms;
+  --d-cinematic: 1100ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-standard: cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  --z-canvas: 0;
+  --z-ui: 10;
+  --z-header: 50;
+  --z-menu: 60;
+  --z-cursor: 100;
+
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --d-micro: 1ms;
+    --d-standard: 1ms;
+    --d-cinematic: 1ms;
+  }
+}

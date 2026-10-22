@@ -1,0 +1,78 @@
+---
+import "@fontsource-variable/space-grotesk";
+import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
+import "../styles/tokens.css";
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import Header from "../components/navigation/Header.astro";
+import Footer from "../components/navigation/Footer.astro";
+import Cursor from "../components/motion/Cursor.astro";
+import { SITE } from "../lib/site";
+import { asset } from "../lib/paths";
+import { pageTransition } from "../lib/motion";
+
+interface Props {
+  title?: string;
+  description?: string;
+  bodyClass?: string;
+  image?: string;
+  footer?: boolean;
+}
+
+const { title, description = SITE.description, bodyClass, image, footer = true } = Astro.props;
+const fullTitle = title ? `${title} — JUST` : `JUST — ${SITE.concept}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image ?? asset("images/brand/og-image.jpg"), Astro.site);
+---
+
+<!doctype html>
+<html lang="ko" transition:animate={pageTransition}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#090A0B" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href={asset("favicon.png")} />
+    <link rel="apple-touch-icon" href={asset("apple-touch-icon.png")} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="JUST" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="generator" content={Astro.generator} />
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      // ClientRouter replaces <html> attributes on navigation — restore runtime classes
+      document.addEventListener("astro:after-swap", function () {
+        var c = document.documentElement.classList;
+        c.add("js", "motion-ready");
+        if (matchMedia("(hover: hover) and (pointer: fine)").matches) c.add("has-cursor");
+      });
+      // if the motion script never runs, never leave content hidden
+      setTimeout(function () {
+        if (!document.documentElement.classList.contains("motion-ready")) {
+          document.documentElement.classList.add("motion-failed");
+        }
+      }, 3500);
+    </script>
+    <ClientRouter fallback="animate" />
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    {footer && <Footer />}
+    <Cursor />
+    <div class="grain" aria-hidden="true"></div>
+    <script>
+      import "../scripts/motion";
+    </script>
+  </body>
+</html>

@@ -1,0 +1,246 @@
+---
+/**
+ * Custom cursor — desktop (fine pointer) only. States: default, link, view,
+ * drag, explore. Pages can set a state with `data-cursor="view"` (+ optional
+ * `data-cursor-label`) or through the `just:cursor` event.
+ */
+---
+
+<div class="cursor" data-cursor-root aria-hidden="true" transition:persist="cursor">
+  <div class="cursor__dot"></div>
+  <div class="cursor__ring">
+    <span class="cursor__label" data-cursor-text></span>
+  </div>
+  <div class="cursor__caption" data-cursor-caption></div>
+</div>
+
+<style>
+  .cursor {
+    display: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    :global(html.has-cursor) .cursor {
+      display: block;
+    }
+    :global(html.has-cursor),
+    :global(html.has-cursor *) {
+      cursor: none !important;
+    }
+  }
+
+  .cursor {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: var(--z-cursor);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--d-micro) var(--ease-standard);
+  }
+
+  .cursor.is-visible {
+    opacity: 1;
+  }
+
+  .cursor__dot,
+  .cursor__ring,
+  .cursor__caption {
+    position: absolute;
+    left: 0;
+    top: 0;
+    will-change: transform;
+  }
+
+  .cursor__dot {
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    border-radius: 50%;
+    background: var(--c-accent);
+    transition:
+      opacity var(--d-micro),
+      transform 0s;
+  }
+
+  .cursor__ring {
+    width: 34px;
+    height: 34px;
+    margin: -17px 0 0 -17px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(241, 238, 232, 0.5);
+    border-radius: 50%;
+    transition:
+      width 420ms var(--ease-out),
+      height 420ms var(--ease-out),
+      margin 420ms var(--ease-out),
+      background 260ms var(--ease-standard),
+      border-color 260ms var(--ease-standard);
+  }
+
+  .cursor__label {
+    font-family: var(--f-display);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--c-ink);
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+      opacity 200ms var(--ease-standard),
+      transform 420ms var(--ease-out);
+  }
+
+  .cursor__caption {
+    margin: 52px 0 0 -0px;
+    transform: translateX(-50%);
+    font-family: var(--f-display);
+    font-size: 0.78rem;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--c-text);
+    opacity: 0;
+    transition: opacity 220ms var(--ease-standard);
+  }
+
+  .cursor[data-state="link"] .cursor__ring {
+    width: 54px;
+    height: 54px;
+    margin: -27px 0 0 -27px;
+    border-color: var(--c-text);
+  }
+
+  .cursor[data-state="view"] .cursor__ring,
+  .cursor[data-state="drag"] .cursor__ring,
+  .cursor[data-state="explore"] .cursor__ring {
+    width: 86px;
+    height: 86px;
+    margin: -43px 0 0 -43px;
+  }
+
+  .cursor[data-state="view"] .cursor__ring {
+    background: var(--c-accent);
+    border-color: var(--c-accent);
+  }
+
+  .cursor[data-state="drag"] .cursor__ring {
+    background: var(--c-text);
+    border-color: var(--c-text);
+    width: 70px;
+    height: 70px;
+    margin: -35px 0 0 -35px;
+  }
+
+  .cursor[data-state="explore"] .cursor__ring {
+    background: rgba(9, 10, 11, 0.25);
+    border-color: rgba(241, 238, 232, 0.45);
+    backdrop-filter: blur(2px);
+  }
+
+  .cursor[data-state="explore"] .cursor__label {
+    color: var(--c-text);
+  }
+
+  .cursor[data-state="view"] .cursor__label,
+  .cursor[data-state="drag"] .cursor__label,
+  .cursor[data-state="explore"] .cursor__label {
+    opacity: 1;
+    transform: none;
+  }
+
+  .cursor[data-state="view"] .cursor__dot,
+  .cursor[data-state="drag"] .cursor__dot,
+  .cursor[data-state="explore"] .cursor__dot {
+    opacity: 0;
+  }
+
+  .cursor.has-caption .cursor__caption {
+    opacity: 1;
+  }
+
+  .cursor[data-state="hidden"] {
+    opacity: 0 !important;
+  }
+</style>
+
+<script>
+  type State = "default" | "link" | "view" | "drag" | "explore" | "hidden";
+  const LABELS: Partial<Record<State, string>> = { view: "View", drag: "Drag", explore: "Explore" };
+
+  const root = document.querySelector<HTMLElement>("[data-cursor-root]");
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (root && fine.matches) {
+    document.documentElement.classList.add("has-cursor");
+    const dot = root.querySelector<HTMLElement>(".cursor__dot")!;
+    const ring = root.querySelector<HTMLElement>(".cursor__ring")!;
+    const text = root.querySelector<HTMLElement>("[data-cursor-text]")!;
+    const caption = root.querySelector<HTMLElement>("[data-cursor-caption]")!;
+
+    let x = -100;
+    let y = -100;
+    let rx = x;
+    let ry = y;
+    let forced: { state: State; label?: string } | null = null;
+    let hoverState: { state: State; label?: string; caption?: string } = { state: "default" };
+
+    const render = () => {
+      const s = forced && forced.state !== "default" ? forced : hoverState;
+      const state = s.state;
+      root.dataset.state = state;
+      const label = state === "view" && forced?.state !== "view" ? s.label || LABELS.view : LABELS[state];
+      text.textContent = label ?? "";
+      const cap = forced?.state === "view" ? forced.label : hoverState.caption;
+      caption.textContent = cap ?? "";
+      root.classList.toggle("has-caption", Boolean(cap) && state === "view");
+    };
+
+    const resolveHover = (target: Element | null) => {
+      const el = target?.closest<HTMLElement>("[data-cursor], a, button, [role='button'], label, select, input");
+      if (!el) return { state: "default" as State };
+      const named = el.dataset.cursor as State | undefined;
+      if (named) return { state: named, label: el.dataset.cursorLabel, caption: el.dataset.cursorCaption };
+      return { state: "link" as State };
+    };
+
+    window.addEventListener(
+      "pointermove",
+      (e) => {
+        if (e.pointerType !== "mouse") return;
+        x = e.clientX;
+        y = e.clientY;
+        root.classList.add("is-visible");
+        dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      },
+      { passive: true },
+    );
+    document.addEventListener("pointerover", (e) => {
+      hoverState = resolveHover(e.target as Element);
+      render();
+    });
+    document.documentElement.addEventListener("pointerleave", () => root.classList.remove("is-visible"));
+    document.addEventListener("just:cursor", (e) => {
+      const detail = (e as CustomEvent<{ state: State; label?: string }>).detail;
+      forced = detail.state === "default" ? null : detail;
+      render();
+    });
+    document.addEventListener("astro:after-swap", () => {
+      forced = null;
+      hoverState = { state: "default" };
+      render();
+    });
+
+    const tick = () => {
+      const k = reduced ? 1 : 0.2;
+      rx += (x - rx) * k;
+      ry += (y - ry) * k;
+      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+      caption.style.transform = `translate3d(${rx}px, ${ry}px, 0) translateX(-50%)`;
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+</script>

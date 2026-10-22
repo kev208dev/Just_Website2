@@ -1,0 +1,460 @@
+/* ==========================================================================
+   JUST Digital Atelier — global styles
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--c-bg);
+  scrollbar-color: #2a2b2e var(--c-bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--f-text);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  font-feature-settings: "ss01", "ss03";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+  word-break: keep-all;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+::selection {
+  background: var(--c-accent);
+  color: var(--c-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ------------------------------------------------------------------ utilities */
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  left: var(--gutter);
+  top: 12px;
+  z-index: 200;
+  padding: 10px 16px;
+  background: var(--c-accent);
+  color: var(--c-ink);
+  font: 600 var(--t-small) / 1 var(--f-display);
+  transform: translateY(-160%);
+  transition: transform var(--d-micro) var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+.eyebrow--accent {
+  color: var(--c-accent);
+}
+
+.display {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: var(--t-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+}
+
+.mega {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: var(--t-mega);
+  line-height: 0.82;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+
+.lead {
+  font-size: var(--t-lead);
+  line-height: 1.6;
+  color: rgba(241, 238, 232, 0.78);
+  max-width: 38em;
+}
+
+.muted {
+  color: var(--c-muted);
+}
+
+.accent {
+  color: var(--c-accent);
+}
+
+.hairline {
+  border: 0;
+  border-top: 1px solid var(--c-line);
+  margin: 0;
+}
+
+/* split text — lines are wrapped in masks and revealed by motion.ts */
+.split-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+
+.split-line > span {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* motion targets are hidden until motion.ts reveals them (html.js is set inline in <head>) */
+html.js [data-reveal="lines"] .split-line > span {
+  transform: translateY(112%);
+}
+
+html.js [data-reveal="mask"] {
+  clip-path: inset(0 0 100% 0);
+}
+
+html.js [data-reveal="fade"] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* fail-safes: reduced motion, or the motion script never ran */
+html.motion-failed [data-reveal],
+html.motion-failed [data-reveal] .split-line > span {
+  clip-path: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal],
+  html.js [data-reveal] .split-line > span {
+    clip-path: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------ controls */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--c-line-strong);
+  border-radius: 999px;
+  font-family: var(--f-display);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(241, 238, 232, 0.82);
+  white-space: nowrap;
+  transition:
+    background var(--d-micro) var(--ease-standard),
+    color var(--d-micro) var(--ease-standard),
+    border-color var(--d-micro) var(--ease-standard);
+}
+
+.chip:hover {
+  border-color: var(--c-text);
+  color: var(--c-text);
+}
+
+.chip[aria-pressed="true"],
+.chip.is-active {
+  background: var(--c-text);
+  border-color: var(--c-text);
+  color: var(--c-ink);
+}
+
+.chip sup,
+.chip .count {
+  font-size: 0.7em;
+  opacity: 0.6;
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--f-display);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.link-arrow svg {
+  width: 1em;
+  height: 1em;
+  transition: transform var(--d-micro) var(--ease-out);
+}
+
+.link-arrow:hover svg {
+  transform: translate(3px, -3px);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7em;
+  min-height: 52px;
+  padding: 0 26px;
+  border-radius: 999px;
+  background: var(--c-text);
+  color: var(--c-ink);
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  transition:
+    background var(--d-micro) var(--ease-standard),
+    transform var(--d-micro) var(--ease-out);
+}
+
+.button:hover {
+  background: var(--c-accent);
+}
+
+.button--ghost {
+  background: transparent;
+  color: var(--c-text);
+  border: 1px solid var(--c-line-strong);
+}
+
+.button--ghost:hover {
+  background: var(--c-text);
+  color: var(--c-ink);
+}
+
+/* underline link that draws in on hover */
+.u-link {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size var(--d-standard) var(--ease-out);
+}
+
+.u-link:hover,
+.u-link:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* ------------------------------------------------------------------ page shells */
+
+.page {
+  padding-top: calc(var(--header-h) + clamp(2rem, 6vw, 5rem));
+}
+
+.page-head {
+  position: relative;
+  padding-bottom: clamp(2.5rem, 6vw, 5rem);
+}
+
+.page-head__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-5);
+  margin-bottom: var(--s-5);
+}
+
+.page-head__title {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: var(--t-mega);
+  line-height: 0.84;
+  letter-spacing: -0.065em;
+  text-transform: uppercase;
+  margin-left: -0.05em;
+}
+
+.page-head__title sup {
+  font-size: 0.16em;
+  letter-spacing: 0;
+  vertical-align: top;
+  margin-left: 0.25em;
+  position: relative;
+  top: 0.6em;
+  color: var(--c-accent);
+  font-weight: 500;
+}
+
+.page-head__intro {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gutter);
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+}
+
+.page-head__intro > * {
+  grid-column: 7 / -1;
+}
+
+@media (max-width: 860px) {
+  .page-head__intro > * {
+    grid-column: 1 / -1;
+  }
+}
+
+.section {
+  padding-block: var(--section);
+}
+
+.section-label {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+  padding-bottom: var(--s-4);
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  border-bottom: 1px solid var(--c-line);
+}
+
+.section-label .num {
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  color: var(--c-accent);
+  letter-spacing: 0.1em;
+}
+
+/* subtle film grain over everything — static, cheap */
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ------------------------------------------------------------------ page transitions */
+
+@keyframes jt-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-2vh);
+  }
+}
+
+@keyframes jt-in {
+  from {
+    clip-path: inset(100% 0 0 0);
+    transform: translateY(4vh);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes jt-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,828 @@
+[
+  {
+    "id": "a001",
+    "year": 2025,
+    "event": "2025 경기도 미래창업가 발굴프로그램",
+    "award": "1위 / 대상",
+    "tier": "grand",
+    "institution": "경기도교육감",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현",
+      "황태경",
+      "배주원",
+      "손하윤"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a002",
+    "year": 2025,
+    "event": "2025 비즈쿨 캠프 경진대회 IR 결선",
+    "award": "1위 / 대상",
+    "tier": "grand",
+    "institution": "중소벤처기업부 장관",
+    "generations": [
+      "24기",
+      "23기"
+    ],
+    "members": [
+      "명준현",
+      "정하은"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a003",
+    "year": 2025,
+    "event": "제 18회 전국 창업발명경진대회",
+    "award": "1위 / 대상",
+    "tier": "grand",
+    "institution": "중소벤처기업부 장관",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a004",
+    "year": 2025,
+    "event": "제 18회 전국 창업발명경진대회",
+    "award": "1위 / 대상",
+    "tier": "grand",
+    "institution": "환경부 장관",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a005",
+    "year": 2025,
+    "event": "비즈쿨 창업동아리 연합 STARTUPTHON",
+    "award": "1위 / 금상",
+    "tier": "gold",
+    "institution": "디미고",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "박초연",
+      "한준혁",
+      "조경윤",
+      "김도연"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a006",
+    "year": 2025,
+    "event": "제 7회 대구 빅데이터 분석 경진대회",
+    "award": "1위 / 최우수상",
+    "tier": "gold",
+    "institution": "대구미래교육연구원장",
+    "generations": [
+      "23기"
+    ],
+    "members": [
+      "박재현"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a007",
+    "year": 2025,
+    "event": "제 4회 청소년 메이커 경진대회",
+    "award": "최우수상",
+    "tier": "gold",
+    "institution": "서울시의회의장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a008",
+    "year": 2025,
+    "event": "제 18회 전국 창업발명경진대회",
+    "award": "최우수상",
+    "tier": "gold",
+    "institution": "특허청장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a009",
+    "year": 2025,
+    "event": "제 11회 부산창업아이디어 경진대회",
+    "award": "대학총장상",
+    "tier": "special",
+    "institution": "동의대학교 총장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a010",
+    "year": 2025,
+    "event": "제 27회 전국학생통계활용대회",
+    "award": "은상",
+    "tier": "silver",
+    "institution": "통계청장",
+    "generations": [
+      "23기"
+    ],
+    "members": [
+      "정하은",
+      "이한영",
+      "황혜린"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a011",
+    "year": 2025,
+    "event": "제 9회 벤처창업 아이템 경진대회",
+    "award": "은상",
+    "tier": "silver",
+    "institution": "창업진흥원장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "박초연",
+      "한준혁",
+      "이예진",
+      "손하윤"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a012",
+    "year": 2025,
+    "event": "2025년 창업 인큐베이팅 경진대회",
+    "award": "창의상",
+    "tier": "special",
+    "institution": "창업진흥원장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현",
+      "박초연",
+      "배주원"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a013",
+    "year": 2025,
+    "event": "2025 경기도 미래창업가 발굴프로그램",
+    "award": "우수상",
+    "tier": "silver",
+    "institution": "한국엔젤투자협회장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "박초연",
+      "한준혁",
+      "김도연",
+      "조경윤"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a014",
+    "year": 2025,
+    "event": "안산시 공공데이터 활용·분석 경진대회",
+    "award": "우수상",
+    "tier": "silver",
+    "institution": "안산시",
+    "generations": [
+      "23기"
+    ],
+    "members": [
+      "박재현"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a015",
+    "year": 2025,
+    "event": "2025 여름 ERICA 고교 딥테크 오디션",
+    "award": "우수상",
+    "tier": "silver",
+    "institution": "ERICA 창업교육센터장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "박초연",
+      "한준혁",
+      "김도연",
+      "이예진"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a016",
+    "year": 2025,
+    "event": "제 7회 공공데이터 분석활용 대회",
+    "award": "우수상",
+    "tier": "silver",
+    "institution": "경기도교육감",
+    "generations": [
+      "23기"
+    ],
+    "members": [
+      "정하은",
+      "이한영",
+      "황혜린"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a017",
+    "year": 2025,
+    "event": "2025 외교 공공데이터 활용 경진대회",
+    "award": "장려상",
+    "tier": "bronze",
+    "institution": "한국국제협력단 이사장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "박초연",
+      "한준혁",
+      "손하윤",
+      "이예진"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a018",
+    "year": 2025,
+    "event": "제 9회 벤처창업 아이템 경진대회",
+    "award": "동상",
+    "tier": "bronze",
+    "institution": "한국반도체산업협회장",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "조경윤",
+      "김도연"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a019",
+    "year": 2025,
+    "event": "2025 학생창업유망팀 300",
+    "award": "최종선정",
+    "tier": "selection",
+    "institution": "교육부 장관",
+    "generations": [
+      "24기"
+    ],
+    "members": [
+      "명준현",
+      "김도연",
+      "배주원",
+      "황태경"
+    ],
+    "project": null,
+    "source": "2025 수상 아카이브"
+  },
+  {
+    "id": "a020",
+    "year": null,
+    "event": "2024 디스플레이 챌린지 공모전 대상(장관상)",
+    "award": "대상",
+    "tier": "grand",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a021",
+    "year": null,
+    "event": "고교 CID 대회 대상",
+    "award": "대상",
+    "tier": "grand",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a022",
+    "year": null,
+    "event": "JA-삼성 Entrepreneur’s Playground(창업놀이터) 대상",
+    "award": "대상",
+    "tier": "grand",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a023",
+    "year": null,
+    "event": "대기업-청소년 아이디어 경진대회 최우수상 (부문 1등)",
+    "award": "최우수",
+    "tier": "gold",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a024",
+    "year": null,
+    "event": "국민대-JA Korea 온라인 창업 캠프 최우수상",
+    "award": "최우수",
+    "tier": "gold",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a025",
+    "year": null,
+    "event": "고교 CID 대회 우수상",
+    "award": "우수",
+    "tier": "silver",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a026",
+    "year": null,
+    "event": "대-스쿨 해결사 대교부문 최우수상",
+    "award": "최우수",
+    "tier": "gold",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a027",
+    "year": null,
+    "event": "JA-삼성 Entrepreneur’s Playground(창업놀이터) 최우수상",
+    "award": "최우수",
+    "tier": "gold",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a028",
+    "year": null,
+    "event": "Hello New World 해커톤 우수상",
+    "award": "우수",
+    "tier": "silver",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a029",
+    "year": null,
+    "event": "2022 국제로봇올림피아드 CAMP 미션형창작 3위",
+    "award": "3위",
+    "tier": "bronze",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a030",
+    "year": null,
+    "event": "대-스쿨 해결사 롯데케미칼부문 최우수상",
+    "award": "최우수",
+    "tier": "gold",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a031",
+    "year": null,
+    "event": "스마틴 앱 챌린지 2024 장려상",
+    "award": "장려",
+    "tier": "bronze",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a032",
+    "year": null,
+    "event": "대구콘텐츠코리아랩 주니어 콘텐츠 창업 캠프 최우수상",
+    "award": "최우수",
+    "tier": "gold",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a033",
+    "year": null,
+    "event": "2025 시스코 이노베이션 챌린지 Best Idea",
+    "award": "Best Idea",
+    "tier": "special",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a034",
+    "year": null,
+    "event": "건식저장시설 홍보 아이디어 공모전 3위",
+    "award": "3위",
+    "tier": "bronze",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a035",
+    "year": null,
+    "event": "한양대 에리카 퇴근시간 버스승차인원 예측 경진대회 대상",
+    "award": "대상",
+    "tier": "grand",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a036",
+    "year": null,
+    "event": "경기도상업경진대회 창업실무 금상",
+    "award": "금상",
+    "tier": "gold",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a037",
+    "year": null,
+    "event": "PAAS-TA - 한국지능정보사회진흥원장상 은상",
+    "award": "은상",
+    "tier": "silver",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a038",
+    "year": null,
+    "event": "대-스쿨 해결사 대교부문 우수상",
+    "award": "우수",
+    "tier": "silver",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a039",
+    "year": null,
+    "event": "삼성 주니어 소프트웨어 창작대회 개발상",
+    "award": "개발상",
+    "tier": "special",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a040",
+    "year": null,
+    "event": "레드브릭 게임 콘테스트 우수상",
+    "award": "우수",
+    "tier": "silver",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a041",
+    "year": null,
+    "event": "제2회 학교안전사고 데이터 분석 활용 경진대회 특별상",
+    "award": "특별",
+    "tier": "special",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a042",
+    "year": null,
+    "event": "경기도상업경진대회 홍보크리에이터 금상",
+    "award": "금상",
+    "tier": "gold",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a043",
+    "year": null,
+    "event": "비즈쿨 창업영재 새싹캠프 장려상",
+    "award": "장려",
+    "tier": "bronze",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a044",
+    "year": null,
+    "event": "전국상업경진대회 홍보크리에이터 금상",
+    "award": "금상",
+    "tier": "gold",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a045",
+    "year": null,
+    "event": "네이버 청소년 크리에이터 스쿨 장려상",
+    "award": "장려",
+    "tier": "bronze",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a046",
+    "year": null,
+    "event": "한국정보올림피아드 - KOI 본선 동상",
+    "award": "동상",
+    "tier": "bronze",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a047",
+    "year": null,
+    "event": "KAIST IP CEO & CNAI ACCEL 해커톤 특별상",
+    "award": "특별",
+    "tier": "special",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a048",
+    "year": null,
+    "event": "학생 창업유망팀 300 성장트랙 최종 선정",
+    "award": "선정",
+    "tier": "selection",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a049",
+    "year": null,
+    "event": "고교 SID 대회 본선 진출",
+    "award": "본선",
+    "tier": "selection",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a050",
+    "year": null,
+    "event": "우리가 바꾸는 경기 프로젝트 - 차세대융합기술연구원상장 장려상",
+    "award": "장려",
+    "tier": "bronze",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a051",
+    "year": null,
+    "event": "2023 대한민국 고등학생 소프트웨어 개발 공모전 본선 진출",
+    "award": "본선",
+    "tier": "selection",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a052",
+    "year": null,
+    "event": "한국디지털미디어고등학교 창의 IT 발표회 동상",
+    "award": "동상",
+    "tier": "bronze",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a053",
+    "year": null,
+    "event": "[연암공대] 버스승차인원 예측 경진대회 노력상",
+    "award": "노력",
+    "tier": "bronze",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a054",
+    "year": null,
+    "event": "JA-삼성SDS 2021 SmartHackathon 본선 진출",
+    "award": "본선",
+    "tier": "selection",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a055",
+    "year": null,
+    "event": "2021 한경 청소년 경제 체험대회 본선 진출",
+    "award": "본선",
+    "tier": "selection",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a056",
+    "year": null,
+    "event": "K-ICT 빅데이터 센터 데이터 크리에이터 캠프 본선 진출",
+    "award": "본선",
+    "tier": "selection",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a057",
+    "year": null,
+    "event": "제1회 WONDERCHILD 창의발명대회 온라인 유통기술 본선 진출",
+    "award": "본선",
+    "tier": "selection",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a058",
+    "year": null,
+    "event": "한국디지털미디어고등학교 콘솔게임 프로그래밍 대회 본선 진출",
+    "award": "본선",
+    "tier": "selection",
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": null,
+    "source": "이전 수상 아카이브"
+  },
+  {
+    "id": "a059",
+    "year": 2026,
+    "event": "청각장애인의 수어번역 프로그램 다이노수어",
+    "award": null,
+    "tier": null,
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": "dino-sueo",
+    "source": "2026 수상 아카이브"
+  },
+  {
+    "id": "a060",
+    "year": 2026,
+    "event": "유휴공간 연결 플랫폼 CrocTick",
+    "award": null,
+    "tier": null,
+    "institution": null,
+    "generations": [],
+    "members": [],
+    "project": "croctick",
+    "source": "2026 수상 아카이브"
+  }
+]
