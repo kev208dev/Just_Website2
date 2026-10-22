@@ -5,11 +5,14 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Official GitHub Pages (Actions source) permissions: read the repo, write Pages,
+# and mint the OIDC token that actions/deploy-pages exchanges for a deployment.
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# Never cancel an in-flight production deployment; queue the next one instead.
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -18,12 +21,31 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
+
+      # Reads the repository's Pages site. Fails fast with a clear message when
+      # Pages is not enabled, instead of a bare 404 in the deploy job.
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v6
+
+      # astro.config.mjs hard-codes base '/Just_Website2/'; make sure it matches
+      # the path GitHub Pages actually serves the site from.
+      - name: Verify base path
+        env:
+          PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+        run: |
+          echo "Pages base_url:  ${{ steps.pages.outputs.base_url }}"
+          echo "Pages base_path: $PAGES_BASE_PATH"
+          if [ "${PAGES_BASE_PATH%/}" != "/Just_Website2" ]; then
+            echo "::error::Pages base path '$PAGES_BASE_PATH' does not match astro.config.mjs base '/Just_Website2/'"
+            exit 1
+          fi
 
       - name: Install
         run: npm ci --no-audit --no-fund
@@ -34,17 +56,19 @@ jobs:
       - name: Build
         run: npx astro build
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
   deploy:
     needs: build
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    # Requires Settings → Pages → Source: "GitHub Actions".
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
