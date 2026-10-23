@@ -16,7 +16,9 @@
       "배주원",
       "손하윤"
     ],
-    "featured": true
+    "featured": true,
+    "image": "images/awards/award-10.webp",
+    "imageAlt": "2025 경기도 미래창업가 발굴프로그램 대상 수상 현장 사진"
   },
   {
     "id": "a25-02",
@@ -34,7 +36,9 @@
       "명준현",
       "정하은"
     ],
-    "featured": true
+    "featured": true,
+    "image": "images/awards/award-16.webp",
+    "imageAlt": "2025 비즈쿨 캠프 경진대회 IR 결선 대상 수상 현장 사진"
   },
   {
     "id": "a25-03",
@@ -50,7 +54,9 @@
     "members": [
       "명준현"
     ],
-    "featured": true
+    "featured": true,
+    "image": "images/awards/award-12.webp",
+    "imageAlt": "제 18회 전국 창업발명경진대회 대상 수상 현장 사진"
   },
   {
     "id": "a25-04",
@@ -87,7 +93,9 @@
       "조경윤",
       "김도연"
     ],
-    "featured": false
+    "featured": false,
+    "image": "images/awards/award-11.webp",
+    "imageAlt": "비즈쿨 창업동아리 연합 STARTUPTHON 금상 수상 현장 사진"
   },
   {
     "id": "a25-06",
@@ -153,7 +161,9 @@
     "members": [
       "명준현"
     ],
-    "featured": false
+    "featured": false,
+    "image": "images/awards/award-19.webp",
+    "imageAlt": "제 11회 부산창업아이디어 경진대회 대학총장상 수상 현장 사진"
   },
   {
     "id": "a25-10",
@@ -190,7 +200,9 @@
       "이예진",
       "손하윤"
     ],
-    "featured": false
+    "featured": false,
+    "image": "images/awards/award-17.webp",
+    "imageAlt": "제 9회 벤처창업 아이템 경진대회 은상 수상 현장 사진"
   },
   {
     "id": "a25-12",
@@ -208,7 +220,9 @@
       "박초연",
       "배주원"
     ],
-    "featured": false
+    "featured": false,
+    "image": "images/awards/award-07.webp",
+    "imageAlt": "2025년 창업 인큐베이팅 경진대회 창의상 수상 현장 사진"
   },
   {
     "id": "a25-13",
@@ -227,7 +241,9 @@
       "김도연",
       "조경윤"
     ],
-    "featured": false
+    "featured": false,
+    "image": "images/awards/award-15.webp",
+    "imageAlt": "2025 경기도 미래창업가 발굴프로그램 우수상 수상 현장 사진"
   },
   {
     "id": "a25-14",
@@ -264,7 +280,9 @@
       "김도연",
       "이예진"
     ],
-    "featured": false
+    "featured": false,
+    "image": "images/awards/award-18.webp",
+    "imageAlt": "2025 여름 ERICA 고교 딥테크 오디션 우수상 수상 현장 사진"
   },
   {
     "id": "a25-16",
@@ -303,7 +321,9 @@
       "손하윤",
       "이예진"
     ],
-    "featured": false
+    "featured": false,
+    "image": "images/awards/award-05.webp",
+    "imageAlt": "2025 외교 공공데이터 활용 경진대회 장려상 수상 현장 사진"
   },
   {
     "id": "a25-18",
@@ -320,7 +340,9 @@
       "조경윤",
       "김도연"
     ],
-    "featured": false
+    "featured": false,
+    "image": "images/awards/award-09.webp",
+    "imageAlt": "제 9회 벤처창업 아이템 경진대회 동상 수상 현장 사진"
   },
   {
     "id": "a25-19",
@@ -339,6 +361,8 @@
       "배주원",
       "황태경"
     ],
-    "featured": false
+    "featured": false,
+    "image": "images/awards/award-08.webp",
+    "imageAlt": "2025 학생창업유망팀 300 최종선정 수상 현장 사진"
   }
 ]

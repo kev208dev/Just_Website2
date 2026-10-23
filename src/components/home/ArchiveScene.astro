@@ -4,7 +4,7 @@ import { routes, withBase } from '../../lib/paths';
 
 const [awards, archive] = await Promise.all([getAwards(), getArchive()]);
 const grand = awards.filter((a) => a.data.tier === 1);
-const photoHighlights = ['a25-04', 'a25-16', 'a25-14']
+const photoHighlights = ['a25-03', 'a25-02', 'a25-04']
   .map((id) => awards.find((a) => a.id === id))
   .filter((a): a is NonNullable<typeof a> => !!a && !!a.data.image);
 const stats = [
