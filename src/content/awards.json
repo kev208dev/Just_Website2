@@ -66,7 +66,9 @@
     "members": [
       "명준현"
     ],
-    "featured": true
+    "featured": true,
+    "image": "images/awards/award-03.webp",
+    "imageAlt": "제 18회 전국 창업발명경진대회 대상 — 수상 관련 현장 사진"
   },
   {
     "id": "a25-05",
@@ -117,7 +119,9 @@
     "members": [
       "명준현"
     ],
-    "featured": false
+    "featured": false,
+    "image": "images/awards/award-04.webp",
+    "imageAlt": "제 4회 청소년 메이커 경진대회 최우수상 — 수상 관련 현장 사진"
   },
   {
     "id": "a25-08",
@@ -239,7 +243,9 @@
     "members": [
       "박재현"
     ],
-    "featured": false
+    "featured": false,
+    "image": "images/awards/award-02.webp",
+    "imageAlt": "안산시 공공데이터 활용·분석 경진대회 우수상 — 수상 관련 현장 사진"
   },
   {
     "id": "a25-15",
@@ -276,7 +282,9 @@
       "이한영",
       "황혜린"
     ],
-    "featured": false
+    "featured": false,
+    "image": "images/awards/award-01.webp",
+    "imageAlt": "제 7회 공공데이터 분석활용 대회 우수상 — 수상 관련 현장 사진"
   },
   {
     "id": "a25-17",

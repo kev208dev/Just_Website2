@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/ui/PageHero.astro';
 import RevealText from '../components/motion/RevealText.astro';
 import { getArchive, getAwards, getMembers, linkParticipants, site } from '../lib/data';
-import { routes } from '../lib/paths';
+import { routes, withBase } from '../lib/paths';
 
 const [awards, archive, members] = await Promise.all([getAwards(), getArchive(), getMembers()]);
 const featured = awards.filter((a) => a.data.featured);
@@ -26,6 +26,8 @@ type Row = {
   generations: string[];
   members: { name: string; id?: string }[];
   source: 'record' | 'archive';
+  image?: string;
+  imageAlt?: string;
 };
 
 const rows: Row[] = [
@@ -38,6 +40,8 @@ const rows: Row[] = [
     institution: a.data.institution,
     generations: a.data.generations,
     members: linkParticipants(a.data.members, members),
+    image: a.data.image,
+    imageAlt: a.data.imageAlt,
     source: 'record' as const,
   })),
   ...archive.map((a) => ({
@@ -91,22 +95,23 @@ const memberHref = (id: string) => `${routes.people}?member=${id}`;
             <li>
               <article class="plaque" data-tilt id={`plaque-${a.id}`}>
                 <div class="plaque__inner">
-                  <p class="plaque__top t-caps">
-                    <span>No. {String(i + 1).padStart(2, '0')}</span>
-                    <span>{a.data.year}</span>
-                  </p>
-                  <p class="plaque__grade">{a.data.grade}</p>
-                  <h3 class="plaque__event">{a.data.event}</h3>
-                  <p class="plaque__inst">{a.data.institution} 수여</p>
-                  <p class="plaque__members">
-                    {linkParticipants(a.data.members, members).map((m, j) => (
-                      <>
-                        {j > 0 && ', '}
-                        {m.id ? <a href={memberHref(m.id)}>{m.name}</a> : <span>{m.name}</span>}
-                      </>
-                    ))}
-                  </p>
-                  <span class="plaque__sheen" aria-hidden="true" />
+                  {a.data.image && (
+                    <figure class="plaque__photo">
+                      <img src={withBase(a.data.image)} alt={a.data.imageAlt ?? `${a.data.event} 수상 사진`}
+                        width="1600" height="900" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+                    </figure>
+                  )}
+                  <div class="plaque__caption">
+                    <p class="plaque__top t-caps"><span>No. {String(i + 1).padStart(2, '0')}</span><span>{a.data.year}</span></p>
+                    <p class="plaque__grade-label t-serif">{a.data.grade}</p>
+                    <h3 class="plaque__event">{a.data.event}</h3>
+                    <p class="plaque__inst">{a.data.institution} 수여</p>
+                    <p class="plaque__members">
+                      {linkParticipants(a.data.members, members).map((m, j) => (
+                        <>{j > 0 && ', '}{m.id ? <a href={memberHref(m.id)}>{m.name}</a> : <span>{m.name}</span>}</>
+                      ))}
+                    </p>
+                  </div>
                 </div>
               </article>
             </li>
@@ -197,6 +202,12 @@ const memberHref = (id: string) => `${routes.people}?member=${id}`;
                 <span class="record__toggle" aria-hidden="true" />
               </button>
               <div class="record__detail" id={`${r.id}-detail`} hidden>
+                {r.image && (
+                  <figure class="record__photo">
+                    <img src={withBase(r.image)} alt={r.imageAlt ?? `${r.event} 수상 사진`}
+                      width="1600" height="900" loading="lazy" decoding="async" />
+                  </figure>
+                )}
                 <dl>
                   {r.institution && (
                     <div>
@@ -657,6 +668,26 @@ const memberHref = (id: string) => `${routes.people}?member=${id}`;
       padding-left: 8px;
     }
   }
+
+  /* Photo-led editorial awards wall — text is placed below supplied artwork. */
+  .plaque__inner { padding: 0; display: block; min-height: 0; height: 100%; overflow: visible; }
+  .plaque__photo { background: #17191c; aspect-ratio: 16 / 10; display: grid; place-items: center; overflow: hidden; }
+  .plaque__photo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .plaque__caption { padding: clamp(20px, 2.8vw, 40px); display: grid; gap: 12px; }
+  .plaque__caption .plaque__top { color: var(--c-ink-muted); }
+  .plaque__grade-label { color: var(--c-accent-deep); font-size: clamp(2rem, 2vw, 3rem); font-style: italic; line-height: 1; margin-top: 22px; }
+  .plaque__caption .plaque__event { font-size: clamp(1.125rem, 1.2vw, 1.6rem); line-height: 1.35; overflow-wrap: anywhere; }
+  .plaque__caption .plaque__inst, .plaque__caption .plaque__members { color: var(--c-ink-muted); }
+  .plaque__caption .plaque__members a { color: var(--c-ink); }
+  .plaque[data-tilt] { transform: none; }
+  .plaque:hover .plaque__inner { background: transparent; }
+  .record__photo { max-width: 740px; margin: 0 0 26px; background: #17191c; border-radius: 2px; }
+  .record__photo img { display: block; width: 100%; height: auto; max-height: 70vh; object-fit: contain; }
+  @media (max-width: 820px) {
+    .plaque__photo { aspect-ratio: 16 / 10; }
+    .plaque__caption { padding: 24px 4px 40px; }
+  }
+
 </style>
 
 <script>

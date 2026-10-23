@@ -1,9 +1,12 @@
 ---
 import { getArchive, getAwards, site } from '../../lib/data';
-import { routes } from '../../lib/paths';
+import { routes, withBase } from '../../lib/paths';
 
 const [awards, archive] = await Promise.all([getAwards(), getArchive()]);
 const grand = awards.filter((a) => a.data.tier === 1);
+const photoHighlights = ['a25-04', 'a25-16', 'a25-14']
+  .map((id) => awards.find((a) => a.id === id))
+  .filter((a): a is NonNullable<typeof a> => !!a && !!a.data.image);
 const stats = [
   { value: String(awards.length), label: '2025 수상 기록' },
   { value: String(grand.length), label: '대상' },
@@ -32,6 +35,21 @@ const stats = [
         ))
       }
     </dl>
+
+
+    <div class="archive__photos" aria-label="주요 수상 현장 사진">
+      {photoHighlights.map((a, i) => (
+        <a class:list={['archive__photo', i === 0 && 'is-large']} href={`${routes.awards}#${a.id}`}>
+          <figure class="archive__photo-media">
+            <img src={withBase(a.data.image!)} alt={a.data.imageAlt ?? `${a.data.event} 수상 사진`}
+              width="1600" height="900" loading="lazy" decoding="async" />
+          </figure>
+          <div class="archive__photo-caption">
+            <span class="t-num">0{i + 1}</span><span>{a.data.event}</span><span class="t-serif">{a.data.grade}</span>
+          </div>
+        </a>
+      ))}
+    </div>
 
     <ol class="archive__list">
       {
@@ -188,4 +206,22 @@ const stats = [
       text-align: left;
     }
   }
+
+  .archive__photos { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: clamp(18px, 3vw, 40px); margin-bottom: clamp(70px, 9vw, 128px); }
+  .archive__photo { grid-column: span 5; min-width: 0; display: block; }
+  .archive__photo.is-large { grid-column: span 7; grid-row: span 2; }
+  .archive__photo-media { display: grid; place-items: center; aspect-ratio: 16 / 10; overflow: hidden; background: #191a1d; }
+  .archive__photo-media img { width: 100%; height: 100%; object-fit: contain; transition: transform 800ms var(--ease-out); }
+  .archive__photo:hover .archive__photo-media img { transform: scale(1.02); }
+  .archive__photo-caption { display: grid; grid-template-columns: 28px minmax(0,1fr) auto; gap: 14px; align-items: baseline; padding-top: 14px; font-size: var(--fs-small); }
+  .archive__photo-caption .t-num { color: var(--c-ink-muted); }
+  .archive__photo-caption .t-serif { color: var(--c-accent-deep); white-space: nowrap; }
+  @media (max-width: 900px) {
+    .archive__photos { grid-template-columns: 1fr 1fr; }
+    .archive__photo, .archive__photo.is-large { grid-column: span 1; grid-row: auto; }
+    .archive__photo.is-large { grid-column: 1 / -1; }
+    .archive__photo-caption { grid-template-columns: 22px minmax(0,1fr); }
+    .archive__photo-caption .t-serif { grid-column: 2; }
+  }
+  @media (max-width: 540px) { .archive__photos { grid-template-columns: 1fr; } .archive__photo, .archive__photo.is-large { grid-column: 1; } }
 </style>

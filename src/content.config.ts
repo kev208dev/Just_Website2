@@ -64,6 +64,9 @@ const awards = defineCollection({
     generations: z.array(z.string()),
     members: z.array(z.string()),
     featured: z.boolean().default(false),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    gallery: z.array(z.string()).optional(),
   }),
 });
 
