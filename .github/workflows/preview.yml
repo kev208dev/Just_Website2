@@ -1,0 +1,50 @@
+name: Build preview
+
+# Builds every branch and commits the static output to the `build-preview`
+# branch, so changes can be reviewed (and browser-tested) as plain files.
+# Production deploys stay in deploy.yml.
+on:
+  push:
+    branches-ignore: [build-preview]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: preview
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Build
+        run: |
+          set -o pipefail
+          npx astro build 2>&1 | tee build.log
+      - name: Publish build-preview branch
+        if: always()
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin build-preview >/dev/null 2>&1; then
+            git fetch --depth=1 origin build-preview
+            git worktree add -B build-preview _preview origin/build-preview
+          else
+            git worktree add --orphan -b build-preview _preview
+          fi
+          find _preview -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          [ -f build.log ] && cp build.log _preview/
+          [ -d dist ] && cp -r dist _preview/dist
+          echo "${GITHUB_SHA} ${GITHUB_REF_NAME}" > _preview/SOURCE_SHA
+          cd _preview
+          git add -A
+          git commit -q -m "preview: ${GITHUB_REF_NAME} ${GITHUB_SHA::7}" || exit 0
+          git push origin build-preview
