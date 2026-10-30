@@ -78,6 +78,13 @@ import { site } from '../lib/data';
   }
 
   @media (max-width: 720px) {
+    /* keep the address on one line on phones */
+    .channel__value {
+      font-size: clamp(1.125rem, 5.2vw, 1.6rem);
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
+
     .channel {
       grid-template-columns: 1fr auto;
     }
