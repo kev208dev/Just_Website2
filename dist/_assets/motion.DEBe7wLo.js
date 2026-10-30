@@ -1,0 +1,1 @@
+var e=e=>e<.5?4*e*e*e:1-(-2*e+2)**3/2,t=(e,t)=>1-Math.exp(-e*t),n=()=>typeof window<`u`&&window.matchMedia(`(prefers-reduced-motion: reduce)`).matches;export{e as n,n as r,t};
