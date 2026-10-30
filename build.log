@@ -1,32 +1,32 @@
-[2m09:09:35[22m [34m[content][39m Syncing content
-[2m09:09:36[22m [34m[content][39m Synced content
-[2m09:09:36[22m [34m[types][39m Generated [2m635ms[22m
-[2m09:09:36[22m [34m[build][39m output: [34m"static"[39m
-[2m09:09:36[22m [34m[build][39m mode: [34m"static"[39m
-[2m09:09:36[22m [34m[build][39m directory: [34m/home/runner/work/Just_Website2/Just_Website2/dist/[39m
-[2m09:09:36[22m [34m[build][39m Collecting build info...
-[2m09:09:36[22m [34m[build][39m [32m✓ Completed in 691ms.[39m
-[2m09:09:36[22m [34m[build][39m Building static entrypoints...
-[2m09:09:36[22m [34m[vite][39m [32m✓ built in 365ms[39m
-[2m09:09:36[22m [34m[vite][39m [32m✓ built in 211ms[39m
-[2m09:09:36[22m [34m[build][39m Rearranging server assets...
+[2m09:11:12[22m [34m[content][39m Syncing content
+[2m09:11:12[22m [34m[content][39m Synced content
+[2m09:11:12[22m [34m[types][39m Generated [2m623ms[22m
+[2m09:11:12[22m [34m[build][39m output: [34m"static"[39m
+[2m09:11:12[22m [34m[build][39m mode: [34m"static"[39m
+[2m09:11:12[22m [34m[build][39m directory: [34m/home/runner/work/Just_Website2/Just_Website2/dist/[39m
+[2m09:11:12[22m [34m[build][39m Collecting build info...
+[2m09:11:12[22m [34m[build][39m [32m✓ Completed in 667ms.[39m
+[2m09:11:12[22m [34m[build][39m Building static entrypoints...
+[2m09:11:13[22m [34m[vite][39m [32m✓ built in 356ms[39m
+[2m09:11:13[22m [34m[vite][39m [32m✓ built in 208ms[39m
+[2m09:11:13[22m [34m[build][39m Rearranging server assets...
 
 [42m[30m generating static routes [39m[49m
-[2m09:09:36[22m   [34m├─[39m [2m/404.html[22m [2m(+14ms)[22m 
-[2m09:09:36[22m   [34m├─[39m [2m/about/index.html[22m [2m(+17ms)[22m 
-[2m09:09:36[22m   [34m├─[39m [2m/awards/index.html[22m [2m(+13ms)[22m 
-[2m09:09:36[22m   [34m├─[39m [2m/contact/index.html[22m [2m(+6ms)[22m 
-[2m09:09:36[22m   [34m├─[39m [2m/explore/index.html[22m [2m(+3ms)[22m 
-[2m09:09:36[22m   [34m├─[39m [2m/people/index.html[22m [2m(+4ms)[22m 
-[2m09:09:36[22m   [34m├─[39m [2m/work/myeong-game/index.html[22m [2m(+3ms)[22m 
-[2m09:09:36[22m   [34m├─[39m [2m/work/myeong-casino/index.html[22m [2m(+2ms)[22m 
-[2m09:09:36[22m   [34m├─[39m [2m/work/pangolingo/index.html[22m [2m(+3ms)[22m 
-[2m09:09:36[22m   [34m├─[39m [2m/work/just-speed/index.html[22m [2m(+2ms)[22m 
-[2m09:09:36[22m   [34m├─[39m [2m/work/just-quiz/index.html[22m [2m(+2ms)[22m 
-[2m09:09:36[22m   [34m├─[39m [2m/work/index.html[22m [2m(+3ms)[22m 
-[2m09:09:36[22m   [34m├─[39m [2m/index.html[22m [2m(+3ms)[22m 
-[2m09:09:36[22m [32m✓ Completed in 101ms.
+[2m09:11:13[22m   [34m├─[39m [2m/404.html[22m [2m(+15ms)[22m 
+[2m09:11:13[22m   [34m├─[39m [2m/about/index.html[22m [2m(+13ms)[22m 
+[2m09:11:13[22m   [34m├─[39m [2m/awards/index.html[22m [2m(+12ms)[22m 
+[2m09:11:13[22m   [34m├─[39m [2m/contact/index.html[22m [2m(+5ms)[22m 
+[2m09:11:13[22m   [34m├─[39m [2m/explore/index.html[22m [2m(+3ms)[22m 
+[2m09:11:13[22m   [34m├─[39m [2m/people/index.html[22m [2m(+3ms)[22m 
+[2m09:11:13[22m   [34m├─[39m [2m/work/myeong-game/index.html[22m [2m(+3ms)[22m 
+[2m09:11:13[22m   [34m├─[39m [2m/work/myeong-casino/index.html[22m [2m(+2ms)[22m 
+[2m09:11:13[22m   [34m├─[39m [2m/work/pangolingo/index.html[22m [2m(+3ms)[22m 
+[2m09:11:13[22m   [34m├─[39m [2m/work/just-speed/index.html[22m [2m(+2ms)[22m 
+[2m09:11:13[22m   [34m├─[39m [2m/work/just-quiz/index.html[22m [2m(+2ms)[22m 
+[2m09:11:13[22m   [34m├─[39m [2m/work/index.html[22m [2m(+2ms)[22m 
+[2m09:11:13[22m   [34m├─[39m [2m/index.html[22m [2m(+3ms)[22m 
+[2m09:11:13[22m [32m✓ Completed in 97ms.
 [39m
-[2m09:09:36[22m [34m[build][39m [32m✓ Completed in 724ms.[39m
-[2m09:09:36[22m [34m[build][39m 13 page(s) built in [1m1.42s[22m
-[2m09:09:36[22m [34m[build][39m [1mComplete![22m
+[2m09:11:13[22m [34m[build][39m [32m✓ Completed in 708ms.[39m
+[2m09:11:13[22m [34m[build][39m 13 page(s) built in [1m1.38s[22m
+[2m09:11:13[22m [34m[build][39m [1mComplete![22m
