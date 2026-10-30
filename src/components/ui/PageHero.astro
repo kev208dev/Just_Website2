@@ -13,11 +13,13 @@ const { kicker, lines, intro, count, size = 'mega' } = Astro.props;
 
 <header class="page-hero container">
   {
-    (kicker || count) && (
+    kicker ? (
       <div class="page-hero__top">
-        {kicker && <p class="section-label t-caps">{kicker}</p>}
+        <p class="section-label t-caps">{kicker}</p>
         {count && <p class="page-hero__count t-caps t-muted t-num">{count}</p>}
       </div>
+    ) : (
+      count && <p class="page-hero__count is-floating t-caps t-muted t-num">{count}</p>
     )
   }
   <RevealText as="h1" lines={lines} class:list={['page-hero__title', 't-display', `is-${size}`]} />
@@ -46,6 +48,17 @@ const { kicker, lines, intro, count, size = 'mega' } = Astro.props;
 
   .page-hero__count {
     margin-left: auto;
+  }
+
+  /* Without a kicker the count sits beside the title instead of on its own row. */
+  .page-hero {
+    position: relative;
+  }
+
+  .page-hero__count.is-floating {
+    position: absolute;
+    top: 0;
+    right: var(--gutter);
   }
 
   .page-hero__title.is-mega {
