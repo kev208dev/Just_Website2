@@ -9,7 +9,7 @@ const { cta = true } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<footer class="site-footer">
+<footer class:list={["site-footer", { "no-cta": !cta }]}>
   <div class="container">
     {
       cta && (
@@ -49,6 +49,15 @@ const year = new Date().getFullYear();
     background: var(--c-bg);
     border-top: 1px solid var(--c-line);
     overflow: hidden;
+  }
+
+  /* Without the CTA the footer opens straight onto the links. */
+  .site-footer.no-cta {
+    padding-top: 0;
+  }
+
+  .site-footer.no-cta .footer-grid {
+    border-top: 0;
   }
 
   .footer-cta {

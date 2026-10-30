@@ -48,6 +48,7 @@ const step = 360 / projects.length;
   .universe__scene {
     position: absolute;
     inset: 0;
+    z-index: 0; /* own stacking context, so the 3D ring never paints over the copy */
     display: grid;
     place-items: center;
     perspective: 1600px;

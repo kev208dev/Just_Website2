@@ -140,7 +140,6 @@ const memberHref = (id: string) => `${routes.people}?member=${id}`;
               />
             </figure>
             <div class="photo-wall__caption">
-              <span class="photo-wall__index t-num">{String(i + 1).padStart(2, '0')}</span>
               <span class="photo-wall__event">{a.data.event}</span>
               <span class="photo-wall__grade">{a.data.grade}</span>
             </div>
@@ -730,14 +729,12 @@ const memberHref = (id: string) => `${routes.people}?member=${id}`;
   .photo-wall__item:focus-visible { outline: 2px solid var(--c-accent-deep); outline-offset: 6px; }
   .photo-wall__item.is-portrait .photo-wall__media { aspect-ratio: 16 / 9; }
   .photo-wall__item.is-portrait .photo-wall__media img { width: auto; max-width: 100%; }
-  .photo-wall__caption { display: grid; grid-template-columns: 35px minmax(0, 1fr) auto; gap: 12px; border-top: 1px solid var(--c-line); padding-top: 18px; margin-top: 20px; align-items: start; }
-  .photo-wall__index { color: var(--c-ink-muted); font-size: var(--fs-small); }
+  .photo-wall__caption { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; border-top: 1px solid var(--c-line); padding-top: 18px; margin-top: 20px; align-items: start; }
   .photo-wall__event { font-size: clamp(1rem, 1.4vw, 1.5rem); font-weight: 600; letter-spacing: -.035em; line-height: 1.35; overflow-wrap: anywhere; }
   .photo-wall__grade { font-family: var(--font-serif); color: var(--c-accent-deep); white-space: nowrap; }
   @media (max-width: 800px) {
     .photo-wall__header { align-items: start; flex-direction: column; }
     .photo-wall__grid { grid-template-columns: 1fr; }
-    .photo-wall__caption { grid-template-columns: 28px minmax(0, 1fr); }
     .photo-wall__grade { grid-column: 2; }
     .photo-wall__title { font-size: clamp(2.7rem, 9vw, 4.5rem); }
   }
