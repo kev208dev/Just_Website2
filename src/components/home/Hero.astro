@@ -11,20 +11,14 @@ import { routes, withBase } from '../../lib/paths';
     </picture>
   </div>
 
-  <div class="hero__top container">
-    <p class="t-caps">JUST® Atelier</p>
-    <p class="hero__concept">A digital gallery of ideas,<br />technology, and creation.</p>
-  </div>
-
   <h1 class="hero__title" id="hero-title" data-hero-title>
     <span class="hero__line"><span>From zero.</span></span>
     <span class="hero__line hero__line--b"><span>To <em class="t-serif">anything.</em></span></span>
   </h1>
 
   <div class="hero__bottom container">
-    <p class="hero__motto">{site.mottoKo}<br /><span class="t-muted">{site.tagline}</span></p>
-    <a class="hero__scroll t-caps" href="#works"><span class="hero__scroll-line" aria-hidden="true"></span>Scroll</a>
-    <a class="hero__explore t-caps" href={routes.explore}>Enter the universe <span aria-hidden="true">→</span></a>
+    <p class="hero__motto">{site.mottoKo}</p>
+    <a class="hero__explore t-caps" href={routes.explore}>Explore <span aria-hidden="true">→</span></a>
   </div>
 </section>
 
@@ -63,25 +57,6 @@ import { routes, withBase } from '../../lib/paths';
 
   .hero.is-live .hero__poster {
     opacity: 0;
-  }
-
-  .hero__top {
-    position: absolute;
-    inset: calc(var(--header-h) + 18px) 0 auto;
-    z-index: 2;
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    color: var(--c-soft);
-  }
-
-  .hero__concept {
-    text-align: right;
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: clamp(1.125rem, 0.9rem + 0.7vw, 1.625rem);
-    line-height: 1.2;
-    letter-spacing: -0.01em;
   }
 
   .hero__title {
@@ -145,43 +120,11 @@ import { routes, withBase } from '../../lib/paths';
     inset: auto 0 calc(28px + env(safe-area-inset-bottom));
     z-index: 2;
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr auto;
     align-items: end;
     gap: 16px;
     font-size: var(--fs-small);
     color: var(--c-soft);
-  }
-
-  .hero__scroll {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .hero__scroll-line {
-    position: relative;
-    width: 1px;
-    height: 34px;
-    overflow: hidden;
-    background: var(--c-line);
-  }
-
-  .hero__scroll-line::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--c-bronze);
-    transform: translateY(-100%);
-    animation: scroll-cue 2.4s var(--ease-in-out) infinite;
-  }
-
-  @keyframes scroll-cue {
-    50% {
-      transform: none;
-    }
-    100% {
-      transform: translateY(100%);
-    }
   }
 
   .hero__explore {
@@ -197,35 +140,12 @@ import { routes, withBase } from '../../lib/paths';
   }
 
   @media (max-width: 820px) {
-    .hero__concept {
-      display: none;
-    }
-
     .hero__title {
-      bottom: 150px;
+      bottom: 132px;
     }
 
     .hero__line--b {
       padding-left: 0;
-    }
-
-    .hero__bottom {
-      grid-template-columns: 1fr auto;
-    }
-
-    .hero__motto {
-      grid-column: 1 / -1;
-    }
-
-    .hero__scroll {
-      display: none;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero__scroll-line::after {
-      animation: none;
-      transform: none;
     }
   }
 </style>

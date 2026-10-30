@@ -26,7 +26,6 @@ const meta = [
   { label: 'Category', value: p.category },
   p.year ? { label: 'Year', value: String(p.year), note: p.yearSource } : null,
   p.stack.length ? { label: 'Stack', value: p.stack.join(', ') } : null,
-  { label: 'Art direction', value: p.art.direction },
   p.members.length ? { label: 'Team', value: p.members.join(', ') } : null,
 ].filter(Boolean) as { label: string; value: string; note?: string }[];
 const host = p.links.live?.replace(/^https?:\/\//, '').replace(/\/$/, '');
@@ -93,7 +92,6 @@ const host = p.links.live?.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
     <section class="p-screen" aria-label="실제 화면">
       <div class="container">
-        <p class="section-label t-caps">The product — real screen</p>
         <figure class="p-screen__frame reveal-mask" data-reveal>
           <div class="p-screen__bar" aria-hidden="true"><i></i><i></i><i></i>{host && <span>{host}</span>}</div>
           <img src={withBase(p.image)} alt={p.alt} width="1280" height={Math.round(1280 / p.imageAspect)} loading="lazy" decoding="async" />
@@ -150,7 +148,6 @@ const host = p.links.live?.replace(/^https?:\/\//, '').replace(/\/$/, '');
       <a href={routes.project(next.id)} class="p-next__link container" data-cursor="view" data-cursor-label="NEXT">
         <span class="t-caps t-muted">Next — {num((index + 1) % total)}</span>
         <span class="p-next__title">{next.data.titleEn}</span>
-        <span class="p-next__tag t-serif">{next.data.art.tagline}</span>
         <span class="p-next__thumb"><img src={withBase(next.data.coverThumb)} alt="" loading="lazy" width="960" height="600" /></span>
       </a>
     </nav>
@@ -285,10 +282,6 @@ const host = p.links.live?.replace(/^https?:\/\//, '').replace(/\/$/, '');
     padding-bottom: var(--section-y);
   }
 
-  .p-screen .section-label {
-    margin-bottom: 28px;
-  }
-
   .p-screen__frame {
     overflow: hidden;
     border-radius: var(--radius-m);
@@ -381,13 +374,6 @@ const host = p.links.live?.replace(/^https?:\/\//, '').replace(/\/$/, '');
     letter-spacing: -0.065em;
     text-transform: uppercase;
     transition: color var(--dur-std) var(--ease-out);
-  }
-
-  .p-next__tag {
-    position: relative;
-    z-index: 1;
-    font-size: var(--fs-h3);
-    color: var(--c-bone);
   }
 
   .p-next__thumb {

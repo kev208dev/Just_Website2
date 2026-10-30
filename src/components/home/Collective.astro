@@ -9,7 +9,6 @@ const groups = GROUP_ORDER.map((g) => ({ g, people: members.filter((m) => m.data
 <section class="collective" aria-labelledby="collective-title">
   <div class="container">
     <header class="collective__head">
-      <p class="t-caps t-muted">Scene 06 — The collective</p>
       <h2 class="collective__title" id="collective-title">{members.length} people,<br /><em class="t-serif">one habit.</em></h2>
     </header>
 
@@ -21,7 +20,6 @@ const groups = GROUP_ORDER.map((g) => ({ g, people: members.filter((m) => m.data
             {people.map((m) => (
               <a href={`${routes.people}?member=${m.id}`} class="name" data-cursor="view" data-cursor-label="OPEN">
                 {m.data.name}
-                {m.data.role && <sup>{m.data.role}</sup>}
               </a>
             ))}
           </p>
@@ -95,17 +93,6 @@ const groups = GROUP_ORDER.map((g) => ({ g, people: members.filter((m) => m.data
   .name:hover,
   .name:focus-visible {
     color: var(--c-ivory);
-  }
-
-  .name sup {
-    position: relative;
-    top: -1.6em;
-    margin-left: 4px;
-    font-size: 0.17em;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    color: var(--c-bronze);
-    vertical-align: baseline;
   }
 
   .collective__more {

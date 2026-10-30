@@ -7,7 +7,6 @@ import { site } from '../lib/data';
 <BaseLayout title="Contact" current="contact" footerCta={false} description="JUST에 연락하기 — 이메일과 인스타그램.">
   <div class="page contact">
     <section class="container contact__hero">
-      <p class="section-label t-caps">Contact</p>
       <RevealText as="h1" lines={['Let’s make', '<em class="t-serif">something real.</em>']} class="contact__title t-display" />
     </section>
 
@@ -26,11 +25,6 @@ import { site } from '../lib/data';
       </div>
     </section>
 
-    <section class="container contact__note">
-      <p class="t-lead t-muted reveal-fade" data-reveal>
-        협업 제안, 대회·프로그램 문의, 프로젝트에 대한 이야기 모두 환영합니다. {site.mottoKo}
-      </p>
-    </section>
   </div>
 </BaseLayout>
 
@@ -79,12 +73,8 @@ import { site } from '../lib/data';
     color: var(--c-accent);
   }
 
-  .contact__note {
-    padding-block: clamp(48px, 7vw, 96px) var(--section-y);
-  }
-
-  .contact__note p {
-    max-width: 40ch;
+  .contact__channels {
+    padding-bottom: var(--section-y);
   }
 
   @media (max-width: 720px) {

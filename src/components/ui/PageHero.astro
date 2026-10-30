@@ -2,7 +2,7 @@
 import RevealText from '../motion/RevealText.astro';
 
 interface Props {
-  kicker: string;
+  kicker?: string;
   lines: string[];
   intro?: string;
   count?: string;
@@ -12,10 +12,14 @@ const { kicker, lines, intro, count, size = 'mega' } = Astro.props;
 ---
 
 <header class="page-hero container">
-  <div class="page-hero__top">
-    <p class="section-label t-caps">{kicker}</p>
-    {count && <p class="t-caps t-muted t-num">{count}</p>}
-  </div>
+  {
+    (kicker || count) && (
+      <div class="page-hero__top">
+        {kicker && <p class="section-label t-caps">{kicker}</p>}
+        {count && <p class="page-hero__count t-caps t-muted t-num">{count}</p>}
+      </div>
+    )
+  }
   <RevealText as="h1" lines={lines} class:list={['page-hero__title', 't-display', `is-${size}`]} />
   {
     intro && (
@@ -38,6 +42,10 @@ const { kicker, lines, intro, count, size = 'mega' } = Astro.props;
     display: flex;
     justify-content: space-between;
     gap: 16px;
+  }
+
+  .page-hero__count {
+    margin-left: auto;
   }
 
   .page-hero__title.is-mega {

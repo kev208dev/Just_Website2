@@ -14,7 +14,6 @@ const year = new Date().getFullYear();
     {
       cta && (
         <a class="footer-cta" href={routes.contact} data-cursor="link">
-          <span class="t-caps t-muted">Contact</span>
           <span class="footer-cta__type">
             Let’s make <em class="t-serif">something real.</em>
           </span>
@@ -23,11 +22,6 @@ const year = new Date().getFullYear();
     }
 
     <div class="footer-grid">
-      <p class="footer-brand">
-        {site.tagline}
-        <br />
-        <span class="t-muted">{site.mottoKo}</span>
-      </p>
       <ul class="footer-nav">
         {navItems.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
       </ul>
@@ -43,8 +37,7 @@ const year = new Date().getFullYear();
   <p class="footer-mark" aria-hidden="true">JUST<sup>®</sup></p>
 
   <div class="footer-base container t-caps t-muted">
-    <span>© {year} JUST Atelier</span>
-    <span>From zero. To anything.</span>
+    <span>© {year} JUST</span>
     <span>Build. Prove.</span>
   </div>
 </footer>
@@ -84,7 +77,7 @@ const year = new Date().getFullYear();
 
   .footer-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1.2fr;
+    grid-template-columns: 1fr 1fr;
     gap: 40px;
     padding-block: 36px;
     border-top: 1px solid var(--c-line);
@@ -97,6 +90,11 @@ const year = new Date().getFullYear();
     gap: 6px;
     align-content: start;
     font-family: var(--font-latin);
+  }
+
+  .footer-contact {
+    justify-items: end;
+    text-align: right;
   }
 
   .footer-nav a,
@@ -140,17 +138,4 @@ const year = new Date().getFullYear();
     padding-block: 22px 28px;
   }
 
-  @media (max-width: 720px) {
-    .footer-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .footer-brand {
-      grid-column: 1 / -1;
-    }
-
-    .footer-base span:nth-child(2) {
-      display: none;
-    }
-  }
 </style>

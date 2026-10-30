@@ -14,10 +14,8 @@ const placements = ['wide', 'narrow-low', 'narrow', 'wide-low', 'mid'];
 <BaseLayout title="Work" current="work" description="JUST가 0에서 만든 프로젝트 아카이브.">
   <div class="page">
     <PageHero
-      kicker="Selected works"
-      lines={['All <em class="t-serif">works</em>']}
+      lines={['Work']}
       count={`(${String(projects.length).padStart(2, '0')})`}
-      intro="아이디어를 발견하고, 실험하고, 기술로 실제 결과물을 만듭니다. JUST 멤버들이 직접 만든 작업들입니다."
     />
 
     <section class="works container" data-works data-view="grid" aria-label="프로젝트 목록">
@@ -59,7 +57,7 @@ const placements = ['wide', 'narrow-low', 'narrow', 'wide-low', 'mid'];
                   <span class="work-item__num t-num">{String(i + 1).padStart(2, '0')}</span>
                   <h2 class="work-item__title">{p.data.titleEn}</h2>
                   <span class="work-item__cat t-caps">{p.data.category}</span>
-                  <span class="work-item__stack"><span class="work-item__ko">{p.data.title}</span> — <span class="t-serif">{p.data.art.tagline}</span></span>
+                  <span class="work-item__stack"><span class="work-item__ko">{p.data.title}</span></span>
                   <span class="work-item__year t-num">{p.data.year ?? '—'}</span>
                 </div>
               </a>
@@ -206,11 +204,6 @@ const placements = ['wide', 'narrow-low', 'narrow', 'wide-low', 'mid'];
 
   .work-item__num {
     color: var(--accent);
-  }
-
-  .work-item__stack .t-serif {
-    font-size: 1.125em;
-    color: var(--c-soft);
   }
 
   .work-item__cat {

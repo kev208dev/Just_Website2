@@ -64,7 +64,7 @@ const memberHref = (id: string) => `${routes.people}?member=${id}`;
 
 <BaseLayout title="Awards" current="awards" description="JUST 수상 아카이브 — 2025년 19건의 수상 기록과 이전 기록.">
   <div class="page theme-light awards-page">
-    <PageHero kicker="Awards archive" lines={['The <em class="t-serif">archive</em>']} count={`(${rows.length})`}>
+    <PageHero lines={['Awards']} count={`(${rows.length})`}>
       <dl class="award-stats">
         <div>
           <dt class="t-caps t-muted">2025 records</dt>
@@ -87,7 +87,6 @@ const memberHref = (id: string) => `${routes.people}?member=${id}`;
 
     <section class="exhibit container" aria-labelledby="exhibit-title">
       <div class="exhibit__head">
-        <p class="section-label t-caps">Exhibit — 2025</p>
         <RevealText as="h2" id="exhibit-title" lines={['Grand prizes']} class="exhibit__title t-display" />
       </div>
       <ul class="exhibit__grid">
@@ -124,10 +123,8 @@ const memberHref = (id: string) => `${routes.people}?member=${id}`;
     <section class="photo-wall container" aria-labelledby="photo-wall-title">
       <header class="photo-wall__header">
         <div>
-          <p class="section-label t-caps">Photographic archive / 2025</p>
           <h2 id="photo-wall-title" class="photo-wall__title t-display">Documented <em class="t-serif">moments.</em></h2>
         </div>
-        <p class="photo-wall__intro">기록 속 실제 수상 현장을 모았습니다.<br />사진을 선택하면 해당 수상 기록으로 이동합니다.</p>
       </header>
       <div class="photo-wall__grid">
         {photoArchive.map((a, i) => (
@@ -720,13 +717,11 @@ const memberHref = (id: string) => `${routes.people}?member=${id}`;
     .plaque__caption { padding: 24px 4px 40px; }
   }
 
-
   /* 2025 editorial photography wall: every verified non-featured award is visible. */
   .photo-wall { padding-bottom: var(--section-y); }
   .photo-wall__header { display: flex; align-items: end; justify-content: space-between; gap: 24px; border-top: 1px solid var(--c-ink); padding-top: 24px; margin-bottom: clamp(36px, 5vw, 72px); }
   .photo-wall__title { font-size: clamp(3rem, 5vw, 6rem); line-height: .95; letter-spacing: -.045em; margin-top: 24px; }
   .photo-wall__title em { color: var(--c-accent-deep); font-weight: 400; }
-  .photo-wall__intro { color: var(--c-ink-muted); max-width: 320px; font-size: var(--fs-small); line-height: 1.6; }
   .photo-wall__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(20px, 3vw, 56px); row-gap: clamp(48px, 6vw, 90px); }
   .photo-wall__item { display: block; min-width: 0; }
   .photo-wall__media { aspect-ratio: 16 / 9; display: grid; place-items: center; overflow: hidden; background: #17191c; }

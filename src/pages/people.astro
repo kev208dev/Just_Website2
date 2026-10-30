@@ -22,13 +22,9 @@ const people = members.map((m, i) => {
 <BaseLayout title="People" current="people" description="JUST를 만드는 사람들 — 23기부터 25기, One Flap까지.">
   <div class="page">
     <PageHero
-      kicker="People"
       lines={['People']}
       count={`(${people.length})`}
-      intro="23기부터 25기, 그리고 One Flap까지. 0에서 1을 만드는 사람들입니다."
-    >
-      <p class="people-hint t-caps t-muted">Tip — 이름을 더블클릭하면 별명이 보입니다</p>
-    </PageHero>
+    />
 
     <section class="people container" data-people aria-label="멤버 목록">
       <div class="people__bar" role="group" aria-label="기수 필터">
@@ -67,16 +63,14 @@ const people = members.map((m, i) => {
                     >
                       <span class="person__gen" aria-hidden="true">{p.group === 'One Flap' ? 'OF' : p.group.replace('기', '')}</span>
                       <span class="person__top">
-                        <span class="t-num t-muted">{String(p.index + 1).padStart(2, '0')}</span>
                         {p.dept && <span class="person__dept t-caps">{p.dept}</span>}
                       </span>
                       <span class="person__name" data-name-label>{p.name}</span>
                       <span class="person__bottom">
-                        <span class="person__role">{p.role ?? p.group}</span>
+                        <span class="person__role">{p.role}</span>
                         {p.awards.length > 0 && <span class="person__awards t-num">{p.awards.length} awards</span>}
                       </span>
                       <span class="person__reveal" aria-hidden="true">
-                        <span class="t-caps">View profile</span>
                         <svg viewBox="0 0 12 12" width="14" height="14"><path d="M2 10 10 2M4 2h6v6" fill="none" stroke="currentColor" stroke-width="1.4" /></svg>
                       </span>
                     </button>
@@ -108,10 +102,6 @@ const people = members.map((m, i) => {
 </BaseLayout>
 
 <style>
-  .people-hint {
-    margin-left: auto;
-  }
-
   .people__bar {
     position: sticky;
     top: var(--header-h);

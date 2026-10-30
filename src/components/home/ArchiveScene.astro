@@ -18,7 +18,6 @@ const stats = [
 <section class="archive" aria-labelledby="archive-title">
   <div class="container">
     <header class="archive__head">
-      <p class="t-caps archive__label">Scene 05 — The archive</p>
       <h2 class="archive__title" id="archive-title">Proof, <em class="t-serif">not promises.</em></h2>
     </header>
 
@@ -36,7 +35,6 @@ const stats = [
       }
     </dl>
 
-
     <div class="archive__photos" aria-label="주요 수상 현장 사진">
       {photoHighlights.map((a, i) => (
         <a class:list={['archive__photo', i === 0 && 'is-large']} href={`${routes.awards}#${a.id}`}>
@@ -45,26 +43,11 @@ const stats = [
               width="1600" height="900" loading="lazy" decoding="async" />
           </figure>
           <div class="archive__photo-caption">
-            <span class="t-num">0{i + 1}</span><span>{a.data.event}</span><span class="t-serif">{a.data.grade}</span>
+            <span>{a.data.event}</span><span class="t-serif">{a.data.grade}</span>
           </div>
         </a>
       ))}
     </div>
-
-    <ol class="archive__list">
-      {
-        grand.map((a, i) => (
-          <li>
-            <a href={`${routes.awards}#${a.id}`}>
-              <span class="t-num idx">{String(i + 1).padStart(2, '0')}</span>
-              <span class="event">{a.data.event}</span>
-              <span class="grade t-serif">{a.data.grade}</span>
-              <span class="inst">{a.data.institution} 수여 · {a.data.year}</span>
-            </a>
-          </li>
-        ))
-      }
-    </ol>
 
     <a class="archive__more link-arrow" href={routes.awards}>
       전체 수상 아카이브
@@ -78,10 +61,6 @@ const stats = [
     padding-block: var(--section-y);
     background: var(--c-ivory);
     color: var(--c-ink);
-  }
-
-  .archive__label {
-    color: var(--c-ink-muted);
   }
 
   .archive__head {
@@ -141,47 +120,6 @@ const stats = [
     color: var(--c-ink-muted);
   }
 
-  .archive__list {
-    border-top: 1px solid var(--c-ink);
-  }
-
-  .archive__list a {
-    display: grid;
-    grid-template-columns: 70px minmax(0, 1fr) 120px 260px;
-    align-items: baseline;
-    gap: 20px;
-    padding-block: clamp(22px, 2.6vw, 36px);
-    border-bottom: 1px solid var(--c-ink-line);
-    transition: padding var(--dur-std) var(--ease-out);
-  }
-
-  .archive__list a:hover {
-    padding-left: 14px;
-  }
-
-  .archive__list .idx {
-    font-size: var(--fs-small);
-    color: var(--c-ink-muted);
-  }
-
-  .archive__list .event {
-    font-size: clamp(1.4rem, 0.9rem + 1.6vw, 2.5rem);
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    line-height: 1.15;
-  }
-
-  .archive__list .grade {
-    font-size: clamp(1.4rem, 1rem + 1vw, 2rem);
-    color: var(--c-accent-deep);
-  }
-
-  .archive__list .inst {
-    font-size: var(--fs-small);
-    color: var(--c-ink-muted);
-    text-align: right;
-  }
-
   .archive__more {
     margin-top: 48px;
   }
@@ -196,32 +134,20 @@ const stats = [
       padding-left: 0;
       border-left: 0;
     }
-
-    .archive__list a {
-      grid-template-columns: 40px 1fr auto;
-    }
-
-    .archive__list .inst {
-      grid-column: 2 / -1;
-      text-align: left;
-    }
   }
 
-  .archive__photos { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: clamp(18px, 3vw, 40px); margin-bottom: clamp(70px, 9vw, 128px); }
+  .archive__photos { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: clamp(18px, 3vw, 40px); }
   .archive__photo { grid-column: span 5; min-width: 0; display: block; }
   .archive__photo.is-large { grid-column: span 7; grid-row: span 2; }
   .archive__photo-media { display: grid; place-items: center; aspect-ratio: 16 / 10; overflow: hidden; background: #191a1d; }
   .archive__photo-media img { width: 100%; height: 100%; object-fit: contain; transition: transform 800ms var(--ease-out); }
   .archive__photo:hover .archive__photo-media img { transform: scale(1.02); }
-  .archive__photo-caption { display: grid; grid-template-columns: 28px minmax(0,1fr) auto; gap: 14px; align-items: baseline; padding-top: 14px; font-size: var(--fs-small); }
-  .archive__photo-caption .t-num { color: var(--c-ink-muted); }
+  .archive__photo-caption { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 14px; align-items: baseline; padding-top: 14px; font-size: var(--fs-small); }
   .archive__photo-caption .t-serif { color: var(--c-accent-deep); white-space: nowrap; }
   @media (max-width: 900px) {
     .archive__photos { grid-template-columns: 1fr 1fr; }
     .archive__photo, .archive__photo.is-large { grid-column: span 1; grid-row: auto; }
     .archive__photo.is-large { grid-column: 1 / -1; }
-    .archive__photo-caption { grid-template-columns: 22px minmax(0,1fr); }
-    .archive__photo-caption .t-serif { grid-column: 2; }
   }
   @media (max-width: 540px) { .archive__photos { grid-template-columns: 1fr; } .archive__photo, .archive__photo.is-large { grid-column: 1; } }
 </style>

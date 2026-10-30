@@ -23,9 +23,8 @@ const step = 360 / projects.length;
     </div>
 
     <div class="universe__copy container">
-      <p class="t-caps t-muted">Scene 04 — Explore</p>
       <h2 class="universe__title" id="universe-title">JUST <em class="t-serif">Universe</em></h2>
-      <p class="universe__sub">Rings / Spiral — {projects.length}개의 작품이 떠 있는 3D 공간을 직접 탐험하세요.</p>
+      <p class="universe__sub t-caps t-muted">Rings · Spiral</p>
       <span class="universe__enter"><span>Enter</span></span>
     </div>
   </a>
@@ -117,12 +116,8 @@ const step = 360 / projects.length;
     gap: 18px 40px;
   }
 
-  .universe__copy > .t-caps,
   .universe__title {
     grid-column: 1;
-  }
-
-  .universe__title {
     font-family: var(--font-display);
     font-weight: 500;
     font-size: var(--fs-h1);
