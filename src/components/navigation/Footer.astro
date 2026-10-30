@@ -4,8 +4,10 @@ import { site } from '../../lib/data';
 
 interface Props {
   cta?: boolean;
+  /** Hide the contact links where the page itself is the contact page. */
+  contact?: boolean;
 }
-const { cta = true } = Astro.props;
+const { cta = true, contact = true } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
@@ -25,12 +27,16 @@ const year = new Date().getFullYear();
       <ul class="footer-nav">
         {navItems.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
       </ul>
-      <ul class="footer-contact">
-        <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
-        <li>
-          <a href={site.contact.instagram.url} target="_blank" rel="noopener noreferrer">Instagram {site.contact.instagram.handle}</a>
-        </li>
-      </ul>
+      {
+        contact && (
+          <ul class="footer-contact">
+            <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
+            <li>
+              <a href={site.contact.instagram.url} target="_blank" rel="noopener noreferrer">Instagram {site.contact.instagram.handle}</a>
+            </li>
+          </ul>
+        )
+      }
     </div>
   </div>
 

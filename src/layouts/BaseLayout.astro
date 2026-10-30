@@ -13,6 +13,7 @@ interface Props {
   bodyClass?: string;
   footer?: boolean;
   footerCta?: boolean;
+  footerContact?: boolean;
   ogImage?: string;
 }
 
@@ -23,6 +24,7 @@ const {
   bodyClass = '',
   footer = true,
   footerCta = true,
+  footerContact = true,
   ogImage = 'images/brand/og-image.jpg',
 } = Astro.props;
 
@@ -58,7 +60,7 @@ const ogUrl = new URL(withBase(ogImage), Astro.site);
     <main id="main" tabindex="-1">
       <slot />
     </main>
-    {footer && <Footer cta={footerCta} />}
+    {footer && <Footer cta={footerCta} contact={footerContact} />}
     <Cursor />
     <script>
       import { initGlobal } from '../scripts/global';
